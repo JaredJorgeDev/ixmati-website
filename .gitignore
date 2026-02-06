@@ -1,0 +1,14 @@
+# Sistema
+.DS_Store
+
+# Editor
+.vscode/
+
+# Descargas incompletas
+*.crdownload
+
+# Videos
+*.mp4
+
+# Fotos iPhone
+*.HEIC
