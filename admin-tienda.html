@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CMS Tienda Ixmati</title>
+    <link href="img/logoixmati.jpg" rel="icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --panel: #fff;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #dbe4ef;
+            --brand: #1b6ca8;
+            --brand-dark: #0f3f68;
+            --green: #14804a;
+            --orange: #b45309;
+            --red: #b91c1c;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .shell {
+            width: min(1440px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 56px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 900;
+        }
+
+        .brand span {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border-radius: 8px;
+            background: var(--brand-dark);
+            color: #fff;
+        }
+
+        .top-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .button,
+        button {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--ink);
+            cursor: pointer;
+            font: inherit;
+            font-weight: 800;
+            padding: 10px 14px;
+            text-decoration: none;
+        }
+
+        .button.primary,
+        button.primary {
+            border-color: var(--brand-dark);
+            background: var(--brand-dark);
+            color: #fff;
+        }
+
+        .button.danger {
+            color: var(--red);
+        }
+
+        .hero,
+        .panel,
+        .login-card {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--panel);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, .06);
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+            font-size: clamp(30px, 4vw, 48px);
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 430px;
+            gap: 16px;
+        }
+
+        .panel {
+            padding: 18px;
+        }
+
+        .toolbar {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 180px 160px;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--ink);
+            font: inherit;
+            padding: 10px 12px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        label {
+            display: grid;
+            gap: 6px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .form {
+            display: grid;
+            gap: 10px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .row.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .product-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .product-row {
+            display: grid;
+            grid-template-columns: 80px minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: center;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            padding: 10px;
+        }
+
+        .product-row img {
+            width: 80px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #edf2f7;
+        }
+
+        .product-row h3 {
+            margin: 0 0 4px;
+            font-size: 16px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #3730a3;
+            font-size: 12px;
+            font-weight: 900;
+            padding: 5px 8px;
+        }
+
+        .badge.active {
+            background: #dcfce7;
+            color: var(--green);
+        }
+
+        .badge.draft {
+            background: #fef3c7;
+            color: var(--orange);
+        }
+
+        .login-wrap {
+            display: grid;
+            min-height: 100vh;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .login-card {
+            width: min(440px, 100%);
+            padding: 24px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .preview {
+            width: 100%;
+            min-height: 190px;
+            border: 1px dashed var(--line);
+            border-radius: 10px;
+            background: #f8fafc;
+            object-fit: cover;
+        }
+
+        .notice {
+            border-left: 4px solid var(--brand);
+            border-radius: 8px;
+            background: #eff6ff;
+            color: #1e3a5f;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+        }
+
+        @media (max-width: 1000px) {
+            .grid,
+            .hero,
+            .toolbar,
+            .row,
+            .row.three {
+                grid-template-columns: 1fr;
+            }
+
+            .product-row {
+                grid-template-columns: 70px minmax(0, 1fr);
+            }
+
+            .product-row .top-actions {
+                grid-column: 1 / -1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="login-wrap" id="loginView">
+        <form class="login-card" id="loginForm">
+            <a class="brand" href="index.html"><span>IX</span><strong>CMS Tienda Ixmati</strong></a>
+            <h1 style="font-size:32px;margin-top:22px">Acceso</h1>
+            <p class="muted">Panel independiente para cargar y administrar productos de la tienda.</p>
+            <label>Contraseña
+                <input type="password" id="password" autocomplete="current-password" required>
+            </label>
+            <button class="primary" type="submit" style="width:100%;margin-top:12px">Entrar</button>
+            <p class="muted" id="loginMsg" style="margin-top:12px"></p>
+        </form>
+    </section>
+
+    <main class="shell hidden" id="appView">
+        <header class="topbar">
+            <a class="brand" href="index.html"><span>IX</span><strong>CMS Tienda Ixmati</strong></a>
+            <div class="top-actions">
+                <a class="button" href="tienda.html" target="_blank">Ver tienda</a>
+                <button type="button" id="newProduct">Nuevo producto</button>
+                <button type="button" id="logout">Salir</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div>
+                <h1>Catálogo de tienda</h1>
+                <p class="muted">Carga productos personalizables, lonas, tarjetas, textiles y promocionales sin editar el sitio.</p>
+            </div>
+            <div>
+                <span class="badge" id="countBadge">0 productos</span>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="panel">
+                <div class="toolbar">
+                    <input id="search" placeholder="Buscar por nombre, SKU o categoría">
+                    <select id="categoryFilter">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                    <select id="statusFilter">
+                        <option value="">Todos</option>
+                        <option value="active">Activos</option>
+                        <option value="draft">Borradores</option>
+                    </select>
+                </div>
+                <div id="notice" class="notice hidden"></div>
+                <div class="product-list" id="productList"></div>
+            </div>
+
+            <aside class="panel">
+                <h2 id="formTitle">Nuevo producto</h2>
+                <form class="form" id="productForm">
+                    <input type="hidden" id="id">
+                    <label>Título
+                        <input id="title" required>
+                    </label>
+                    <div class="row">
+                        <label>SKU
+                            <input id="sku" placeholder="TAZA-11OZ">
+                        </label>
+                        <label>Categoría
+                            <input id="category" list="categoryOptions" placeholder="Tazas y termos">
+                        </label>
+                    </div>
+                    <datalist id="categoryOptions">
+                        <option>Tazas y termos</option>
+                        <option>Textil</option>
+                        <option>Lonas y vinil</option>
+                        <option>Impresión</option>
+                        <option>Promocionales</option>
+                        <option>Señalética</option>
+                    </datalist>
+                    <div class="row">
+                        <label>Tipo
+                            <select id="type">
+                                <option>Personalizable</option>
+                                <option>Producto</option>
+                                <option>Servicio</option>
+                                <option>Promoción</option>
+                            </select>
+                        </label>
+                        <label>Estado
+                            <select id="status">
+                                <option value="active">Activo en tienda</option>
+                                <option value="draft">Borrador</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label>Descripción
+                        <textarea id="description" rows="3" required></textarea>
+                    </label>
+                    <label>Descripción corta
+                        <input id="shortDescription" placeholder="Resumen para buscadores o cards">
+                    </label>
+                    <div class="row three">
+                        <label>Precio desde
+                            <input id="price" type="number" min="0" step="0.01">
+                        </label>
+                        <label>Precio hasta
+                            <input id="priceMax" type="number" min="0" step="0.01">
+                        </label>
+                        <label>Etiqueta precio
+                            <input id="priceLabel" placeholder="$95 - $180">
+                        </label>
+                    </div>
+                    <div class="row three">
+                        <label>Stock
+                            <input id="stock" type="number" min="0" step="1" value="0">
+                        </label>
+                        <label>Mínimo
+                            <input id="minQuantity" type="number" min="1" step="1" value="1">
+                        </label>
+                        <label>Unidad
+                            <input id="unit" placeholder="pieza, m2, paquete">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>Tiempo de producción
+                            <input id="productionTime" placeholder="3 a 5 días hábiles">
+                        </label>
+                        <label>Orden
+                            <input id="sortOrder" type="number" step="1" value="100">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>Badge
+                            <input id="badge" placeholder="Nuevo, Top ventas, Promo">
+                        </label>
+                        <label>Destacado
+                            <select id="featured">
+                                <option value="false">No</option>
+                                <option value="true">Sí</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label>Imagen principal
+                        <input id="image" placeholder="img/optimized/termos.webp">
+                    </label>
+                    <img class="preview" id="imagePreview" alt="Preview de producto">
+                    <label>Subir imagen
+                        <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp">
+                    </label>
+                    <div class="row">
+                        <label>Variantes
+                            <textarea id="variants" rows="3" placeholder="Una por línea"></textarea>
+                        </label>
+                        <label>Medidas / tallas
+                            <textarea id="sizes" rows="3" placeholder="Una por línea"></textarea>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>Materiales
+                            <textarea id="materials" rows="3" placeholder="Una por línea"></textarea>
+                        </label>
+                        <label>Acabados
+                            <textarea id="finishes" rows="3" placeholder="Una por línea"></textarea>
+                        </label>
+                    </div>
+                    <label>Campos de personalización que debe pedir ventas
+                        <textarea id="customizableFields" rows="3" placeholder="Logo&#10;Nombre&#10;Color"></textarea>
+                    </label>
+                    <label>Tags
+                        <input id="tags" placeholder="regalos, empresas, promociones">
+                    </label>
+                    <label>Notas internas
+                        <textarea id="notes" rows="3"></textarea>
+                    </label>
+                    <button class="primary" type="submit">Guardar producto</button>
+                    <button class="button danger" type="button" id="deleteProduct">Eliminar producto</button>
+                </form>
+            </aside>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            "use strict";
+
+            var API_URL = "api/store.php";
+            var products = [];
+            var currentId = "";
+            var fields = [
+                "id", "title", "sku", "category", "type", "status", "description", "shortDescription", "price",
+                "priceMax", "priceLabel", "stock", "minQuantity", "unit", "productionTime", "sortOrder", "badge",
+                "featured", "image", "variants", "sizes", "materials", "finishes", "customizableFields", "tags", "notes"
+            ];
+
+            function el(id) {
+                return document.getElementById(id);
+            }
+
+            function msg(text, error) {
+                var box = el("notice");
+                box.textContent = text;
+                box.classList.toggle("hidden", !text);
+                box.style.borderLeftColor = error ? "var(--red)" : "var(--brand)";
+            }
+
+            function escapeHtml(value) {
+                return String(value || "").replace(/[&<>"']/g, function (char) {
+                    return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[char];
+                });
+            }
+
+            function listFromTextarea(id) {
+                return el(id).value.split(/\n|,/).map(function (item) {
+                    return item.trim();
+                }).filter(Boolean);
+            }
+
+            function setList(id, value) {
+                el(id).value = Array.isArray(value) ? value.join("\n") : "";
+            }
+
+            function money(product) {
+                if (product.priceLabel) return product.priceLabel;
+                if (Number(product.priceMax) > Number(product.price)) return "$" + product.price + " - $" + product.priceMax;
+                return product.price ? "Desde $" + product.price : "Cotizar";
+            }
+
+            function showApp() {
+                el("loginView").classList.add("hidden");
+                el("appView").classList.remove("hidden");
+            }
+
+            function showLogin() {
+                el("loginView").classList.remove("hidden");
+                el("appView").classList.add("hidden");
+            }
+
+            async function apiGet() {
+                var response = await fetch(API_URL + "?admin=1", { cache: "no-store" });
+                if (response.status === 401) {
+                    showLogin();
+                    return null;
+                }
+                if (!response.ok) throw new Error("No se pudo cargar catálogo");
+                return response.json();
+            }
+
+            async function load() {
+                var data = await apiGet();
+                if (!data) return;
+                products = Array.isArray(data.products) ? data.products : [];
+                showApp();
+                render();
+            }
+
+            function renderCategories() {
+                var current = el("categoryFilter").value;
+                var categories = Array.from(new Set(products.map(function (product) {
+                    return product.category || "General";
+                }))).sort(function (a, b) {
+                    return a.localeCompare(b, "es");
+                });
+                el("categoryFilter").innerHTML = '<option value="">Todas las categorías</option>' + categories.map(function (category) {
+                    return '<option value="' + escapeHtml(category) + '">' + escapeHtml(category) + "</option>";
+                }).join("");
+                el("categoryFilter").value = current;
+            }
+
+            function filteredProducts() {
+                var query = el("search").value.trim().toLowerCase();
+                var category = el("categoryFilter").value;
+                var status = el("statusFilter").value;
+                return products.filter(function (product) {
+                    var haystack = [product.title, product.sku, product.category, product.description].join(" ").toLowerCase();
+                    return (!query || haystack.indexOf(query) !== -1)
+                        && (!category || product.category === category)
+                        && (!status || product.status === status);
+                }).sort(function (a, b) {
+                    return Number(a.sortOrder || 100) - Number(b.sortOrder || 100);
+                });
+            }
+
+            function render() {
+                renderCategories();
+                var rows = filteredProducts();
+                el("countBadge").textContent = products.length + (products.length === 1 ? " producto" : " productos");
+                el("productList").innerHTML = rows.length ? rows.map(function (product) {
+                    return [
+                        '<article class="product-row">',
+                        '<img src="' + escapeHtml(product.image || "img/optimized/home-hero-promo.webp") + '" alt="">',
+                        "<div>",
+                        "<h3>" + escapeHtml(product.title) + "</h3>",
+                        '<div class="meta">',
+                        '<span class="badge ' + escapeHtml(product.status || "draft") + '">' + (product.status === "active" ? "Activo" : "Borrador") + "</span>",
+                        '<span class="badge">' + escapeHtml(product.sku || "Sin SKU") + "</span>",
+                        '<span class="badge">' + escapeHtml(product.category || "General") + "</span>",
+                        '<span class="badge">' + escapeHtml(money(product)) + "</span>",
+                        '<span class="badge">Stock ' + escapeHtml(product.stock || 0) + "</span>",
+                        "</div>",
+                        "</div>",
+                        '<div class="top-actions"><button type="button" data-edit="' + escapeHtml(product.id) + '">Editar</button></div>',
+                        "</article>"
+                    ].join("");
+                }).join("") : '<p class="muted">No hay productos con esos filtros.</p>';
+            }
+
+            function resetForm() {
+                currentId = "";
+                el("formTitle").textContent = "Nuevo producto";
+                el("productForm").reset();
+                el("id").value = "";
+                el("status").value = "active";
+                el("featured").value = "false";
+                el("minQuantity").value = "1";
+                el("stock").value = "0";
+                el("sortOrder").value = String((products.length + 1) * 10);
+                updatePreview();
+            }
+
+            function editProduct(id) {
+                var product = products.find(function (item) { return item.id === id; });
+                if (!product) return;
+                currentId = id;
+                el("formTitle").textContent = "Editar producto";
+                fields.forEach(function (field) {
+                    if (!el(field)) return;
+                    if (["variants", "sizes", "materials", "finishes", "customizableFields"].indexOf(field) !== -1) {
+                        setList(field, product[field]);
+                    } else if (field === "tags") {
+                        el(field).value = Array.isArray(product.tags) ? product.tags.join(", ") : "";
+                    } else if (field === "featured") {
+                        el(field).value = product.featured ? "true" : "false";
+                    } else {
+                        el(field).value = product[field] == null ? "" : product[field];
+                    }
+                });
+                updatePreview();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+
+            function formProduct() {
+                return {
+                    id: el("id").value || currentId,
+                    title: el("title").value,
+                    sku: el("sku").value,
+                    category: el("category").value,
+                    type: el("type").value,
+                    status: el("status").value,
+                    description: el("description").value,
+                    shortDescription: el("shortDescription").value,
+                    price: Number(el("price").value || 0),
+                    priceMax: Number(el("priceMax").value || 0),
+                    priceLabel: el("priceLabel").value,
+                    stock: Number(el("stock").value || 0),
+                    minQuantity: Number(el("minQuantity").value || 1),
+                    unit: el("unit").value,
+                    productionTime: el("productionTime").value,
+                    sortOrder: Number(el("sortOrder").value || 100),
+                    badge: el("badge").value,
+                    featured: el("featured").value === "true",
+                    image: el("image").value,
+                    variants: listFromTextarea("variants"),
+                    sizes: listFromTextarea("sizes"),
+                    materials: listFromTextarea("materials"),
+                    finishes: listFromTextarea("finishes"),
+                    customizableFields: listFromTextarea("customizableFields"),
+                    tags: listFromTextarea("tags"),
+                    notes: el("notes").value
+                };
+            }
+
+            async function saveProduct(event) {
+                event.preventDefault();
+                var response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ action: "saveProduct", product: formProduct() })
+                });
+                var data = await response.json();
+                if (!response.ok) {
+                    msg(data.error || "No se pudo guardar", true);
+                    return;
+                }
+                products = data.products || products;
+                msg("Producto guardado.");
+                render();
+                editProduct(data.product.id);
+            }
+
+            async function deleteProduct() {
+                if (!currentId) {
+                    msg("Selecciona un producto para eliminar.", true);
+                    return;
+                }
+                if (!window.confirm("¿Eliminar este producto del catálogo?")) return;
+                var response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ action: "deleteProduct", id: currentId })
+                });
+                var data = await response.json();
+                if (!response.ok) {
+                    msg(data.error || "No se pudo eliminar", true);
+                    return;
+                }
+                products = data.products || [];
+                resetForm();
+                msg("Producto eliminado.");
+                render();
+            }
+
+            async function uploadImage() {
+                var file = el("imageFile").files[0];
+                if (!file) return;
+                var form = new FormData();
+                form.append("action", "uploadImage");
+                form.append("image", file);
+                var response = await fetch(API_URL, { method: "POST", body: form });
+                var data = await response.json();
+                if (!response.ok) {
+                    msg(data.error || "No se pudo subir la imagen", true);
+                    return;
+                }
+                el("image").value = data.path;
+                updatePreview();
+                msg("Imagen subida.");
+            }
+
+            function updatePreview() {
+                el("imagePreview").src = el("image").value || "img/optimized/home-hero-promo.webp";
+            }
+
+            el("loginForm").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                var form = new FormData();
+                form.append("action", "login");
+                form.append("password", el("password").value);
+                var response = await fetch(API_URL, { method: "POST", body: form });
+                if (!response.ok) {
+                    el("loginMsg").textContent = "Contraseña incorrecta.";
+                    return;
+                }
+                el("loginMsg").textContent = "";
+                await load();
+            });
+
+            el("logout").addEventListener("click", async function () {
+                var form = new FormData();
+                form.append("action", "logout");
+                await fetch(API_URL, { method: "POST", body: form });
+                showLogin();
+            });
+
+            el("productForm").addEventListener("submit", saveProduct);
+            el("deleteProduct").addEventListener("click", deleteProduct);
+            el("newProduct").addEventListener("click", resetForm);
+            el("image").addEventListener("input", updatePreview);
+            el("imageFile").addEventListener("change", uploadImage);
+            el("search").addEventListener("input", render);
+            el("categoryFilter").addEventListener("change", render);
+            el("statusFilter").addEventListener("change", render);
+            document.addEventListener("click", function (event) {
+                var edit = event.target.closest("[data-edit]");
+                if (edit) editProduct(edit.getAttribute("data-edit"));
+            });
+
+            load().catch(function () {
+                showLogin();
+            });
+            resetForm();
+        })();
+    </script>
+</body>
+
+</html>

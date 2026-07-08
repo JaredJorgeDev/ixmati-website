@@ -12,3 +12,8 @@
 
 # Fotos iPhone
 *.HEIC
+
+# Datos mutables del CMS de tienda
+api/store-products.json
+api/uploads/store/*
+!api/uploads/store/.gitkeep

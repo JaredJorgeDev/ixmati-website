@@ -76,41 +76,14 @@
                     <div class="shop-cart p-4 rounded h-100 wow fadeIn" data-wow-delay=".1s" id="carrito">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="mb-0 text-primary">Carrito rápido</h4>
-                            <span class="badge bg-secondary text-dark">4 items</span>
+                            <span class="badge bg-secondary text-dark" id="shopCartCount">0 items</span>
                         </div>
-                        <div class="cart-line d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="mb-1 fw-bold">20 Tazas premium</p>
-                                <small class="text-muted">Logo y nombre personal</small>
-                            </div>
-                            <span class="fw-bold">$1,900</span>
-                        </div>
-                        <div class="cart-line d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="mb-1 fw-bold">10 Sudaderas DTF</p>
-                                <small class="text-muted">Blanco y marino</small>
-                            </div>
-                            <span class="fw-bold">$3,400</span>
-                        </div>
-                        <div class="cart-line d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="mb-1 fw-bold">1 Banner 2x3</p>
-                                <small class="text-muted">Con bastilla y ojillos</small>
-                            </div>
-                            <span class="fw-bold">$1,320</span>
-                        </div>
-                        <div class="cart-line d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="mb-1 fw-bold">Instalación</p>
-                                <small class="text-muted">Entrega misma semana</small>
-                            </div>
-                            <span class="fw-bold">$650</span>
-                        </div>
+                        <div id="shopCart"></div>
                         <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-3">
                             <span class="fw-bold">Total estimado</span>
-                            <span class="fw-bold text-secondary">$7,270</span>
+                            <span class="fw-bold text-secondary" id="shopCartTotal">$0</span>
                         </div>
-                        <a href="contact.html" class="btn btn-primary w-100 mt-3">Enviar carrito a ventas</a>
+                        <button class="btn btn-primary w-100 mt-3" type="button" data-send-cart>Enviar carrito a ventas</button>
                         <p class="small text-muted mb-0 mt-2">Entrega promedio 3 a 5 dias habiles. Ajustamos colores
                             antes de imprimir.</p>
                     </div>
@@ -128,109 +101,13 @@
                     <h1 class="mb-2">Promocionales listos para personalizar</h1>
                     <p class="mb-0">Tazas, cilindros, playeras, adhesivos, carpas y más.</p>
                 </div>
-                <a href="contact.html" class="btn btn-secondary text-white px-4 py-3 rounded-pill mt-3 mt-lg-0">Cotizar
-                    carrito</a>
+                <button type="button" class="btn btn-secondary text-white px-4 py-3 rounded-pill mt-3 mt-lg-0" data-send-cart>Cotizar
+                    carrito</button>
             </div>
-            <div class="row g-4">
-                <div class="col-md-6 wow fadeIn" data-wow-delay=".1s">
-                    <div class="shop-card h-100">
-                        <div class="shop-img">
-                            <img src="img/ixmati/galeria-banner.jpg" alt="Tazas y termos" class="img-fluid w-100">
-                            <span class="shop-badge">Nuevo</span>
-                        </div>
-                        <div class="shop-body">
-                            <h4>Tazas y termos premium</h4>
-                            <p class="mb-3">Sublimación envolvente, nombres y empaques listos para regalo.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-secondary">$95 - $180</span>
-                                <a href="https://wa.me/527751344080?text=Hola%20Ixmati,%20cotizar%20tazas%20y%20termos"
-                                    class="btn btn-sm btn-primary rounded-pill">Cotizar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 wow fadeIn" data-wow-delay=".2s">
-                    <div class="shop-card h-100">
-                        <div class="shop-img">
-                            <img src="img/ixmati/galeria-lona-vinil.jpg" alt="Playeras y sudaderas"
-                                class="img-fluid w-100">
-                            <span class="shop-badge bg-secondary">Top ventas</span>
-                        </div>
-                        <div class="shop-body">
-                            <h4>Playeras y sudaderas</h4>
-                            <p class="mb-3">DTF y vinil textil para tirajes cortos con colores vivos.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-secondary">$190 - $420</span>
-                                <a href="https://wa.me/527751344080?text=Hola%20Ixmati,%20cotizar%20playeras%20y%20sudaderas"
-                                    class="btn btn-sm btn-primary rounded-pill">Cotizar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 wow fadeIn" data-wow-delay=".3s">
-                    <div class="shop-card h-100">
-                        <div class="shop-img">
-                            <img src="img/ixmati/galeria-vastidor.jpg" alt="Bastidores y marcos"
-                                class="img-fluid w-100">
-                        </div>
-                        <div class="shop-body">
-                            <h4>Bastidores y marcos</h4>
-                            <p class="mb-3">Impresión montada en madera o aluminio lista para colgar.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-secondary">$680 - $1,450</span>
-                                <a href="https://wa.me/527751344080?text=Hola%20Ixmati,%20cotizar%20bastidor%20o%20marco"
-                                    class="btn btn-sm btn-primary rounded-pill">Cotizar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 wow fadeIn" data-wow-delay=".4s">
-                    <div class="shop-card h-100">
-                        <div class="shop-img">
-                            <img src="img/ixmati/galeria-bob.jpg" alt="Kits para eventos" class="img-fluid w-100">
-                        </div>
-                        <div class="shop-body">
-                            <h4>Kits promocionales</h4>
-                            <p class="mb-3">Tazas, termos, gorras, llaveros y playeras en un mismo empaque.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-secondary">$520 - $1,200</span>
-                                <a href="https://wa.me/527751344080?text=Hola%20Ixmati,%20cotizar%20kit%20promocional"
-                                    class="btn btn-sm btn-primary rounded-pill">Cotizar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 wow fadeIn" data-wow-delay=".5s">
-                    <div class="shop-card h-100">
-                        <div class="shop-img">
-                            <img src="img/ixmati/hero-lona-stand.jpg" alt="Gran formato" class="img-fluid w-100">
-                        </div>
-                        <div class="shop-body">
-                            <h4>Gran formato</h4>
-                            <p class="mb-3">Lonas, vinil y microperforado con instalación supervisada.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-secondary">$220 m2</span>
-                                <a href="https://wa.me/527751344080?text=Hola%20Ixmati,%20cotizar%20gran%20formato"
-                                    class="btn btn-sm btn-primary rounded-pill">Cotizar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 wow fadeIn" data-wow-delay=".6s">
-                    <div class="shop-card h-100">
-                        <div class="shop-img">
-                            <img src="img/ixmati/hero-lona-evento.jpg" alt="Montaje y acabados" class="img-fluid w-100">
-                        </div>
-                        <div class="shop-body">
-                            <h4>Montaje y acabados</h4>
-                            <p class="mb-3">Bastillas, ojillos, troquelado y colocacion en sitio.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-secondary">Desde $350</span>
-                                <a href="https://wa.me/527751344080?text=Hola%20Ixmati,%20cotizar%20montaje%20y%20acabados"
-                                    class="btn btn-sm btn-primary rounded-pill">Cotizar</a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="shop-filters mb-4" id="shopFilters"></div>
+            <div class="row g-4" id="shopProducts">
+                <div class="col-12">
+                    <div class="shop-empty">Cargando catálogo...</div>
                 </div>
             </div>
         </div>
@@ -315,6 +192,7 @@
     <script src="lib/wow/wow.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/shop.js?v=20260708-cms"></script>
 </body>
 
 </html>
