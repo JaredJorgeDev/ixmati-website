@@ -10,7 +10,24 @@ $baseDir = __DIR__;
 $storeFile = $baseDir . '/store-products.json';
 $uploadDir = $baseDir . '/uploads/store';
 
-const SHOP_ADMIN_PASSWORD_HASH = 'baebc6849cf16b49d6563c956e03941ce57b50f8327a8a5001541ecb7bccd4ea';
+const ADMINWEB_PASSWORD_HASH = '20206721cfd506f34f78198bceb9204cfcc8b4b343869e380787621f610a3d72';
+
+function adminweb_users(): array {
+  return [
+    'admin' => ['role' => 'superadmin'],
+    'supersu' => ['role' => 'superadmin'],
+    'jadith' => ['role' => 'vip'],
+    'flor' => ['role' => 'flor'],
+    'karen' => ['role' => 'student'],
+    'xochitl' => ['role' => 'student'],
+    'adan' => ['role' => 'student']
+  ];
+}
+
+function login_slug(string $username): string {
+  $username = strtolower(trim($username));
+  return explode('@', $username)[0] ?? $username;
+}
 
 function default_products(): array {
   return [
@@ -297,14 +314,17 @@ if ($method !== 'POST') {
 $action = $_POST['action'] ?? '';
 
 if ($action === 'login') {
+  $username = login_slug((string)($_POST['username'] ?? ''));
   $password = (string)($_POST['password'] ?? '');
-  if (hash_equals(SHOP_ADMIN_PASSWORD_HASH, hash('sha256', $password))) {
+  $users = adminweb_users();
+  if (isset($users[$username]) && hash_equals(ADMINWEB_PASSWORD_HASH, hash('sha256', $password))) {
     $_SESSION['shop_admin'] = true;
-    echo json_encode(['authenticated' => true]);
+    $_SESSION['shop_admin_user'] = ['username' => $username, 'role' => $users[$username]['role']];
+    echo json_encode(['authenticated' => true, 'user' => $_SESSION['shop_admin_user']]);
     exit;
   }
   http_response_code(401);
-  echo json_encode(['error' => 'Contraseña incorrecta']);
+  echo json_encode(['error' => 'Usuario o contraseña incorrectos']);
   exit;
 }
 

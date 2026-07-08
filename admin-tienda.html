@@ -302,7 +302,10 @@
         <form class="login-card" id="loginForm">
             <a class="brand" href="index.html"><span>IX</span><strong>CMS Tienda Ixmati</strong></a>
             <h1 style="font-size:32px;margin-top:22px">Acceso</h1>
-            <p class="muted">Panel independiente para cargar y administrar productos de la tienda.</p>
+            <p class="muted">Panel independiente para cargar y administrar productos de la tienda. Usa los mismos accesos de AdminWeb.</p>
+            <label>Usuario
+                <input type="text" id="username" autocomplete="username" required>
+            </label>
             <label>Contraseña
                 <input type="password" id="password" autocomplete="current-password" required>
             </label>
@@ -728,6 +731,7 @@
                 event.preventDefault();
                 var form = new FormData();
                 form.append("action", "login");
+                form.append("username", el("username").value.trim());
                 form.append("password", el("password").value);
                 var response = await fetch(API_URL, { method: "POST", body: form });
                 if (!response.ok) {
