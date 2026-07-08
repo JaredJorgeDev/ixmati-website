@@ -14,13 +14,8 @@ const ADMINWEB_PASSWORD_HASH = '20206721cfd506f34f78198bceb9204cfcc8b4b343869e38
 
 function adminweb_users(): array {
   return [
-    'admin' => ['role' => 'superadmin'],
     'supersu' => ['role' => 'superadmin'],
-    'jadith' => ['role' => 'vip'],
-    'flor' => ['role' => 'flor'],
-    'karen' => ['role' => 'student'],
-    'xochitl' => ['role' => 'student'],
-    'adan' => ['role' => 'student']
+    'flor' => ['role' => 'flor']
   ];
 }
 
@@ -315,7 +310,7 @@ $action = $_POST['action'] ?? '';
 
 if ($action === 'login') {
   $username = login_slug((string)($_POST['username'] ?? ''));
-  $password = (string)($_POST['password'] ?? '');
+  $password = trim((string)($_POST['password'] ?? ''));
   $users = adminweb_users();
   if (isset($users[$username]) && hash_equals(ADMINWEB_PASSWORD_HASH, hash('sha256', $password))) {
     $_SESSION['shop_admin'] = true;
