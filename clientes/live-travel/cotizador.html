@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Travel | Cotizador</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <link rel="stylesheet" href="live-travel.css" />
+  <script src="../portal-auth.js"></script>
+  <script defer src="live-travel.js"></script>
+</head>
+<body data-page="cotizador">
+  <header class="lt-nav-wrap"><div class="lt-wrap lt-nav"><a class="lt-brand" href="index.html"><img src="live.png" alt="Logo" /><span><small>Live Travel</small><strong>Plataforma comercial</strong></span></a><button class="lt-burger" type="button">☰</button><nav class="lt-menu"><a data-page="home" href="index.html">Inicio</a><a data-page="destinos" href="destinos.html">Destinos</a><a data-page="experiencias" href="experiencias.html">Experiencias</a><a data-page="cotizador" href="cotizador.html">Cotizador</a><a data-page="asesoria" href="asesoria.html">Asesoría</a></nav><div class="lt-nav-actions"><a class="lt-btn lt-btn-primary" href="cotizador.html">Cotizar viaje</a><a class="lt-btn lt-btn-outline" href="cotizacion.html">Volver a cotización</a><button class="lt-btn lt-btn-outline" id="logoutBtn" type="button">Cerrar sesión</button></div></div></header>
+  <main class="lt-wrap lt-page">
+    <section class="lt-section lt-reveal"><div class="lt-card"><h1>Cotizador guiado</h1><p>Completa el flujo paso a paso para construir una solicitud clara y lista para seguimiento comercial.</p></div></section>
+    <section class="lt-section lt-reveal">
+      <div class="lt-card" id="quoteWizard">
+        <div class="lt-progress"><span id="progressBar" style="width:16.6%"></span></div>
+        <div class="lt-wizard-grid">
+          <div>
+            <article class="lt-step active"><h3 class="lt-step-title">1. Destino o tipo de viaje</h3><select id="wDestination" class="lt-select"></select><select id="wType" class="lt-select" style="margin-top:8px"><option value="">Tipo de viaje (opcional)</option><option>Pareja</option><option>Familia</option><option>Aventura</option><option>Internacional</option><option>Corporativo</option></select></article>
+            <article class="lt-step"><h3 class="lt-step-title">2. Fechas tentativas</h3><input id="wDate" class="lt-field" placeholder="Ejemplo: segunda semana de julio" /></article>
+            <article class="lt-step"><h3 class="lt-step-title">3. Número de personas</h3><select id="wPeople" class="lt-select"><option value="">Selecciona</option><option>1 persona</option><option>2 personas</option><option>3-4 personas</option><option>5+ personas</option></select></article>
+            <article class="lt-step"><h3 class="lt-step-title">4. Presupuesto por persona</h3><select id="wBudget" class="lt-select"><option value="">Selecciona</option><option>8-12k</option><option>12-18k</option><option>18-28k</option><option>28k+</option></select></article>
+            <article class="lt-step"><h3 class="lt-step-title">5. Datos del cliente</h3><input id="wName" class="lt-field" placeholder="Nombre completo" /><input id="wPhone" class="lt-field" placeholder="Teléfono" style="margin-top:8px" /><input id="wEmail" class="lt-field" placeholder="Correo" style="margin-top:8px" /><textarea id="wNotes" class="lt-field" placeholder="Notas adicionales" style="margin-top:8px"></textarea></article>
+            <article class="lt-step"><h3 class="lt-step-title">6. Resumen</h3><p>Revisa la información y confirma tu solicitud.</p><button id="confirmQuote" class="lt-btn lt-btn-primary" type="button">Confirmar solicitud</button></article>
+            <div class="lt-nav-step"><button id="prevStep" class="lt-btn lt-btn-outline" type="button">Anterior</button><button id="nextStep" class="lt-btn lt-btn-primary" type="button">Siguiente</button></div>
+          </div>
+          <aside class="lt-sidebar">
+            <h3>Resumen dinámico</h3>
+            <div id="quoteSummary" class="lt-list"></div>
+            <div class="lt-mini" style="margin-top:10px"><strong>Estimado visual:</strong> <span id="quoteEstimate"></span> por persona</div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="ltToast" class="lt-toast"></div>
+  <footer class="lt-wrap lt-footer">Live Travel · Cotizador</footer>
+</body>
+</html>

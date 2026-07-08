@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ixmati — Prospect Message Templates</title>
+  <style>
+    :root {
+      --bg: #0a0f1d;
+      --panel: #121a31;
+      --panel-2: #0f172b;
+      --text: #eef3ff;
+      --muted: #b9c3db;
+      --border: #2a3657;
+      --primary: #38bdf8;
+      --primary-2: #0ea5e9;
+      --success: #22c55e;
+      --shadow: 0 14px 32px rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 14% -10%, rgba(56, 189, 248, 0.15), transparent 42%),
+        radial-gradient(circle at 90% 110%, rgba(14, 165, 233, 0.14), transparent 36%),
+        var(--bg);
+      line-height: 1.45;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 18px 14px 28px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.34rem;
+      letter-spacing: 0.2px;
+    }
+
+    .intro {
+      margin: 10px 0 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .business-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 70%), var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: transform 0.18s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .business-card:hover {
+      transform: translateY(-1px);
+      border-color: #384972;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.38);
+    }
+
+    details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-size: 0.98rem;
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      user-select: none;
+    }
+
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .arrow {
+      color: var(--primary);
+      font-size: 0.86rem;
+      transition: transform 0.2s ease;
+    }
+
+    details[open] .arrow {
+      transform: rotate(180deg);
+    }
+
+    .card-content {
+      padding: 8px 12px 12px;
+    }
+
+    .subsection {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 8px;
+    }
+
+    .subsection h3 {
+      margin: 0 0 8px;
+      color: #d8e1fb;
+      font-size: 0.93rem;
+    }
+
+    .message-box {
+      background: rgba(2, 6, 23, 0.64);
+      border: 1px solid #33466e;
+      border-radius: 10px;
+      color: #eef3ff;
+      padding: 10px;
+      white-space: pre-wrap;
+      font-size: 0.94rem;
+    }
+
+    .button-grid {
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr;
+    }
+
+    .btn {
+      border: 1px solid #3b507e;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 0.88rem;
+      font-weight: 620;
+      color: #eaf2ff;
+      background: linear-gradient(180deg, #1a2f59, #15284c);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: #4d679f;
+      background: linear-gradient(180deg, #234172, #1b345f);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-wa {
+      border-color: #23934d;
+      background: linear-gradient(180deg, #1f9d50, #19813f);
+    }
+
+    .btn-wa:hover {
+      border-color: #2ab65d;
+      background: linear-gradient(180deg, #23ad59, #1e8e48);
+    }
+
+    .btn-social {
+      border-color: #4f46e5;
+      background: linear-gradient(180deg, #3e3ab8, #31308c);
+    }
+
+    .btn-social:hover {
+      border-color: #6059ef;
+      background: linear-gradient(180deg, #4b46d3, #3937a5);
+    }
+
+    .helper {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: #9aa8c8;
+    }
+
+    @media (min-width: 680px) {
+      .container {
+        padding: 24px 18px 36px;
+      }
+
+      h1 {
+        font-size: 1.56rem;
+      }
+
+      .card-content {
+        padding: 10px 14px 14px;
+      }
+
+      .button-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Ixmati — Prospect Message Templates</h1>
+    <p class="intro">Mensajes de referencia para prospección inicial y respuesta cuando el prospecto muestra interés.</p>
+
+    <div id="businessList"></div>
+
+    <p class="helper">Tip: en redes se copia el texto automáticamente y se abre el perfil/chat para pegar y enviar.</p>
+  </main>
+
+  <div id="global-html-launcher" style="position:fixed;left:16px;bottom:16px;z-index:9999;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+    <button id="globalNavToggle" type="button" aria-label="Abrir navegación rápida" style="border:1px solid #cbd5e1;background:#0f172a;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(15,23,42,.2);cursor:pointer;">Navegar</button>
+    <div id="globalNavPanel" hidden style="margin-top:8px;min-width:220px;max-height:60vh;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 14px 30px rgba(15,23,42,.16);">
+      <p style="margin:2px 4px 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;">Páginas</p>
+      <div id="globalNavLinks" style="display:grid;gap:6px;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const BUSINESSES = [
+        { name: "LuxStore", category: "negocio", phone: "7717777604", social: "https://www.facebook.com/profile.php?id=61575812518331" },
+        { name: "Natural Sushi", category: "restaurante", phone: "7756880414", social: "https://www.facebook.com/naturalsushitulancingo" },
+        { name: "Clínica Dental Orthodontics", category: "negocio", phone: "7757583469", social: "https://www.facebook.com/orthodonticstulancing/" },
+        { name: "The King Barber Shop", category: "negocio", phone: "7751673008", social: "https://www.facebook.com/tkingbarber" },
+        { name: "La Frida Naails", category: "negocio", phone: "7751099012", social: "https://www.instagram.com/la_frida_naails_/" },
+        { name: "Nails Bar Tulancingo", category: "negocio", phone: "7755935770", social: "https://www.facebook.com/NailBarTulancingo" },
+        { name: "Rhino Snack & Beer", category: "restaurante", phone: "7751123034", social: "https://www.facebook.com/profile.php?id=100063802652590" },
+        { name: "Casa Emiliano", category: "negocio", phone: "7757531586", social: "https://www.facebook.com/profile.php?id=100063521422619" },
+        { name: "VIRUZ X GREEN", category: "negocio", phone: "7757849409", social: "https://www.facebook.com/juancarlos.avila.3990" }
+      ];
+
+      const listEl = document.getElementById("businessList");
+
+      function buildInitialMessage(businessName, category) {
+        const targetLine = category === "restaurante"
+          ? "Estamos seleccionando algunos restaurantes activos de Tulancingo para mostrar ejemplos reales."
+          : "Estamos seleccionando algunos negocios activos de Tulancingo para mostrar ejemplos reales.";
+
+        return [
+          "Hola, buen día.",
+          "Te escribimos de Ixmati Estudio Visual; somos un equipo local de Tulancingo.",
+          "Estamos trabajando en una dinámica local de digitalización para negocios de la zona.",
+          targetLine,
+          "Estamos preparando simulaciones gratuitas con web, pedidos o citas y WhatsApp directo.",
+          "Vimos " + businessName + " y creemos que sería un excelente ejemplo para esta dinámica.",
+          "¿Te gustaría que te mostremos cómo se vería funcionando con este sistema?"
+        ].join("\n");
+      }
+
+      function buildYesMessage(businessName) {
+        return [
+          "¡Qué buena noticia, gracias por responder!",
+          "Esta semana estamos mostrando simulaciones en una videollamada corta.",
+          "Ahí te enseñamos cómo se vería " + businessName + " con este sistema aplicado.",
+          "La idea es que lo puedas visualizar claro y sin compromiso.",
+          "¿Te quedaría bien este viernes?",
+          "Si sí, ¿qué horario te funciona mejor: por la tarde o por la noche?"
+        ].join("\n");
+      }
+
+      function buildExplainMessage() {
+        return [
+          "Claro.",
+          "Es un sistema donde el negocio puede tener:",
+          "• página web",
+          "• pedidos o citas en línea",
+          "• contacto directo por WhatsApp",
+          "• herramientas digitales para organizar mejor el negocio",
+          "Estamos mostrando simulaciones para que lo vean aplicado antes de decidir."
+        ].join("\n");
+      }
+
+      function whatsappUrl(phone, message) {
+        const digits = String(phone || "").replace(/\D/g, "");
+        return "https://wa.me/52" + digits + "?text=" + encodeURIComponent(message);
+      }
+
+      function socialMeta(socialUrl) {
+        const url = String(socialUrl || "").trim();
+
+        if (/instagram\.com/i.test(url)) {
+          const match = url.match(/instagram\.com\/([^/?#]+)/i);
+          const handle = match ? match[1] : "";
+          return {
+            label: "Enviar por Instagram",
+            href: handle ? "https://ig.me/m/" + handle : url,
+            network: "instagram"
+          };
+        }
+
+        if (/facebook\.com/i.test(url)) {
+          const profileById = url.match(/[?&]id=(\d+)/i);
+          if (profileById) {
+            return {
+              label: "Abrir Facebook",
+              href: url,
+              network: "facebook"
+            };
+          }
+
+          const usernameMatch = url.match(/facebook\.com\/([^/?#]+)/i);
+          const username = usernameMatch ? usernameMatch[1] : "";
+          return {
+            label: username ? "Enviar por Facebook" : "Abrir Facebook",
+            href: username ? "https://m.me/" + username : url,
+            network: "facebook"
+          };
+        }
+
+        return {
+          label: "Abrir red social",
+          href: url,
+          network: "generic"
+        };
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function renderSection(business, idx) {
+        const initial = buildInitialMessage(business.name, business.category);
+        const yesMsg = buildYesMessage(business.name);
+        const explainMsg = buildExplainMessage();
+        const social = socialMeta(business.social);
+        const openByDefault = idx < 2 ? " open" : "";
+
+        return (
+          "<details class=\"business-card\"" + openByDefault + ">" +
+            "<summary><span>" + escapeHtml(business.name) + "</span><span class=\"arrow\">▼</span></summary>" +
+            "<div class=\"card-content\">" +
+              "<section class=\"subsection\">" +
+                "<h3>Mensaje inicial</h3>" +
+                "<div class=\"message-box\" id=\"msg-initial-" + idx + "\">" + escapeHtml(initial) + "</div>" +
+                "<div class=\"button-grid\">" +
+                  "<button type=\"button\" class=\"btn js-copy\" data-target=\"msg-initial-" + idx + "\">Copy message</button>" +
+                  "<a class=\"btn btn-wa\" target=\"_blank\" rel=\"noopener\" href=\"" + whatsappUrl(business.phone, initial) + "\">Enviar por WhatsApp</a>" +
+                  "<a class=\"btn btn-social js-social\" target=\"_blank\" rel=\"noopener\" data-message-target=\"msg-initial-" + idx + "\" href=\"" + escapeHtml(social.href) + "\">" + escapeHtml(social.label) + "</a>" +
+                "</div>" +
+              "</section>" +
+              "<section class=\"subsection\">" +
+                "<h3>Si dicen que sí</h3>" +
+                "<div class=\"message-box\" id=\"msg-yes-" + idx + "\">" + escapeHtml(yesMsg) + "</div>" +
+                "<div class=\"button-grid\">" +
+                  "<button type=\"button\" class=\"btn js-copy\" data-target=\"msg-yes-" + idx + "\">Copy message</button>" +
+                  "<a class=\"btn btn-wa\" target=\"_blank\" rel=\"noopener\" href=\"" + whatsappUrl(business.phone, yesMsg) + "\">Enviar por WhatsApp</a>" +
+                  "<a class=\"btn btn-social js-social\" target=\"_blank\" rel=\"noopener\" data-message-target=\"msg-yes-" + idx + "\" href=\"" + escapeHtml(social.href) + "\">" + escapeHtml(social.label) + "</a>" +
+                "</div>" +
+              "</section>" +
+              "<section class=\"subsection\">" +
+                "<h3>Si preguntan qué es</h3>" +
+                "<div class=\"message-box\" id=\"msg-explain-" + idx + "\">" + escapeHtml(explainMsg) + "</div>" +
+                "<div class=\"button-grid\">" +
+                  "<button type=\"button\" class=\"btn js-copy\" data-target=\"msg-explain-" + idx + "\">Copy message</button>" +
+                  "<a class=\"btn btn-wa\" target=\"_blank\" rel=\"noopener\" href=\"" + whatsappUrl(business.phone, explainMsg) + "\">Enviar por WhatsApp</a>" +
+                  "<a class=\"btn btn-social js-social\" target=\"_blank\" rel=\"noopener\" data-message-target=\"msg-explain-" + idx + "\" href=\"" + escapeHtml(social.href) + "\">Enviar por red social</a>" +
+                "</div>" +
+              "</section>" +
+            "</div>" +
+          "</details>"
+        );
+      }
+
+      listEl.innerHTML = BUSINESSES.map(renderSection).join("");
+
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text);
+        }
+
+        return new Promise(function (resolve, reject) {
+          const area = document.createElement("textarea");
+          area.value = text;
+          area.setAttribute("readonly", "");
+          area.style.position = "absolute";
+          area.style.left = "-9999px";
+          document.body.appendChild(area);
+          area.select();
+
+          try {
+            document.execCommand("copy");
+            resolve();
+          } catch (error) {
+            reject(error);
+          } finally {
+            document.body.removeChild(area);
+          }
+        });
+      }
+
+      document.querySelectorAll(".js-copy").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const target = document.getElementById(button.getAttribute("data-target"));
+          if (!target) return;
+
+          const text = target.textContent.trim();
+          const original = button.textContent;
+
+          copyText(text)
+            .then(function () {
+              button.textContent = "Copied";
+              button.style.borderColor = "#22d3ee";
+            })
+            .catch(function () {
+              button.textContent = "Copy failed";
+              button.style.borderColor = "#f97316";
+            })
+            .finally(function () {
+              setTimeout(function () {
+                button.textContent = original;
+                button.style.borderColor = "";
+              }, 1300);
+            });
+        });
+      });
+
+      document.querySelectorAll(".js-social").forEach(function (link) {
+        link.addEventListener("click", function () {
+          const target = document.getElementById(link.getAttribute("data-message-target"));
+          if (!target) return;
+          copyText(target.textContent.trim()).catch(function () {
+            return null;
+          });
+        });
+      });
+    })();
+
+    (function () {
+      if (window.__globalNavInstalled) return;
+      window.__globalNavInstalled = true;
+
+      var links = [
+        { href: "index.html", label: "Inicio" },
+        { href: "restaurantes.html", label: "Planes Restaurantes" },
+        { href: "servicios.html", label: "Planes Servicios" },
+        { href: "tiendas.html", label: "Planes Tiendas" },
+    { href: "redes-sociales.html", label: "Redes Sociales" },
+        { href: "prospectos.html", label: "Prospectos" },
+        { href: "mensajes-prospectos.html", label: "Mensajes Prospectos" },
+        { href: "totem-demo.html", label: "Totem Demo" },
+        { href: "uada.html", label: "Demo Uada" },
+        { href: "exkapa.html", label: "Demo Exkapa" },
+        { href: "moms.html", label: "Demo Moms" }
+      ];
+
+      var toggle = document.getElementById("globalNavToggle");
+      var panel = document.getElementById("globalNavPanel");
+      var linksWrap = document.getElementById("globalNavLinks");
+      var root = document.getElementById("global-html-launcher");
+      if (!toggle || !panel || !linksWrap || !root) return;
+
+      var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+      linksWrap.innerHTML = links.map(function (item) {
+        var active = item.href.toLowerCase() === current;
+        var baseStyle = "display:block;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #e2e8f0;";
+        var activeStyle = "background:#e0f2fe;color:#075985;border-color:#7dd3fc;";
+        var normalStyle = "background:#fff;color:#0f172a;";
+        return "<a href=\"" + item.href + "\" style=\"" + baseStyle + (active ? activeStyle : normalStyle) + "\">" + item.label + "</a>";
+      }).join("");
+
+      toggle.addEventListener("click", function () {
+        panel.hidden = !panel.hidden;
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!root.contains(e.target)) panel.hidden = true;
+      });
+    })();
+  </script>
+</body>
+</html>

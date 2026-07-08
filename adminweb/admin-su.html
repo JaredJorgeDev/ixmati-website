@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel SU - Ixmati</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-academia.js?v=20260624-flor2"></script>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <script src="produccion-data.js?v=20260708-one-per-day"></script>
+  <link rel="stylesheet" href="su-admin.css">
+  <style>
+    :root{--bg:#f6f7fb;--panel:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--ink:#111827;--brand:#0f766e}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(180deg,rgba(15,23,42,.08),transparent 280px),var(--bg);color:var(--text)}
+    .shell{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:24px 0 56px}.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--ink);font-weight:950}.brand span{display:grid;place-items:center;width:38px;height:38px;border-radius:8px;background:var(--ink);color:#fff}
+    .hero,.cards{display:grid;gap:16px}.hero{grid-template-columns:minmax(0,1fr) 340px;margin-bottom:16px}.panel,.card{border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 18px 45px rgba(15,23,42,.07);padding:22px}.eyebrow{margin:0 0 10px;color:var(--brand);font-size:12px;font-weight:950;letter-spacing:.12em;text-transform:uppercase}h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.98}p{color:var(--muted);line-height:1.55}.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.card{min-height:230px;display:flex;flex-direction:column;justify-content:space-between;color:inherit;text-decoration:none}.card h2{margin:0 0 8px;color:var(--ink)}.button{display:inline-flex;align-items:center;justify-content:center;width:max-content;min-height:38px;border-radius:8px;padding:9px 12px;background:var(--ink);color:#fff;text-decoration:none;font-weight:900}.kpi{display:flex;justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:10px;background:#f8fafc}.kpi strong{font-size:22px;color:var(--ink)}@media(max-width:900px){.hero,.cards{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="su-topbar">
+      <a class="su-brand" href="admin-su.html"><span>SU</span><strong>SuperSU Ixmati</strong></a>
+      <nav class="su-menu">
+        <a href="admin-su.html" aria-current="page">Inicio SU</a>
+        <a href="progreso-estudiantes.html">Estudiantes</a>
+        <a href="produccion-admin.html">Produccion</a>
+        <a href="calendario-produccion.html">Calendario</a>
+        <a href="cms-op.html">CMS OPs</a>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="panel"><p class="eyebrow">Direccion interna</p><h1>Panel de control</h1><p>Este panel no es academia. Es para supervisar avance, aprobar entregables y administrar trabajo de produccion.</p></div>
+      <aside class="panel"><p class="eyebrow">Resumen rapido</p><div class="kpi"><span>Alumnos</span><strong id="studentCount">0</strong></div><div class="kpi"><span>Entregas academia</span><strong id="submissionCount">0</strong></div><div class="kpi"><span>Pendientes revision</span><strong id="academyReviewCount">0</strong></div><div class="kpi"><span>OPs</span><strong id="opCount">0</strong></div><div class="kpi"><span>En revision</span><strong id="reviewCount">0</strong></div><div class="kpi"><span>Aprobadas</span><strong id="approvedCount">0</strong></div></aside>
+    </section>
+    <section class="cards">
+      <a class="card" href="progreso-estudiantes.html"><div><p class="eyebrow">Estudiantes</p><h2>Progreso y evaluaciones</h2><p>Ver avance, evaluaciones aprobadas y modulos pendientes por estudiante.</p></div><span class="button">Abrir progreso</span></a>
+      <a class="card" href="produccion-admin.html"><div><p class="eyebrow">Produccion</p><h2>Aprobacion de contenido</h2><p>Revisar archivos enviados por Flor, aprobarlos o pedir cambios.</p></div><span class="button">Abrir produccion</span></a>
+      <a class="card" href="calendario-produccion.html"><div><p class="eyebrow">Calendario</p><h2>Fechas de publicacion</h2><p>Ver el calendario editorial y confirmar que las OPs coincidan con sus fechas.</p></div><span class="button">Abrir calendario</span></a>
+      <a class="card" href="cms-op.html"><div><p class="eyebrow">CMS</p><h2>Administrar OPs</h2><p>Crear nuevas OPs para posts, stories, reels, carruseles, banners o piezas impresas.</p></div><span class="button">Abrir CMS</span></a>
+    </section>
+    <section class="panel" style="margin-top:16px">
+      <p class="eyebrow">Universidad Ixmati</p>
+      <h2>Vista de control academico</h2>
+      <div class="cards" id="academyAdminSummary"></div>
+    </section>
+  </main>
+  <script>
+    (function(){var api=window.IxmatiProduction;var academy=window.IxmatiAcademySupabase;api.ready(function(){var ops=api.allOps();document.getElementById("opCount").textContent=ops.length;document.getElementById("reviewCount").textContent=ops.filter(function(op){return api.currentStatus(op)==="Enviado a aprobacion"}).length;document.getElementById("approvedCount").textContent=ops.filter(function(op){var s=api.currentStatus(op);return s==="Aprobado"||s==="Programado"||s==="Publicado"}).length;});if(academy&&academy.enabled){academy.listAdminData().then(function(data){if(!data)return;var pending=data.submissions.filter(function(item){return item.status==="submitted"||item.status==="requiere_correccion"});document.getElementById("studentCount").textContent=data.profiles.length;document.getElementById("submissionCount").textContent=data.submissions.length;document.getElementById("academyReviewCount").textContent=pending.length;document.getElementById("academyAdminSummary").innerHTML=['<a class="card" href="progreso-estudiantes.html"><div><p class="eyebrow">Alumnos</p><h2>'+data.profiles.length+' registrados</h2><p>Perfiles con rol estudiante o Flor conectados a Supabase.</p></div><span class="button">Ver alumnos</span></a>','<a class="card" href="progreso-estudiantes.html"><div><p class="eyebrow">Actividades</p><h2>'+pending.length+' pendientes</h2><p>Entregas practicas esperando aprobacion, rechazo o correccion.</p></div><span class="button">Revisar</span></a>','<a class="card" href="progreso-estudiantes.html"><div><p class="eyebrow">Evaluaciones</p><h2>'+data.attempts.length+' intentos</h2><p>Historial de examenes guardados en quiz_attempts.</p></div><span class="button">Ver evaluaciones</span></a>'].join('');});}else{document.getElementById("academyAdminSummary").innerHTML='<div class="card"><div><p class="eyebrow">Supabase</p><h2>No configurado</h2><p>Cuando agregues SUPABASE_URL y SUPABASE_ANON_KEY, aqui veras alumnos, entregas y evaluaciones reales.</p></div></div>';}})();
+  </script>
+</body>
+</html>

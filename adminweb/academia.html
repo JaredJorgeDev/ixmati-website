@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Universidad Ixmati</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-academia.js?v=20260624-flor2"></script>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <link rel="stylesheet" href="academia.css">
+  <script src="academia.js" defer></script>
+</head>
+<body>
+  <main class="academy-shell">
+    <header class="topbar">
+      <a class="brand-mark" href="academia.html" aria-label="Universidad Ixmati">
+        <span class="brand-icon">IX</span>
+        <span>Universidad Ixmati</span>
+      </a>
+      <nav class="nav-actions" aria-label="Navegacion Flor">
+        <a href="academia.html">Inicio</a>
+        <a href="modulo-estudio-visual.html">Estudio Visual</a>
+        <a href="modulo-web.html">Web</a>
+        <a href="modulo-marketing.html">Marketing</a>
+        <a href="modulo-comercial.html">Comercial</a>
+        <a href="modulo-operacion.html">Operacion</a>
+        <a href="produccion-flor.html">Produccion</a>
+        <a href="admin-su.html">Panel SU</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">Capacitacion interna</p>
+        <h1>Universidad Ixmati</h1>
+        <p class="subtitle">Ruta interna para aprender operacion real de agencia: preprensa, produccion visual, web, marketing, atencion comercial y seguimiento.</p>
+      </div>
+      <aside class="progress-panel" aria-label="Progreso general">
+        <p class="eyebrow">Progreso</p>
+        <div class="progress-kpis">
+          <div class="kpi"><span>Modulos completados</span><strong id="completedModules">0 / 5</strong></div>
+          <div class="kpi"><span>Porcentaje general</span><strong id="generalProgress">0%</strong></div>
+          <div class="kpi"><span>Evaluaciones aprobadas</span><strong id="approvedEvaluations">0</strong></div>
+        </div>
+        <div class="meter" aria-hidden="true"><span id="generalMeter"></span></div>
+        <div class="panel-actions">
+          <a class="button-link primary" id="continueLearning" href="modulo-estudio-visual.html">Continuar ruta</a>
+          <button class="button-link subtle" id="resetProgress" type="button">Reiniciar progreso</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="dashboard-grid" aria-label="Resumen de aprendizaje">
+      <article class="content-panel compact-panel">
+        <div class="section-title compact">
+          <div>
+            <h2>Ruta sugerida</h2>
+            <p>Orden recomendado para capacitarse de lo visual a la operacion.</p>
+          </div>
+        </div>
+        <div class="route-list" id="routeTimeline"></div>
+      </article>
+
+      <article class="content-panel compact-panel">
+        <div class="section-title compact">
+          <div>
+            <h2>Actividad reciente</h2>
+            <p>Ultimos resultados guardados en este navegador.</p>
+          </div>
+        </div>
+        <div class="activity-list" id="recentActivity"></div>
+      </article>
+    </section>
+
+    <section class="dashboard-grid" aria-label="Pendientes y reconocimientos">
+      <article class="content-panel compact-panel">
+        <div class="section-title compact">
+          <div>
+            <h2>Actividades pendientes</h2>
+            <p>Practicas que faltan para desbloquear evaluaciones.</p>
+          </div>
+        </div>
+        <div class="activity-list" id="pendingActivities"></div>
+      </article>
+
+      <article class="content-panel compact-panel">
+        <div class="section-title compact">
+          <div>
+            <h2>Badges</h2>
+            <p>Reconocimientos internos por modulo aprobado.</p>
+          </div>
+        </div>
+        <div class="badge-grid" id="badgeGrid"></div>
+      </article>
+    </section>
+
+    <section class="content-panel compact-panel" aria-labelledby="evaluations-title">
+      <div class="section-title compact">
+        <div>
+          <h2 id="evaluations-title">Evaluaciones</h2>
+          <p>Estado de examenes finales por modulo.</p>
+        </div>
+      </div>
+      <div class="evaluation-grid" id="evaluationGrid"></div>
+    </section>
+
+    <section aria-labelledby="modules-title">
+      <div class="section-title">
+        <div>
+          <h2 id="modules-title">Modulos de capacitacion</h2>
+          <p>Contenido base para explicar, vender y operar servicios Ixmati.</p>
+        </div>
+      </div>
+      <div class="card-grid" id="moduleCards"></div>
+    </section>
+
+    <section aria-labelledby="quick-title">
+      <div class="section-title">
+        <div>
+          <h2 id="quick-title">Accesos rapidos</h2>
+          <p>Material operativo permitido para estudiantes.</p>
+        </div>
+      </div>
+      <div class="quick-grid" id="quickCards"></div>
+    </section>
+  </main>
+</body>
+</html>

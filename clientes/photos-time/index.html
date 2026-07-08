@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema privado de venta fotográfica | Photos Time</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sistema privado de venta fotográfica | Photos Time" />
+  <meta property="og:description"
+    content="Plataforma privada para vender fotografías por evento, grupo o escuela, con acceso por código, paquetes y pagos locales en México." />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sistema privado de venta fotográfica | Photos Time" />
+  <meta name="twitter:description"
+    content="Galerías privadas por código, control de pedidos y pagos locales adaptados a México." />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <script src="../portal-auth.js"></script>
+  <style>
+    :root {
+      --bg: #0f1217;
+      --surface: #171b22;
+      --surface-soft: #1f252f;
+      --ink: #f7f9fc;
+      --muted: #b3bdc9;
+      --line: #303846;
+      --gold: #d4b074;
+      --blue: #7fa1c2;
+      --white: #ffffff;
+      --radius: 18px;
+      --shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 80% -10%, rgba(127, 161, 194, 0.18) 0%, transparent 32%),
+        radial-gradient(circle at 0% 15%, rgba(212, 176, 116, 0.14) 0%, transparent 33%),
+        var(--bg);
+      line-height: 1.56;
+    }
+
+    .wrap {
+      width: min(1160px, 92vw);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 56px 0 38px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #141922 0%, #1d2330 58%, #1b212b 100%);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: clamp(24px, 4vw, 50px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -50px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(212, 176, 116, 0.12);
+    }
+
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      width: clamp(120px, 19vw, 180px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.38);
+      background: #fff;
+    }
+
+    .brand-chip {
+      border-radius: 999px;
+      border: 1px solid rgba(212, 176, 116, 0.4);
+      background: rgba(212, 176, 116, 0.13);
+      color: #f2dcb4;
+      padding: 8px 13px;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 2.6vw, 2.12rem);
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1.07rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .hero p {
+      max-width: 820px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      display: inline-block;
+      transition: .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn.primary {
+      background: var(--white);
+      color: #1a2230;
+    }
+
+    .btn.secondary {
+      background: #243144;
+      color: #d8e5f1;
+      border-color: #354a66;
+    }
+
+    .btn.outline {
+      background: transparent;
+      color: #f1d8ab;
+      border-color: rgba(212, 176, 116, 0.5);
+    }
+
+    main {
+      padding-bottom: 34px;
+    }
+
+    section {
+      padding: 12px 0 30px;
+    }
+
+    .block {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .flow {
+      background: linear-gradient(140deg, #1a202a 0%, #1d2734 56%, #232f3d 100%);
+      border: 1px dashed #5f7491;
+      border-radius: 16px;
+      padding: 22px;
+      white-space: pre-line;
+      font-weight: 650;
+      color: #d8e2ee;
+    }
+
+    .card-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #1b212b 0%, #1f2732 100%);
+      border: 1px solid #343f4f;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
+    }
+
+    .card p {
+      margin-bottom: 0;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .plan {
+      border-radius: 16px;
+      border: 1px solid #3a4454;
+      padding: 20px;
+      background: #1a2029;
+      position: relative;
+    }
+
+    .plan.pro {
+      border-color: rgba(212, 176, 116, 0.6);
+      background: linear-gradient(180deg, #1d2430 0%, #212c3b 100%);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .2px;
+      margin-bottom: 10px;
+      background: rgba(212, 176, 116, 0.18);
+      border: 1px solid rgba(212, 176, 116, 0.5);
+      color: #f0d8ae;
+    }
+
+    .price {
+      font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+      font-weight: 800;
+      margin: 8px 0 10px;
+      color: var(--white);
+    }
+
+    .result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #384454;
+      background: #1f2733;
+      color: #d6e1ed;
+    }
+
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid #3a4452;
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: .96rem;
+    }
+
+    .compare th,
+    .compare td {
+      border-bottom: 1px solid #343f4d;
+      padding: 11px 10px;
+      text-align: left;
+      color: #c7d1dd;
+    }
+
+    .compare th {
+      background: #1d2430;
+      color: #f2f6fb;
+      font-weight: 700;
+    }
+
+    .compare td:nth-child(3),
+    .compare th:nth-child(3) {
+      background: rgba(212, 176, 116, 0.12);
+      color: #f2e3c3;
+      font-weight: 700;
+    }
+
+    .investment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .invest-card {
+      border: 1px solid #3a4454;
+      border-radius: 14px;
+      background: #1a2029;
+      padding: 18px;
+    }
+
+    .invest-card.pro {
+      border-color: rgba(212, 176, 116, 0.65);
+      background: linear-gradient(180deg, #202938 0%, #1f2a38 100%);
+    }
+
+    footer {
+      padding: 0 0 44px;
+      color: #97a6b8;
+      font-size: .95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding-top: 30px;
+      }
+
+      .hero {
+        border-radius: 20px;
+      }
+
+      .compare {
+        font-size: .88rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="hero-top">
+        <img class="logo" src="photostime2.png" alt="Logo Photos Time" />
+        <span class="brand-chip">Galerías privadas y ventas con control</span>
+      </div>
+      <h1>Sistema privado de venta fotográfica</h1>
+      <p>Una plataforma para que las familias ingresen con código, vean sus fotografías, elijan paquetes y paguen de
+        forma local en México.</p>
+      <p><strong>Ideal para fotografía escolar, eventos, graduaciones, academias y sesiones privadas.</strong></p>
+      <div class="actions">
+        <a class="btn primary" href="#sistema">Ver sistema</a>
+        <a class="btn secondary" href="#planes">Ver planes</a>
+        <a class="btn outline" href="#flujo">Ver flujo de compra</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="oportunidad">
+      <div class="block">
+        <h2>El problema no es tomar buenas fotos. Es venderlas sin perder control.</h2>
+        <p>Cuando las fotografías se entregan por mensajes, ligas sueltas o plataformas externas, el proceso se vuelve
+          difícil de controlar: pagos, pedidos, entregas y seguimiento quedan dispersos.</p>
+        <ul>
+          <li>Plataformas externas con pagos internacionales</li>
+          <li>Comisiones y métodos incómodos para México</li>
+          <li>Entrega manual de fotos</li>
+          <li>Pedidos dispersos por mensajes</li>
+          <li>Poco control por escuela, grupo o evento</li>
+          <li>Falta de historial de compras</li>
+        </ul>
+        <p><strong>La solución es tener una plataforma propia, organizada y adaptada a la forma en que tus clientes
+            realmente pagan.</strong></p>
+      </div>
+    </section>
+
+    <section id="flujo">
+      <h2>Un flujo privado para familias, escuelas y eventos</h2>
+      <div class="flow">Creas un evento
+        ↓
+        Sube fotografías
+        ↓
+        Genera código de acceso
+        ↓
+        Las familias entran con su código
+        ↓
+        Ven galería protegida
+        ↓
+        Eligen fotos o paquetes
+        ↓
+        Pagan con método local
+        ↓
+        Recibes pedido organizado
+        ↓
+        Se entrega digital o se prepara impresión</div>
+    </section>
+
+    <section id="sistema">
+      <h2>Módulos del sistema</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3>1. Galerías privadas por código</h3>
+          <p>Cada evento, escuela, grupo o sesión puede tener acceso independiente.</p>
+        </article>
+        <article class="card">
+          <h3>2. Organización por evento</h3>
+          <p>Control de galerías por escuela, generación, grupo, fecha o cliente.</p>
+        </article>
+        <article class="card">
+          <h3>3. Marca de agua</h3>
+          <p>Las fotos se visualizan protegidas antes de compra.</p>
+        </article>
+        <article class="card">
+          <h3>4. Favoritos</h3>
+          <p>Las familias pueden marcar las fotos que más les interesan antes de decidir.</p>
+        </article>
+        <article class="card">
+          <h3>5. Carrito de compra</h3>
+          <p>El usuario puede comprar una o varias fotos en una misma orden.</p>
+        </article>
+        <article class="card">
+          <h3>6. Paquetes fotográficos</h3>
+          <p>Venta de foto individual, paquete digital, o combo.</p>
+        </article>
+        <article class="card">
+          <h3>7. Pagos locales en México</h3>
+          <p>Integración sugerida con Mercado Pago, Clip, Stripe México o transferencia.</p>
+        </article>
+        <article class="card">
+          <h3>8. Panel de pedidos</h3>
+          <p>Visualización de compras, pagos, entregas pendientes y datos del cliente.</p>
+        </article>
+        <article class="card">
+          <h3>9. Entrega digital controlada</h3>
+          <p>Descarga inmediata después de confirmar el pago.</p>
+        </article>
+        <article class="card">
+          <h3>10. Base de clientes</h3>
+          <p>Registro de compradores, eventos, teléfonos, correos y pedidos.</p>
+        </article>
+        <article class="card">
+          <h3>11. Reportes básicos</h3>
+          <p>Ventas por evento, paquetes más vendidos y galerías con mayor actividad.</p>
+        </article>
+        <article class="card">
+          <h3>12. Expiración de galerías</h3>
+          <p>Cada galería puede tener vigencia para generar urgencia y controlar almacenamiento.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Pagos pensados para México</h2>
+        <p>El sistema puede adaptarse a opciones más cómodas para clientes mexicanos y para recibir pagos en una cuenta
+          local.</p>
+        <ul>
+          <li>Mercado Pago</li>
+          <li>Clip</li>
+          <li>Stripe México</li>
+          <li>Transferencia bancaria</li>
+        </ul>
+        <p>La integración final depende de la cuenta, requisitos, comisiones y la operación que prefieras.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Ideal para fotografía escolar, eventos y sesiones</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Escuelas</h3>
+            <p>Galerías por grupo, salón o generación.</p>
+          </article>
+          <article class="card">
+            <h3>Graduaciones</h3>
+            <p>Paquetes digitales e impresos para familias.</p>
+          </article>
+          <article class="card">
+            <h3>Eventos</h3>
+            <p>Fotografías organizadas por evento y código.</p>
+          </article>
+          <article class="card">
+            <h3>Academias</h3>
+            <p>Danza, deportes, música o actividades grupales.</p>
+          </article>
+          <article class="card">
+            <h3>Sesiones privadas</h3>
+            <p>Galería protegida para selección de imágenes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="planes">
+      <h2>Planes de implementación</h2>
+      <div class="plans">
+        <article class="plan">
+          <h3>Plan Base</h3>
+          <p>Para empezar a vender fotos con acceso privado.</p>
+          <div class="price">$8,000 MXN</div>
+          <ul>
+            <li>Galerías privadas por código</li>
+            <li>Marca de agua en visualización</li>
+            <li>Carrito de compra</li>
+            <li>Paquetes fotográficos</li>
+            <li>Integración con pasarela local sugerida</li>
+            <li>Panel básico de pedidos</li>
+            <li>Hasta 5 galerías activas</li>
+            <li>Hasta 5 GB de almacenamiento inicial</li>
+          </ul>
+          <p><strong>Limitaciones:</strong></p>
+          <ul>
+            <li>Sin reportes detallados</li>
+            <li>Sin base de datos avanzada</li>
+          </ul>
+          <div class="result">Ideal para validar el sistema y comenzar a vender fotos de forma más ordenada.</div>
+        </article>
+
+        <article class="plan pro">
+          <span class="badge">Recomendado</span>
+          <h3>Plan Pro</h3>
+          <p>Para operar ventas fotográficas con mayor control, pagos locales y mejor organización.</p>
+          <div class="price">$12,000 MXN</div>
+          <ul>
+            <li>Todo lo del Plan Base</li>
+            <li>Entrega habilitada después de pago confirmado</li>
+            <li>Base de clientes</li>
+            <li>Reportes básicos de ventas</li>
+            <li>Hasta 15 galerías activas</li>
+            <li>Hasta 20 GB de almacenamiento inicial</li>
+          </ul>
+          <div class="result">La opción recomendada para vender más fotos por evento, reducir trabajo manual y tener
+            mayor control de pagos, pedidos y entregas.</div>
+        </article>
+      </div>
+
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th>Base</th>
+            <th>Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Galerías privadas</td>
+            <td>Sí</td>
+            <td>Sí</td>
+          </tr>
+          <tr>
+            <td>Acceso por código</td>
+            <td>Sí</td>
+            <td>Sí</td>
+          </tr>
+          <tr>
+            <td>Marca de agua</td>
+            <td>Sí</td>
+            <td>Sí</td>
+          </tr>
+          <tr>
+            <td>Liberación de entrega</td>
+            <td>Inmediata</td>
+            <td>Inmediata</td>
+          </tr>
+          <tr>
+            <td>Base de clientes</td>
+            <td>No</td>
+            <td>Sí</td>
+          </tr>
+          <tr>
+            <td>Reportes</td>
+            <td>No / básico</td>
+            <td>Sí</td>
+          </tr>
+          <tr>
+            <td>Galerías activas</td>
+            <td>5</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>Almacenamiento</td>
+            <td>5 GB</td>
+            <td>20 GB</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Inversión del sistema</h2>
+        <div class="investment-grid">
+          <article class="invest-card">
+            <h3>Plan Base</h3>
+            <div class="price">$8,000 MXN</div>
+            <a class="btn secondary" href="#">Quiero el Plan Base</a>
+          </article>
+          <article class="invest-card pro">
+            <span class="badge">Recomendado</span>
+            <h3>Plan Pro</h3>
+            <div class="price">$12,000 MXN</div>
+            <a class="btn primary" href="#">Quiero el Plan Pro</a>
+          </article>
+        </div>
+        <p style="margin-top:14px"><strong>El Plan Pro es la opción ideal para operar con más eventos, mayor
+            almacenamiento, pagos locales y mejor control de pedidos.</strong></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Operación y mantenimiento</h2>
+        <p>El mantenimiento del sistema tiene un costo de <strong>$700 MXN / mes</strong>.</p>
+        <p>Si contratas el plan de redes sociales, el mantenimiento del sistema se incluye sin costo adicional.</p>
+        <ul>
+          <li>hosting</li>
+          <li>soporte básico</li>
+          <li>respaldo</li>
+          <li>ajustes menores</li>
+          <li>mantenimiento técnico</li>
+        </ul>
+        <a class="btn secondary" href="crecimiento.html">Ver plan de redes sociales</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="block" style="text-align:center">
+        <h2>Una plataforma propia para vender fotos sin depender de pagos extranjeros.</h2>
+        <p>Puedes tener control sobre tus galerías, pedidos y métodos de pago, con una experiencia más cómoda para las
+          familias.</p>
+        <a class="btn outline" href="#planes">Elegir plan recomendado</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">Sistema privado de galerías y venta fotográfica para Photos Time.</footer>
+</body>
+
+</html>

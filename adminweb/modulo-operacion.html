@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operacion Interna - Universidad Ixmati</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-academia.js?v=20260624-flor2"></script>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <link rel="stylesheet" href="academia.css">
+  <script src="academia.js" defer></script>
+</head>
+<body data-module="operacion">
+  <main class="academy-shell">
+    <header class="topbar">
+      <a class="brand-mark" href="academia.html"><span class="brand-icon">IX</span><span>Universidad Ixmati</span></a>
+      <nav class="nav-actions">
+        <a href="academia.html">Inicio</a>
+        <a href="modulo-estudio-visual.html">Estudio Visual</a>
+        <a href="modulo-web.html">Web</a>
+        <a href="modulo-marketing.html">Marketing</a>
+        <a href="modulo-comercial.html">Comercial</a>
+        <a href="modulo-operacion.html">Operacion</a>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-main"><p class="eyebrow">Modulo</p><h1 id="moduleTitle">Operacion Interna</h1><p class="subtitle" id="moduleSummary"></p></div>
+      <aside class="progress-panel">
+        <p class="eyebrow">Estado del modulo</p>
+        <div class="module-facts"><div class="kpi"><span>Duracion</span><strong id="moduleTime"></strong></div><div class="kpi"><span>Nivel</span><strong id="moduleLevel"></strong></div><div class="kpi"><span>Contenido</span><strong id="moduleLessons"></strong></div></div>
+        <span id="moduleStatus" class="status-pill">Pendiente</span>
+        <div class="meter"><span id="moduleMeter"></span></div>
+        <div class="panel-actions"><a class="button-link primary" id="startModule" href="#">Continuar estudio</a><a class="button-link" id="practiceModule" href="#">Practica</a><a class="button-link" id="evaluationModule" href="#">Evaluacion</a></div>
+      </aside>
+    </section>
+    <section class="module-overview-grid">
+      <article class="content-panel"><p class="eyebrow">Resultado esperado</p><h2 id="moduleOutcome"></h2><div id="moduleOverview"></div></article>
+      <aside class="content-panel compact-panel"><h2>Como avanzar</h2><p>Primero estudia las lecciones, despues resuelve la practica guiada y al final presenta la evaluacion.</p><p>La evaluacion permanece bloqueada hasta completar la ruta de estudio.</p></aside>
+    </section>
+  </main>
+</body>
+</html>

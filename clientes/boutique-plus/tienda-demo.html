@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda demo | Boutique Plus</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <script src="../portal-auth.js"></script>
+  <style>
+    :root{--bg:#fbf7f2;--surface:#fff;--ink:#26221f;--muted:#6f6760;--line:#e5ddd4;--rose:#b98f8b;--deep:#5b4a42;--sage:#6f7b63;--cream:#f4efe7;--ok:#4f7d52;--warn:#9b6f45;--off:#88746e;--shadow:0 14px 26px rgba(56,48,42,.1)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}button,input,select,textarea{font:inherit}.wrap{width:min(1260px,94vw);margin:0 auto}
+    .top{position:sticky;top:0;z-index:40;background:rgba(255,248,246,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.nav{display:grid;grid-template-columns:auto minmax(180px,1fr) auto;gap:12px;align-items:center;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}.mark{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--ink);font-family:Georgia,serif}
+    .search{width:100%;border:1px solid #e4d1d5;border-radius:999px;padding:11px 15px;background:#fff;color:var(--ink)}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .btn{border:1px solid transparent;border-radius:999px;padding:9px 14px;font-weight:850;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:39px;color:inherit}.btn.primary{background:var(--deep);color:#fff}.btn.outline{background:#fff;color:var(--deep);border-color:#e2cbd1}.btn.sage{background:var(--sage);color:#fff}.btn:disabled{opacity:.45;cursor:not-allowed}
+    .hero{padding:24px 0 12px}.hero-panel{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:22px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;min-height:330px;padding:24px;color:var(--ink);overflow:hidden;box-shadow:var(--shadow)}.hero h1{font-family:Georgia,serif;font-size:clamp(2rem,4vw,4.2rem);line-height:1;margin:0 0 12px;letter-spacing:0}.hero p{max-width:650px;color:var(--muted);font-size:1.08rem}.hero-image{width:100%;height:330px;object-fit:cover;border-radius:8px;display:block}.hero-card{background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:16px;color:var(--ink)}.hero-card strong{display:block;font-size:1.8rem}
+    h1,h2,h3,h4,p{margin-top:0}p{color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:8px;padding:13px;margin-bottom:12px;box-shadow:0 8px 18px rgba(104,76,83,.06)}.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.chip{border:1px solid #e1ccd1;background:#fff;border-radius:999px;padding:8px 12px;font-weight:850;cursor:pointer}.chip.active{background:var(--deep);border-color:var(--deep);color:#fff}.row input,.row select{border:1px solid #dfccd1;border-radius:8px;padding:10px 11px;background:#fff;min-width:170px}
+    .layout{display:grid;grid-template-columns:1fr 345px;gap:14px;padding-bottom:34px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(218px,1fr));gap:13px}.card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}.pic{height:245px;background:#f4e2e5;position:relative;overflow:hidden}.pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .22s ease}.card:hover img{transform:scale(1.035)}.status{position:absolute;left:10px;top:10px;border-radius:999px;padding:5px 9px;font-size:.72rem;font-weight:900;background:#fff;color:var(--deep);box-shadow:0 8px 16px rgba(0,0,0,.12)}.body{padding:12px}.meta{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:7px}.price{font-weight:950;color:var(--deep)}.tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.tag{border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:850;background:var(--cream);color:#845a48}.size{background:#eef3eb;color:#536e49}.stock{background:#f7e7eb;color:#885366}.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.card-actions .btn{padding:8px 10px}
+    .cart{position:sticky;top:82px;height:fit-content;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;box-shadow:var(--shadow)}.cart-list{display:grid;gap:8px;max-height:330px;overflow:auto;margin:10px 0}.item{border:1px solid #ead9dd;border-radius:8px;background:#fffaf9;padding:8px}.item-top{display:flex;justify-content:space-between;gap:8px}.qty{display:flex;align-items:center;gap:7px;margin-top:7px}.qty button{border:1px solid #ddc4ca;background:#fff;border-radius:8px;padding:3px 8px;font-weight:900;cursor:pointer}.sum{border-top:1px solid var(--line);padding-top:10px}.sum div{display:flex;justify-content:space-between;margin:5px 0}.sum strong{font-size:1.08rem}.empty{color:var(--muted);margin:0}
+    .modal{position:fixed;inset:0;background:rgba(42,31,35,.56);display:none;place-items:center;z-index:80;padding:16px}.modal.open{display:grid}.modal-card{width:min(960px,96vw);max-height:92vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;box-shadow:0 22px 44px rgba(34,23,27,.22)}.detail{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px}.detail img{width:100%;height:500px;object-fit:cover;border-radius:8px}.detail-price{font-size:2rem;color:var(--deep);font-weight:950}.size-grid{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.size-btn{border:1px solid #dfc9cf;background:#fff;border-radius:999px;padding:8px 12px;font-weight:850;cursor:pointer}.size-btn.active{background:var(--deep);color:#fff;border-color:var(--deep)}
+    .checkout{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.checkout form{display:grid;gap:10px}.checkout label{display:grid;gap:5px;font-weight:800;color:var(--muted)}.checkout input,.checkout textarea,.checkout select{border:1px solid #dfccd1;border-radius:8px;padding:10px 11px;background:#fff}.checkout textarea{min-height:78px;resize:vertical}.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pay-option{border:1px solid #dfccd1;background:#fff;border-radius:8px;padding:10px;font-weight:850;cursor:pointer}.pay-option.active{border-color:var(--deep);background:#f4efe7;color:var(--deep)}.order-summary{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px}.order-summary ul{padding-left:18px;color:var(--muted)}.confirm-box{background:#f4efe7;border:1px solid var(--line);border-radius:8px;padding:18px}.toast{position:fixed;right:16px;bottom:16px;background:var(--sage);color:#fff;padding:10px 12px;border-radius:8px;font-weight:850;display:none;z-index:99}.toast.show{display:block}
+    @media(max-width:980px){.nav{grid-template-columns:1fr}.layout,.hero-panel,.detail,.checkout{grid-template-columns:1fr}.cart{position:static}.actions{justify-content:flex-start}.hero-card{max-width:360px}.pic{height:230px}}@media(max-width:600px){.grid{grid-template-columns:1fr}.pay-grid{grid-template-columns:1fr}.hero-panel{padding:20px;min-height:420px}.detail img{height:340px}.row input,.row select{width:100%}}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="wrap nav">
+      <div class="brand"><span class="mark">B+</span><span>Boutique Plus</span></div>
+      <input id="topSearch" class="search" placeholder="Buscar por prenda, talla o estilo..." />
+      <div class="actions">
+        <a class="btn outline" href="index.html">Propuesta</a>
+        <a class="btn outline" href="cms-demo.html">CMS</a>
+        <button id="cartBtn" class="btn primary" type="button">Carrito 0</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-panel">
+        <div>
+          <h1>Nuevos outfits para sentirte cómoda y segura.</h1>
+          <p>Blusas, vestidos, jeans, conjuntos y chamarras en tallas extras. Compra demo con carrito, tallas y checkout.</p>
+        </div>
+        <div>
+          <img class="hero-image" src="https://images.unsplash.com/photo-1664894626606-283ad185a726?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=1200" alt="Outfits plus size de boutique" />
+          <aside class="hero-card" style="margin-top:10px"><strong>50 prendas</strong><span>Catálogo base para boutique plus size con disponibilidad por talla.</span></aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel"><div id="catRow" class="row"></div></section>
+    <section class="panel">
+      <div class="row">
+        <input id="nameFilter" placeholder="Buscar producto" />
+        <select id="sizeFilter"><option value="Todas">Talla: Todas</option><option>XL</option><option>1X</option><option>2X</option><option>3X</option><option>4X</option></select>
+        <select id="stockFilter"><option value="Todos">Disponibilidad: Todos</option><option>Disponible</option><option>Últimas piezas</option><option>Agotado</option></select>
+        <select id="sortFilter"><option value="recent">Más reciente</option><option value="low">Precio menor</option><option value="high">Precio mayor</option></select>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div>
+        <section class="panel"><h3>Catálogo</h3><div id="productGrid" class="grid"></div></section>
+      </div>
+      <aside class="cart">
+        <h3>Carrito demo</h3>
+        <div id="cartList" class="cart-list"><p class="empty">No hay prendas agregadas.</p></div>
+        <div class="sum">
+          <div><span>Subtotal</span><strong id="subtotal">$0 MXN</strong></div>
+          <div><span>Envío estimado</span><span id="shipping">$0 MXN</span></div>
+          <div><span>Total</span><strong id="grandTotal">$0 MXN</strong></div>
+        </div>
+        <div class="card-actions">
+          <button id="clearCart" class="btn outline" type="button">Vaciar</button>
+          <button id="checkoutBtn" class="btn primary" type="button">Checkout</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div id="detailModal" class="modal"><div class="modal-card"><div id="detailContent"></div></div></div>
+  <div id="checkoutModal" class="modal"><div class="modal-card">
+    <h3>Checkout demo</h3>
+    <div class="checkout">
+      <form id="checkoutForm">
+        <label>Nombre completo<input id="cName" required /></label>
+        <label>Teléfono<input id="cPhone" required /></label>
+        <label>Correo<input id="cEmail" type="email" required /></label>
+        <label>Dirección<input id="cAddress" required /></label>
+        <label>Comentarios de talla o entrega<textarea id="cRef" placeholder="Ej. Prefiero corte holgado, confirmar medidas por WhatsApp."></textarea></label>
+        <label>Método de entrega<select id="delivery"><option>Envío local</option><option>Recoger en boutique</option><option>Envío nacional</option></select></label>
+        <div><strong>Método de pago</strong><div id="payGrid" class="pay-grid"><button class="pay-option active" type="button" data-pay="Transferencia">Transferencia</button><button class="pay-option" type="button" data-pay="Tarjeta">Tarjeta</button><button class="pay-option" type="button" data-pay="Contra entrega">Contra entrega</button></div></div>
+      </form>
+      <div class="order-summary">
+        <h4>Resumen</h4>
+        <ul id="checkoutItems"></ul>
+        <p><strong>Subtotal:</strong> <span id="coSubtotal"></span></p>
+        <p><strong>Envío:</strong> <span id="coShipping"></span></p>
+        <p><strong>Total:</strong> <strong id="coTotal"></strong></p>
+        <div class="card-actions">
+          <button id="closeCheckout" class="btn outline" type="button">Cancelar</button>
+          <button id="confirmOrder" class="btn primary" type="button">Confirmar pedido</button>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div id="confirmModal" class="modal"><div class="modal-card"><div id="confirmContent" class="confirm-box"></div></div></div>
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const KEYS = { products: "boutique_plus_products", cart: "boutique_plus_cart", orders: "boutique_plus_orders" };
+    const FALLBACK_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 900'%3E%3Crect width='700' height='900' fill='%23f4efe7'/%3E%3Cpath d='M130 730c80-120 120-300 84-470 82-56 188-56 270 0-38 170 4 350 86 470H130z' fill='%23b98f8b' opacity='.72'/%3E%3Ccircle cx='350' cy='190' r='62' fill='%23efe3d5'/%3E%3Ctext x='350' y='820' text-anchor='middle' font-family='Arial' font-size='36' fill='%235b4a42'%3EBoutique Plus%3C/text%3E%3C/svg%3E";
+    const photoPool = [
+      "https://images.unsplash.com/photo-1664894626606-283ad185a726?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=1200",
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=900"
+    ];
+    const img = q => photoPool[[...q].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % photoPool.length];
+    function fallbackImage(el) { el.onerror = null; el.src = FALLBACK_IMAGE; }
+    const baseProducts = [
+      {id:1,name:"Blusa satinada rosa",category:"Blusas",price:420,availability:"Disponible",sizes:["XL","1X","2X"],description:"Blusa suave con caída ligera para outfits casuales o de oficina.",image:img("plus size pink blouse fashion"),featured:true,tags:["Nuevo","Cómoda"]},
+      {id:2,name:"Vestido midi floral",category:"Vestidos",price:690,availability:"Disponible",sizes:["1X","2X","3X"],description:"Vestido fresco con cintura cómoda y movimiento natural.",image:img("plus size floral dress woman"),featured:true,tags:["Favorito"]},
+      {id:3,name:"Jean recto azul profundo",category:"Jeans",price:760,availability:"Últimas piezas",sizes:["XL","1X","2X","3X"],description:"Mezclilla stretch de tiro alto con corte recto.",image:img("curvy woman jeans fashion"),featured:false,tags:["Stretch"]},
+      {id:4,name:"Conjunto lounge terracota",category:"Conjuntos",price:880,availability:"Disponible",sizes:["1X","2X","3X","4X"],description:"Set cómodo de dos piezas para uso diario con estilo.",image:img("plus size lounge set fashion"),featured:false,tags:["Set"]},
+      {id:5,name:"Chamarra ligera beige",category:"Chamarras",price:940,availability:"Disponible",sizes:["XL","1X","2X"],description:"Capa ligera para combinar con vestidos, jeans o conjuntos.",image:img("plus size jacket woman"),featured:false,tags:["Temporada"]},
+      {id:6,name:"Blusa cruzada marfil",category:"Blusas",price:450,availability:"Disponible",sizes:["XL","1X","2X","3X"],description:"Escote cruzado y manga suave para una silueta elegante.",image:img("curvy woman white blouse"),featured:false,tags:["Elegante"]},
+      {id:7,name:"Vestido camisero negro",category:"Vestidos",price:720,availability:"Agotado",sizes:["1X","2X"],description:"Vestido camisero versátil para día o noche.",image:img("plus size black shirt dress"),featured:false,tags:["Agotado"]},
+      {id:8,name:"Jean wide leg claro",category:"Jeans",price:790,availability:"Disponible",sizes:["XL","1X","2X","3X"],description:"Corte amplio con mezclilla suave y tiro alto.",image:img("plus size wide leg jeans"),featured:false,tags:["Nuevo"]},
+      {id:9,name:"Conjunto blazer arena",category:"Conjuntos",price:1150,availability:"Últimas piezas",sizes:["1X","2X"],description:"Conjunto pulido para eventos, trabajo o salidas especiales.",image:img("plus size blazer set woman"),featured:true,tags:["Premium"]},
+      {id:10,name:"Chamarra denim stretch",category:"Chamarras",price:980,availability:"Disponible",sizes:["XL","1X","2X","3X"],description:"Denim flexible para completar outfits casuales.",image:img("curvy woman denim jacket"),featured:false,tags:["Stretch"]},
+      {id:11,name:"Blusa manga globo vino",category:"Blusas",price:490,availability:"Disponible",sizes:["1X","2X","3X"],description:"Manga con volumen controlado y tela fresca.",image:img("plus size burgundy blouse"),featured:false,tags:["Color"]},
+      {id:12,name:"Vestido envolvente verde",category:"Vestidos",price:740,availability:"Disponible",sizes:["XL","1X","2X","3X"],description:"Corte envolvente que permite ajustar comodidad y cintura.",image:img("plus size green wrap dress"),featured:false,tags:["Ajustable"]}
+    ];
+    [
+      ["Blusa peplum lavanda","Blusas",520,"Disponible",["XL","1X","2X"],"Corte peplum con tela ligera para marcar cintura sin ajustar.","plus size lavender peplum blouse"],
+      ["Blusa rib café","Blusas",390,"Disponible",["XL","1X","2X","3X"],"Básica acanalada para combinar con jeans o falda.","curvy woman ribbed top"],
+      ["Blusa off shoulder negra","Blusas",470,"Últimas piezas",["1X","2X"],"Hombros descubiertos con ajuste cómodo.","plus size off shoulder top"],
+      ["Camisa oversize rayada","Blusas",560,"Disponible",["XL","1X","2X","3X","4X"],"Camisa amplia para looks frescos y modernos.","plus size striped shirt"],
+      ["Top tejido crema","Blusas",430,"Disponible",["XL","1X","2X"],"Textura suave y tono neutro para uso diario.","curvy woman knit top"],
+      ["Blusa escote V azul","Blusas",450,"Disponible",["1X","2X","3X"],"Escote V favorecedor y manga fluida.","plus size blue blouse"],
+      ["Blusa estampada coral","Blusas",480,"Agotado",["XL","1X"],"Estampado femenino para outfits casuales.","plus size printed blouse"],
+      ["Blusa manga corta oliva","Blusas",410,"Disponible",["XL","1X","2X","3X"],"Prenda fresca con caída relajada.","plus size olive blouse"],
+      ["Vestido camiseta terracota","Vestidos",620,"Disponible",["XL","1X","2X","3X"],"Vestido casual de tela suave para fin de semana.","plus size t shirt dress"],
+      ["Vestido largo azul marino","Vestidos",890,"Disponible",["1X","2X","3X"],"Largo fluido con presencia elegante.","plus size navy maxi dress"],
+      ["Vestido corto estampado","Vestidos",650,"Últimas piezas",["XL","1X","2X"],"Diseño fresco para salidas de día.","plus size short print dress"],
+      ["Vestido tipo suéter","Vestidos",780,"Disponible",["XL","1X","2X"],"Textura cómoda para clima fresco.","plus size sweater dress"],
+      ["Vestido camisero denim","Vestidos",840,"Disponible",["1X","2X","3X"],"Denim ligero con cinturón ajustable.","plus size denim shirt dress"],
+      ["Vestido plisado vino","Vestidos",920,"Agotado",["1X","2X"],"Plisado elegante para ocasión especial.","plus size burgundy dress"],
+      ["Vestido negro básico","Vestidos",590,"Disponible",["XL","1X","2X","3X","4X"],"Básico versátil con corte cómodo.","plus size black dress"],
+      ["Vestido wrap lunares","Vestidos",760,"Disponible",["XL","1X","2X"],"Corte cruzado con estampado discreto.","plus size polka dot wrap dress"],
+      ["Jean skinny negro stretch","Jeans",720,"Disponible",["XL","1X","2X","3X"],"Mezclilla elástica con ajuste cómodo.","plus size black skinny jeans"],
+      ["Jean mom fit azul","Jeans",780,"Disponible",["XL","1X","2X"],"Tiro alto y pierna relajada.","plus size mom jeans"],
+      ["Jean flare oscuro","Jeans",820,"Últimas piezas",["1X","2X","3X"],"Corte flare que estiliza la pierna.","plus size flare jeans"],
+      ["Jean cargo gris","Jeans",860,"Disponible",["XL","1X","2X","3X"],"Bolsillos cargo y tela flexible.","plus size cargo jeans"],
+      ["Short denim plus","Jeans",520,"Disponible",["XL","1X","2X"],"Short de mezclilla para looks relajados.","plus size denim shorts"],
+      ["Jegging azul medio","Jeans",610,"Disponible",["XL","1X","2X","3X","4X"],"Comodidad de legging con apariencia denim.","plus size jeggings"],
+      ["Jean recto blanco","Jeans",790,"Agotado",["1X","2X"],"Denim blanco para outfits limpios.","plus size white jeans"],
+      ["Pantalón wide leg negro","Jeans",740,"Disponible",["XL","1X","2X","3X"],"Pierna amplia y cintura cómoda.","plus size black wide leg pants"],
+      ["Conjunto rib arena","Conjuntos",890,"Disponible",["XL","1X","2X","3X"],"Set acanalado de dos piezas para diario.","plus size ribbed set"],
+      ["Conjunto falda y top","Conjuntos",980,"Últimas piezas",["1X","2X"],"Coordinado femenino para salida casual.","plus size skirt set"],
+      ["Conjunto deportivo negro","Conjuntos",840,"Disponible",["XL","1X","2X","3X","4X"],"Comodidad para días activos.","plus size activewear set"],
+      ["Conjunto lino rosa","Conjuntos",1050,"Disponible",["XL","1X","2X"],"Tela fresca con acabado sofisticado.","plus size linen set pink"],
+      ["Conjunto pantalón palazzo","Conjuntos",1120,"Disponible",["1X","2X","3X"],"Palazzo fluido con blusa coordinada.","plus size palazzo set"],
+      ["Set casual verde salvia","Conjuntos",920,"Agotado",["XL","1X"],"Coordinado relajado en tono salvia.","plus size sage green set"],
+      ["Conjunto tejido gris","Conjuntos",990,"Disponible",["XL","1X","2X"],"Tejido suave para clima fresco.","plus size knit set"],
+      ["Conjunto short y camisa","Conjuntos",870,"Disponible",["1X","2X","3X"],"Set fresco para vacaciones o fin de semana.","plus size shorts shirt set"],
+      ["Chamarra biker negra","Chamarras",1180,"Disponible",["XL","1X","2X"],"Estilo biker con corte cómodo.","plus size black biker jacket"],
+      ["Blazer rosa suave","Chamarras",990,"Disponible",["XL","1X","2X","3X"],"Blazer femenino para elevar outfits básicos.","plus size pink blazer"],
+      ["Gabardina ligera camel","Chamarras",1240,"Últimas piezas",["1X","2X"],"Capa elegante para temporada de transición.","plus size camel trench coat"],
+      ["Cardigan largo crema","Chamarras",760,"Disponible",["XL","1X","2X","3X","4X"],"Cardigan cómodo para capas suaves.","plus size long cardigan"],
+      ["Chamarra acolchada oliva","Chamarras",1090,"Disponible",["XL","1X","2X"],"Acolchada ligera para clima fresco.","plus size quilted jacket"],
+      ["Kimono floral","Chamarras",680,"Disponible",["XL","1X","2X","3X"],"Capa ligera para vestidos o jeans.","plus size floral kimono"]
+    ].forEach(([name,category,price,availability,sizes,description,query]) => baseProducts.push({ id: baseProducts.length + 1, name, category, price, availability, sizes, description, image: img(query), featured: false, tags: [] }));
+    let products = loadProducts(), cart = JSON.parse(localStorage.getItem(KEYS.cart) || "[]"), selectedSize = "XL", payMethod = "Transferencia";
+    const state = { cat:"Todo", query:"", size:"Todas", stock:"Todos", sort:"recent" };
+    const $ = id => document.getElementById(id);
+    const money = n => new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(Number(n||0));
+    function loadProducts(){const raw=localStorage.getItem(KEYS.products);if(raw){try{const parsed=JSON.parse(raw);if(Array.isArray(parsed)&&parsed.length){const fixed=parsed.map(p=>({...p,image:p.image&&!p.image.includes("source.unsplash.com")?p.image:img(`${p.name} ${p.category}`)}));localStorage.setItem(KEYS.products,JSON.stringify(fixed));return fixed}}catch{}}localStorage.setItem(KEYS.products,JSON.stringify(baseProducts));return [...baseProducts]}
+    function saveCart(){localStorage.setItem(KEYS.cart,JSON.stringify(cart))}
+    function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),1600)}
+    function categories(){return ["Todo",...new Set(products.map(p=>p.category))]}
+    function renderCats(){ $("catRow").innerHTML=categories().map(c=>`<button class="chip ${state.cat===c?"active":""}" data-cat="${c}" type="button">${c}</button>`).join(""); document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;render()})}
+    function filtered(){let out=products.filter(p=>{const q=(state.query||"").toLowerCase();return (state.cat==="Todo"||p.category===state.cat)&&(!q||`${p.name} ${p.category} ${(p.sizes||[]).join(" ")} ${p.description}`.toLowerCase().includes(q))&&(state.size==="Todas"||(p.sizes||[]).includes(state.size))&&(state.stock==="Todos"||p.availability===state.stock)});if(state.sort==="low")out.sort((a,b)=>a.price-b.price);if(state.sort==="high")out.sort((a,b)=>b.price-a.price);if(state.sort==="recent")out.sort((a,b)=>b.id-a.id);return out}
+    function productCard(p){const disabled=p.availability==="Agotado";return `<article class="card"><div class="pic"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="fallbackImage(this)"><span class="status">${p.availability}</span></div><div class="body"><div class="meta"><h4>${p.name}</h4><div class="price">${money(p.price)}</div></div><p>${p.description}</p><div class="tags"><span class="tag">${p.category}</span><span class="tag size">${(p.sizes||[]).join(", ")}</span>${(p.tags||[]).map(t=>`<span class="tag stock">${t}</span>`).join("")}</div><div class="card-actions"><button class="btn outline" type="button" onclick="openDetail(${p.id})">Detalle</button><button class="btn primary" type="button" ${disabled?"disabled":""} onclick="addToCart(${p.id})">Agregar</button></div></div></article>`}
+    function renderProducts(){const list=filtered();$("productGrid").innerHTML=list.length?list.map(productCard).join(""):`<p class="empty">No hay prendas con esos filtros.</p>`}
+    function renderCart(){const count=cart.reduce((s,i)=>s+i.qty,0);$("cartBtn").textContent=`Carrito ${count}`;$("cartList").innerHTML=cart.length?cart.map(i=>`<div class="item"><div class="item-top"><strong>${i.name}</strong><button class="btn outline" style="min-height:28px;padding:3px 8px" onclick="removeItem('${i.key}')">Quitar</button></div><small>${i.size} · ${money(i.price)}</small><div class="qty"><button onclick="changeQty('${i.key}',-1)">-</button><span>${i.qty}</span><button onclick="changeQty('${i.key}',1)">+</button></div></div>`).join(""):`<p class="empty">No hay prendas agregadas.</p>`;const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0),shipping=subtotal>0?99:0;$("subtotal").textContent=money(subtotal);$("shipping").textContent=money(shipping);$("grandTotal").textContent=money(subtotal+shipping)}
+    function render(){renderCats();renderProducts();renderCart()}
+    function addToCart(id,size){const p=products.find(x=>x.id===id);if(!p||p.availability==="Agotado")return;const chosen=size||p.sizes?.[0]||"XL";const key=`${id}-${chosen}`;const existing=cart.find(i=>i.key===key);if(existing)existing.qty++;else cart.push({key,id:p.id,name:p.name,price:p.price,size:chosen,qty:1});saveCart();renderCart();toast("Prenda agregada al carrito")}
+    function removeItem(key){cart=cart.filter(i=>i.key!==key);saveCart();renderCart()}
+    function changeQty(key,delta){const it=cart.find(i=>i.key===key);if(!it)return;it.qty+=delta;if(it.qty<=0)cart=cart.filter(i=>i.key!==key);saveCart();renderCart()}
+    function openDetail(id){const p=products.find(x=>x.id===id);selectedSize=p.sizes?.[0]||"XL";$("detailContent").innerHTML=`<div class="detail"><img src="${p.image}" alt="${p.name}" onerror="fallbackImage(this)"><div><h2>${p.name}</h2><div class="detail-price">${money(p.price)}</div><p>${p.description}</p><p><strong>Categoría:</strong> ${p.category}</p><p><strong>Disponibilidad:</strong> ${p.availability}</p><strong>Selecciona talla</strong><div class="size-grid">${(p.sizes||[]).map((s,i)=>`<button class="size-btn ${i===0?"active":""}" type="button" data-size="${s}">${s}</button>`).join("")}</div><div class="card-actions"><button class="btn outline" type="button" onclick="closeDetail()">Cerrar</button><button class="btn primary" type="button" ${p.availability==="Agotado"?"disabled":""} onclick="addToCart(${p.id}, selectedSize); closeDetail()">Agregar al carrito</button></div></div></div>`;$("detailModal").classList.add("open");document.querySelectorAll(".size-btn").forEach(b=>b.onclick=()=>{selectedSize=b.dataset.size;document.querySelectorAll(".size-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active")})}
+    function closeDetail(){$("detailModal").classList.remove("open")}
+    function openCheckout(){if(!cart.length){toast("Agrega una prenda primero");return}const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0),shipping=99;$("checkoutItems").innerHTML=cart.map(i=>`<li>${i.qty} x ${i.name} (${i.size})</li>`).join("");$("coSubtotal").textContent=money(subtotal);$("coShipping").textContent=money(shipping);$("coTotal").textContent=money(subtotal+shipping);$("checkoutModal").classList.add("open")}
+    function confirmOrder(){const form=$("checkoutForm");if(!form.reportValidity())return;const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0),order={id:Date.now(),createdAt:new Date().toISOString(),customer:$("cName").value,phone:$("cPhone").value,total:subtotal+99,items:cart,payMethod};const orders=JSON.parse(localStorage.getItem(KEYS.orders)||"[]");orders.push(order);localStorage.setItem(KEYS.orders,JSON.stringify(orders));cart=[];saveCart();renderCart();$("checkoutModal").classList.remove("open");$("confirmContent").innerHTML=`<h2>Pedido demo confirmado</h2><p>Se generó el pedido #${order.id}. En una tienda real, este resumen puede enviarse a WhatsApp o registrarse para seguimiento interno.</p><p><strong>Total:</strong> ${money(order.total)}</p><div class="card-actions"><a class="btn sage" target="_blank" href="https://wa.me/?text=${encodeURIComponent("Pedido Boutique Plus #" + order.id + " por " + money(order.total))}">Enviar por WhatsApp</a><button class="btn outline" type="button" onclick="document.getElementById('confirmModal').classList.remove('open')">Cerrar</button></div>`;$("confirmModal").classList.add("open")}
+    $("topSearch").oninput=e=>{state.query=e.target.value;$("nameFilter").value=e.target.value;renderProducts()};$("nameFilter").oninput=e=>{state.query=e.target.value;$("topSearch").value=e.target.value;renderProducts()};$("sizeFilter").onchange=e=>{state.size=e.target.value;renderProducts()};$("stockFilter").onchange=e=>{state.stock=e.target.value;renderProducts()};$("sortFilter").onchange=e=>{state.sort=e.target.value;renderProducts()};$("clearCart").onclick=()=>{cart=[];saveCart();renderCart()};$("checkoutBtn").onclick=openCheckout;$("closeCheckout").onclick=()=>$("checkoutModal").classList.remove("open");$("confirmOrder").onclick=confirmOrder;document.querySelectorAll(".pay-option").forEach(b=>b.onclick=()=>{payMethod=b.dataset.pay;document.querySelectorAll(".pay-option").forEach(x=>x.classList.remove("active"));b.classList.add("active")});document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open")}));
+    render();
+  </script>
+</body>
+</html>

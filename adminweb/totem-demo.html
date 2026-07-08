@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Totem Demo | Ixmati</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f7ff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --brand: #0ea5e9;
+      --brand2: #2563eb;
+      --card: rgba(255, 255, 255, 0.9);
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.15) 0%, rgba(244, 247, 255, 0) 40%),
+        radial-gradient(circle at 100% 20%, rgba(37, 99, 235, 0.15) 0%, rgba(244, 247, 255, 0) 38%),
+        var(--bg);
+      color: var(--ink);
+      scroll-behavior: smooth;
+    }
+
+    .glass {
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .section {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding: 5rem 1rem;
+    }
+
+    .example-card.active {
+      border-color: #0ea5e9;
+      box-shadow: 0 20px 40px rgba(14, 165, 233, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .phone-shell {
+      border-radius: 2rem;
+      border: 10px solid #0f172a;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .typing::after {
+      content: '|';
+      animation: blink 0.8s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .btn-animate,
+    .interactive-card,
+    .example-card {
+      transition: all 300ms ease;
+    }
+
+    .btn-animate:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(14, 165, 233, 0.22);
+    }
+
+    .interactive-card:hover,
+    .example-card:hover {
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .totem-stage {
+      perspective: 1200px;
+      position: relative;
+      min-height: 700px;
+      display: grid;
+      place-items: center;
+    }
+
+    .totem-3d-wrap {
+      width: min(360px, 78vw);
+      height: 680px;
+      transform-style: preserve-3d;
+      animation: totemRotate 8s linear infinite;
+      transition: transform 300ms ease;
+    }
+
+    .totem-3d-wrap:hover {
+      animation-play-state: paused;
+      transform: scale(1.03);
+    }
+
+    .totem-body {
+      width: 100%;
+      height: 100%;
+      border-radius: 2.4rem;
+      background: linear-gradient(160deg, #0f172a, #1e293b);
+      box-shadow: 0 34px 70px rgba(15, 23, 42, 0.35);
+      padding: 1rem;
+      transform: rotateY(0deg);
+    }
+
+    .totem-screen {
+      border-radius: 1.6rem;
+      background: #fff;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      overflow: hidden;
+      height: 74%;
+    }
+
+    .totem-label {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 9999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #0f172a;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+      z-index: 10;
+    }
+
+    .totem-line {
+      position: absolute;
+      height: 2px;
+      background: rgba(15, 23, 42, 0.35);
+      transform-origin: left center;
+      z-index: 9;
+    }
+
+    .flow-step {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 600ms ease, transform 600ms ease, box-shadow 300ms ease;
+    }
+
+    .flow-step.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-pulse {
+      animation: pulseSoft 1.6s ease-in-out infinite;
+    }
+
+    .download-pop {
+      animation: downloadPop 420ms ease;
+    }
+
+    body.presentation-mode {
+      overflow: hidden;
+    }
+
+    body.presentation-mode .slide {
+      display: none;
+      min-height: 100vh;
+      padding-top: 7rem;
+      padding-bottom: 2rem;
+    }
+
+    body.presentation-mode .slide.active-slide {
+      display: grid;
+    }
+
+    @keyframes totemRotate {
+      0% { transform: rotateY(-10deg); }
+      50% { transform: rotateY(10deg); }
+      100% { transform: rotateY(-10deg); }
+    }
+
+    @keyframes pulseSoft {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.82; }
+    }
+
+    @keyframes downloadPop {
+      0% { transform: scale(1); }
+      45% { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+
+  </style>
+</head>
+<body class="text-slate-900">
+  <div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl glass rounded-2xl px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-blue-700 text-white grid place-items-center font-black">I</div>
+      <p class="font-semibold text-sm sm:text-base">Ixmati | Feria Digital</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <p id="progressText" class="text-sm sm:text-base font-semibold text-slate-600">1/6</p>
+      <button id="prevSlide" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 btn-animate" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
+      <button id="nextSlide" class="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 btn-animate" aria-label="Siguiente"><i data-lucide="chevron-right"></i></button>
+    </div>
+  </div>
+
+  <main id="slidesWrapper" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+    <section class="section slide" data-slide="1">
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 w-full">
+        <div class="space-y-8 reveal">
+          <div class="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/80 px-4 py-2 text-sm text-sky-700 font-semibold">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Simulación para negocios de Tulancingo
+          </div>
+          <div class="space-y-5">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">¿Tu negocio aparece en Google pero no está vendiendo?</h1>
+            <p class="text-lg sm:text-2xl text-slate-600 max-w-2xl">Mira cómo se vería funcionando con sistema digital: web + WhatsApp + pedidos.</p>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold mb-4">Selecciona un negocio:</h2>
+            <div id="exampleCards" class="grid md:grid-cols-3 gap-4"></div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="glass rounded-3xl p-4 sm:p-6 h-full">
+            <p class="text-sm uppercase tracking-widest text-slate-500 font-semibold mb-3">Preview en vivo</p>
+            <div class="phone-shell max-w-sm mx-auto">
+              <div class="h-[620px] bg-slate-50">
+                <img id="previewImage" src="https://picsum.photos/seed/uadahero/700/420" alt="Vista previa" class="w-full h-52 object-cover"/>
+                <div class="p-4 space-y-3">
+                  <p id="previewBadge" class="inline-block px-3 py-1 rounded-full bg-sky-100 text-sky-700 font-semibold text-xs">Restaurante</p>
+                  <h3 id="previewTitle" class="text-2xl font-extrabold">Restaurante Uadá</h3>
+                  <p id="previewTagline" class="text-slate-600 text-sm">Menú, pedidos y contacto directo en WhatsApp.</p>
+                  <div id="previewServices" class="grid grid-cols-2 gap-2 text-xs"></div>
+                  <button id="previewAction" class="w-full py-3 rounded-xl bg-slate-900 text-white font-semibold">Pedir ahora</button>
+                  <button id="previewSaveContact" class="w-full py-3 rounded-xl border border-slate-300 bg-white text-slate-800 font-semibold hover:bg-slate-50 btn-animate inline-flex items-center justify-center gap-2">
+                    <i data-lucide="contact-round" class="w-4 h-4 card-pulse"></i>
+                    Guardar contacto
+                  </button>
+                  <p class="text-xs text-slate-500 text-center">Descarga vCard del negocio</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section slide" data-slide="2">
+      <div class="w-full grid lg:grid-cols-2 gap-10 items-center">
+        <div class="space-y-5 reveal">
+          <p class="text-sm uppercase tracking-widest text-slate-500 font-semibold">Experiencia física</p>
+          <h2 class="text-3xl sm:text-5xl font-black leading-tight">Así se vería el tótem interactivo en la feria</h2>
+          <p class="text-lg text-slate-600 max-w-2xl">Cada expositor tendrá un tótem que muestra una simulación digital de su negocio.</p>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="interactive-card rounded-2xl border border-slate-200 bg-white p-4">
+              <p class="text-sm text-slate-500">Pantalla</p>
+              <p class="font-bold">Demo del negocio en tiempo real</p>
+            </div>
+            <div class="interactive-card rounded-2xl border border-slate-200 bg-white p-4">
+              <p class="text-sm text-slate-500">Objetivo</p>
+              <p class="font-bold">Escaneo + conversión + captura de leads</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="totem-stage">
+            <div class="totem-3d-wrap" id="totemKiosk">
+              <div class="totem-body">
+                <div class="totem-screen">
+                  <img id="totemScreenImage" src="./img/PHOTO-2023-12-15-12-25-54.jpg" alt="Demo en tótem" class="w-full h-56 object-cover" />
+                  <div class="p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                      <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-sky-500 to-blue-700 text-white grid place-items-center text-xs font-black">I</div>
+                      <p class="font-bold text-sm">Ixmati Demo</p>
+                    </div>
+                    <p id="totemBusinessName" class="text-xl font-black">Restaurante Uadá</p>
+                    <p class="text-sm text-slate-600">Simulación digital activa para feria.</p>
+                  </div>
+                </div>
+                <div class="bg-slate-100 rounded-2xl mt-3 p-3 border border-slate-300 text-center">
+                  <img id="totemQrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fexample.com%2Ftotem-demo" alt="QR demo tótem" class="w-32 h-32 mx-auto rounded-lg bg-white p-1 border border-slate-200" />
+                  <div class="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600">
+                    <i data-lucide="id-card" class="w-3 h-3 card-pulse"></i>
+                    <span>Escanea para:</span>
+                  </div>
+                  <ul class="text-[11px] text-slate-600 font-semibold mt-1 space-y-0.5">
+                    <li>• ver demo del negocio</li>
+                    <li>• guardar contacto (vCard)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="totem-label top-[12%] left-[2%]">Pantalla interactiva con demo del negocio</div>
+            <span class="totem-line top-[17%] left-[30%] w-20 rotate-[12deg]"></span>
+
+            <div class="totem-label bottom-[19%] right-[0%]">QR para ver la demo en tu celular</div>
+            <span class="totem-line bottom-[23%] right-[24%] w-20 -rotate-[18deg]"></span>
+
+            <div class="totem-label bottom-[5%] left-[3%]">Captura de leads para negocios interesados</div>
+            <span class="totem-line bottom-[10%] left-[28%] w-16 rotate-[8deg]"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section slide" data-slide="3">
+      <div class="w-full space-y-8">
+        <div class="reveal">
+          <p class="text-sm uppercase tracking-widest text-slate-500 font-semibold mb-2">Operación del sistema</p>
+          <h2 class="text-3xl sm:text-5xl font-black">Cómo funciona en la feria</h2>
+        </div>
+
+        <div class="relative">
+          <div class="hidden md:block absolute left-[10%] right-[10%] top-1/2 h-0.5 bg-slate-200 -z-10"></div>
+          <div class="grid md:grid-cols-5 gap-4">
+          <article class="flow-step interactive-card glass rounded-2xl p-5">
+            <i data-lucide="monitor" class="w-8 h-8 text-sky-600 mb-3"></i>
+            <p class="font-bold text-lg">Paso 1</p>
+            <p class="text-slate-600">Visitante ve el tótem</p>
+          </article>
+          <article class="flow-step interactive-card glass rounded-2xl p-5">
+            <i data-lucide="qr-code" class="w-8 h-8 text-sky-600 mb-3"></i>
+            <p class="font-bold text-lg">Paso 2</p>
+            <p class="text-slate-600">Escanea el QR con su celular</p>
+          </article>
+          <article class="flow-step interactive-card glass rounded-2xl p-5">
+            <i data-lucide="smartphone" class="w-8 h-8 text-sky-600 mb-3"></i>
+            <p class="font-bold text-lg">Paso 3</p>
+            <p class="text-slate-600">Prueba la demo del negocio</p>
+          </article>
+          <article class="flow-step interactive-card glass rounded-2xl p-5">
+            <i data-lucide="id-card" class="w-8 h-8 text-sky-600 mb-3 card-pulse"></i>
+            <p class="font-bold text-lg">Paso 4</p>
+            <p class="text-slate-600">Guarda el contacto del negocio (vCard)</p>
+          </article>
+          <article class="flow-step interactive-card glass rounded-2xl p-5">
+            <i data-lucide="user-plus" class="w-8 h-8 text-sky-600 mb-3"></i>
+            <p class="font-bold text-lg">Paso 5</p>
+            <p class="text-slate-600">Solicita su propia demo digital</p>
+          </article>
+        </div>
+        </div>
+
+        <div class="reveal glass rounded-3xl p-6 sm:p-8">
+          <h3 class="text-2xl sm:text-3xl font-black mb-3">vCard para negocios</h3>
+          <p class="text-slate-600 mb-5">Cada demo permite que los visitantes guarden el contacto del negocio directamente en su celular.</p>
+          <div class="grid md:grid-cols-2 gap-5 items-center">
+            <div class="rounded-2xl border border-slate-200 bg-white p-5">
+              <p class="text-lg font-black">Mom's Boutique</p>
+              <p class="text-sm text-slate-600 mt-1">Teléfono: +52 775 179 7886</p>
+              <p class="text-sm text-slate-600">WhatsApp: +52 775 179 7886</p>
+              <p class="text-sm text-slate-600">Sitio web: ixmati.mx/demo/moms</p>
+            </div>
+            <div>
+              <button data-vcard-example="moms" class="save-vcard-btn w-full md:w-auto px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 btn-animate inline-flex items-center justify-center gap-2">
+                <i data-lucide="id-card" class="w-4 h-4 card-pulse"></i>
+                Guardar contacto
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <h3 class="text-2xl sm:text-3xl font-black mb-4">Negocios que tendrán demo en la feria</h3>
+          <div id="participantCards" class="grid md:grid-cols-3 gap-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section slide" data-slide="4">
+      <div class="w-full grid xl:grid-cols-2 gap-8 items-stretch">
+        <div class="glass rounded-3xl p-6 sm:p-8 reveal">
+          <p class="text-sm uppercase tracking-widest text-slate-500 font-semibold mb-2">Así se vería tu web</p>
+          <h2 class="text-3xl sm:text-4xl font-black mb-6" id="mockBusinessTitle">Restaurante Uadá</h2>
+
+          <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+            <img id="mockHeroImage" src="https://picsum.photos/seed/uadaweb/1280/500" class="w-full h-48 sm:h-64 object-cover" alt="Hero negocio">
+            <div class="p-5 sm:p-6">
+              <div class="flex items-center justify-between gap-2 mb-4">
+                <div>
+                  <h3 id="mockName" class="text-2xl font-extrabold">Restaurante Uadá</h3>
+                  <p id="mockTagline" class="text-slate-600">Comida local con sabor de casa.</p>
+                </div>
+                <button class="rounded-full bg-emerald-500 text-white px-4 py-2 text-sm font-bold">WhatsApp</button>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-3">Servicios / Menú</p>
+                <div id="mockServices" class="grid grid-cols-2 gap-3 mb-5"></div>
+              </div>
+              <div class="rounded-2xl bg-slate-100 h-28 grid place-items-center text-slate-500 text-sm font-medium mb-5">
+                Mapa del negocio (placeholder)
+              </div>
+              <button id="mockAction" class="w-full py-3 rounded-xl bg-sky-500 text-white font-bold text-lg">Pedir</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6 reveal">
+          <div class="glass rounded-3xl p-6 sm:p-8">
+            <p class="text-sm uppercase tracking-widest text-slate-500 font-semibold mb-2">Plan recomendado</p>
+            <h3 id="recommendedPlan" class="text-4xl font-black mb-3">R2</h3>
+            <p id="planReason" class="text-slate-600 mb-4">Ideal para pedidos y visibilidad activa.</p>
+            <ul id="planIncludes" class="space-y-2 text-slate-700"></ul>
+          </div>
+
+          <div class="glass rounded-3xl p-6 sm:p-8">
+            <h4 class="text-xl font-bold mb-2">Resumen del caso</h4>
+            <div id="problemText" class="text-slate-600 mb-4"></div>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <div class="rounded-xl bg-sky-50 p-3">
+                <p class="text-slate-500">Categoría</p>
+                <p id="categoryText" class="font-semibold"></p>
+              </div>
+              <div class="rounded-xl bg-sky-50 p-3">
+                <p class="text-slate-500">Plan</p>
+                <p id="planText" class="font-semibold"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section slide" data-slide="5">
+      <div class="w-full max-w-5xl mx-auto reveal">
+        <div class="glass rounded-3xl p-6 sm:p-8">
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <div>
+              <p class="text-sm uppercase tracking-widest text-slate-500 font-semibold">Simulación de chat</p>
+              <h2 class="text-3xl sm:text-4xl font-black">Primer contacto Ixmati</h2>
+            </div>
+            <div class="rounded-2xl bg-emerald-100 text-emerald-700 px-4 py-2 font-semibold text-sm">Estilo WhatsApp</div>
+          </div>
+
+          <div id="chatBox" class="bg-[#e7fcd6] rounded-3xl p-4 sm:p-6 min-h-[430px] space-y-3"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section slide" data-slide="6">
+      <div class="w-full grid xl:grid-cols-2 gap-8">
+        <div class="space-y-6 reveal">
+          <div class="glass rounded-3xl p-6 sm:p-8">
+            <h3 class="text-2xl font-black mb-4">Negocios invitados a la feria</h3>
+            <div class="grid sm:grid-cols-2 gap-3 text-sm">
+              <article class="rounded-2xl border border-slate-200 bg-white p-4">
+                <p class="font-bold">Restaurante Uadá</p>
+                <p class="text-emerald-700 font-semibold mt-1">Simulación disponible</p>
+              </article>
+              <article class="rounded-2xl border border-slate-200 bg-white p-4">
+                <p class="font-bold">Exkapa</p>
+                <p class="text-emerald-700 font-semibold mt-1">Simulación disponible</p>
+              </article>
+              <article class="rounded-2xl border border-slate-200 bg-white p-4 sm:col-span-2">
+                <p class="font-bold">Mom's Boutique</p>
+                <p class="text-emerald-700 font-semibold mt-1">Simulación disponible</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="glass rounded-3xl p-6 sm:p-8">
+            <p class="text-sm uppercase tracking-widest text-slate-500 font-semibold mb-2">Captura de lead</p>
+            <h2 class="text-3xl sm:text-4xl font-black mb-5">¿Quieres ver tu negocio funcionando así?</h2>
+            <form id="leadForm" class="space-y-4">
+              <div>
+                <label class="block text-sm font-semibold mb-1">Nombre</label>
+                <input required name="name" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-lg" placeholder="Ej. Ana López" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-1">Nombre del negocio</label>
+                <input required name="business" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-lg" placeholder="Ej. Cafetería Plaza" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-1">WhatsApp</label>
+                <input required name="whatsapp" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-lg" placeholder="Ej. 7751234567" />
+              </div>
+              <button class="w-full py-4 rounded-2xl bg-sky-500 text-white text-xl font-bold hover:bg-sky-600">Crear demo gratuita para mi negocio</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="space-y-6 reveal">
+          <div class="glass rounded-3xl p-6 sm:p-8">
+            <h3 class="text-2xl font-black mb-4">Leads capturados (demo)</h3>
+            <div class="overflow-auto max-h-[330px]">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="text-left text-slate-500 border-b border-slate-200">
+                    <th class="py-2">Nombre</th>
+                    <th class="py-2">Negocio</th>
+                    <th class="py-2">WhatsApp</th>
+                  </tr>
+                </thead>
+                <tbody id="leadsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <footer class="glass rounded-3xl p-6 sm:p-8">
+            <p class="text-xl font-black">Ixmati</p>
+            <p class="text-slate-600">Esto es una simulación para fines de demostración.</p>
+            <p class="text-slate-700 font-semibold mt-2">Cada expositor puede tener su demo digital + vCard para compartir su negocio.</p>
+          </footer>
+
+          <div class="glass rounded-3xl p-6 sm:p-8 text-center">
+            <h3 class="text-2xl font-black mb-2">Escanea para ver esta demo en tu celular</h3>
+            <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=https%3A%2F%2Fexample.com%2Ftotem-demo" alt="QR de la demo" class="w-56 h-56 sm:w-72 sm:h-72 object-contain mx-auto rounded-2xl border border-slate-200 bg-white p-2">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="thankModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/50 p-4">
+    <div class="bg-white rounded-3xl w-full max-w-lg p-6 sm:p-8">
+      <h3 class="text-3xl font-black mb-3">Gracias por registrarte</h3>
+      <p id="thankSummary" class="text-slate-600 mb-5"></p>
+      <button id="closeModal" class="w-full py-3 rounded-xl bg-slate-900 text-white font-bold">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    const plansConfig = {
+      T1: {
+        includes: ['Landing page base', 'WhatsApp directo', 'Mapa integrado']
+      },
+      T3: {
+        includes: ['Catálogo con compra directa', 'Carrito y confirmación de pedido', 'Página optimizada para celular', 'Integración con WhatsApp para soporte', 'Sistema de captación de clientes']
+      },
+      R1: {
+        includes: ['Catálogo de productos', 'WhatsApp directo', 'Página optimizada para celular', 'Captación de clientes']
+      },
+      R2: {
+        includes: ['Menú digital optimizado', 'Botón de pedido directo por WhatsApp', 'Integración con Google Maps', 'Página optimizada para celular', 'Sistema de captación de clientes']
+      },
+      R3: {
+        includes: ['Menú digital optimizado', 'Pedidos estructurados y seguimiento', 'Integración con Google Maps', 'Página optimizada para celular', 'Sistema de captación de clientes']
+      }
+    };
+
+    const examples = [
+      {
+        id: 'uada',
+        name: 'Restaurante Uadá',
+        shortName: 'Restaurante Uadá',
+        category: 'Restaurante',
+        problem: 'Muchos restaurantes pierden pedidos porque llegan por distintos canales:',
+        problemChannels: ['Facebook', 'WhatsApp', 'llamadas', 'Google Maps'],
+        problemClosing: 'Sin un sistema central es difícil dar seguimiento a clientes.',
+        plan: 'R2',
+        planReason: 'Plan recomendado: R2',
+        action: 'Pedir ahora',
+        previewTagline: 'Menú, pedidos y contacto directo en WhatsApp.',
+        image: './img/PHOTO-2023-12-15-12-25-54.jpg',
+        webImage: './img/410959065_122115536564121326_8339001260255242753_n.jpg',
+        liveDemo: './uada.html',
+        vcardName: 'Restaurante Uadá',
+        vcardPhone: '+527751234567',
+        vcardUrl: 'https://ixmati.mx/demo/uada',
+        vcardEmail: 'contacto@uada.com',
+        services: ['Menú del día', 'Pedidos', 'Promociones', 'Ubicación']
+      },
+      {
+        id: 'exkapa',
+        name: 'Exkapa',
+        shortName: 'Exkapa',
+        category: 'Restaurante',
+        problem: 'Los pedidos y consultas llegan en diferentes canales y no quedan centralizados.',
+        plan: 'R3',
+        planReason: 'Plan recomendado: R3',
+        action: 'Pedir ahora',
+        previewTagline: 'Pastelería y pedidos directos desde el celular.',
+        image: './img/exkapa/492062649_1223123616486991_1948757496249815245_n.jpg',
+        webImage: './img/exkapa/492062649_1223123616486991_1948757496249815245_n.jpg',
+        liveDemo: './exkapa.html',
+        vcardName: 'Exkapa',
+        vcardPhone: '+527753483159',
+        vcardUrl: 'https://ixmati.mx/demo/exkapa',
+        vcardEmail: 'contacto@exkapa.com',
+        services: ['Catálogo', 'Pedidos', 'Promociones', 'Ubicación']
+      },
+      {
+        id: 'moms',
+        name: "Mom's Boutique",
+        shortName: "Mom's Boutique",
+        category: 'Boutique',
+        problem: 'Reciben consultas por Instagram y WhatsApp, pero sin seguimiento de prospectos.',
+        plan: 'T3',
+        planReason: 'Plan recomendado: T3',
+        action: 'Ver catálogo',
+        previewTagline: 'Catálogo, contacto y captación de clientes en una sola página.',
+        image: './img/moms/299613961_3202274616711801_3655843103150618729_n.jpg',
+        webImage: './img/moms/299613961_3202274616711801_3655843103150618729_n.jpg',
+        liveDemo: './moms.html',
+        vcardName: "Mom's Boutique",
+        vcardPhone: '+527751797886',
+        vcardUrl: 'https://ixmati.mx/demo/moms',
+        vcardEmail: 'contacto@momsboutique.com',
+        services: ['Nuevas colecciones', 'Catálogo', 'Promociones', 'Contacto']
+      }
+    ];
+
+    const chatMessages = [
+      {
+        sender: 'ixmati',
+        text: 'Hola, buen día. Te escribimos de Ixmati, estamos implementando un modelo de digitalización para negocios de Tulancingo.'
+      },
+      {
+        sender: 'ixmati',
+        text: 'Estamos haciendo una dinámica de selección de negocios activos para mostrar cómo se verían operando con sistema digital (web + citas/pedidos + WhatsApp directo).'
+      },
+      {
+        sender: 'ixmati',
+        text: 'Elegimos tu negocio por su actividad y reputación, y estamos creando simulaciones gratuitas.'
+      },
+      {
+        sender: 'ixmati',
+        text: '¿Te gustaría ver cómo se vería tu negocio funcionando con este sistema?'
+      },
+      {
+        sender: 'business',
+        text: 'Sí, me interesa ver la demo.'
+      }
+    ];
+
+    let currentExample = examples[0];
+    let activeSlide = 1;
+    let chatStarted = false;
+    let autoCycleIndex = 0;
+    let isPresentationMode = false;
+
+    const el = {
+      exampleCards: document.getElementById('exampleCards'),
+      participantCards: document.getElementById('participantCards'),
+      previewImage: document.getElementById('previewImage'),
+      previewBadge: document.getElementById('previewBadge'),
+      previewTitle: document.getElementById('previewTitle'),
+      previewTagline: document.getElementById('previewTagline'),
+      previewServices: document.getElementById('previewServices'),
+      previewAction: document.getElementById('previewAction'),
+      previewSaveContact: document.getElementById('previewSaveContact'),
+      mockBusinessTitle: document.getElementById('mockBusinessTitle'),
+      mockHeroImage: document.getElementById('mockHeroImage'),
+      mockName: document.getElementById('mockName'),
+      mockTagline: document.getElementById('mockTagline'),
+      mockServices: document.getElementById('mockServices'),
+      mockAction: document.getElementById('mockAction'),
+      recommendedPlan: document.getElementById('recommendedPlan'),
+      planReason: document.getElementById('planReason'),
+      planIncludes: document.getElementById('planIncludes'),
+      problemText: document.getElementById('problemText'),
+      categoryText: document.getElementById('categoryText'),
+      planText: document.getElementById('planText'),
+      progressText: document.getElementById('progressText'),
+      chatBox: document.getElementById('chatBox'),
+      leadsTableBody: document.getElementById('leadsTableBody'),
+      leadForm: document.getElementById('leadForm'),
+      thankModal: document.getElementById('thankModal'),
+      thankSummary: document.getElementById('thankSummary'),
+      closeModal: document.getElementById('closeModal'),
+      prevSlide: document.getElementById('prevSlide'),
+      nextSlide: document.getElementById('nextSlide'),
+      qrImage: document.getElementById('qrImage'),
+      totemQrImage: document.getElementById('totemQrImage'),
+      totemScreenImage: document.getElementById('totemScreenImage'),
+      totemBusinessName: document.getElementById('totemBusinessName')
+    };
+
+    function getSlides() {
+      return Array.from(document.querySelectorAll('.slide'));
+    }
+
+    function updateProgress() {
+      const total = getSlides().length;
+      el.progressText.textContent = `${activeSlide}/${total}`;
+    }
+
+    function downloadVCard(name, phone, url, email) {
+      const vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        `FN:${name}`,
+        `ORG:${name}`,
+        `TEL:${phone}`,
+        `EMAIL:${email}`,
+        `URL:${url}`,
+        'END:VCARD'
+      ].join('\n');
+
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'contacto.vcf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+    }
+
+    function renderExampleCards() {
+      el.exampleCards.innerHTML = examples.map(item => `
+        <article class="interactive-card text-left border border-slate-200 bg-white rounded-2xl p-4 shadow-sm">
+          <p class="font-bold text-lg mb-1">${item.name}</p>
+          <p class="text-sm text-slate-500 mb-1">Categoría: ${item.category}</p>
+          <p class="text-sm text-slate-600 mb-2 line-clamp-2">${item.problem}</p>
+          <p class="text-sm font-semibold text-sky-700">Plan recomendado: ${item.plan}</p>
+          <p class="inline-flex mt-2 rounded-full bg-emerald-100 text-emerald-700 px-2 py-1 text-xs font-bold">vCard disponible</p>
+          <div class="mt-3 flex gap-2">
+            <button data-example="${item.id}" class="example-card flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold hover:bg-slate-50">Seleccionar</button>
+            <a href="${item.liveDemo}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center rounded-xl bg-slate-900 text-white px-3 py-2 text-sm font-semibold hover:bg-slate-800 btn-animate">Ver demo en vivo</a>
+          </div>
+        </article>
+      `).join('');
+
+      el.exampleCards.querySelectorAll('.example-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const selected = examples.find(item => item.id === card.dataset.example);
+          if (selected) {
+            currentExample = selected;
+            renderAllByExample();
+          }
+        });
+      });
+    }
+
+    function renderParticipantCards() {
+      el.participantCards.innerHTML = examples.map(item => `
+        <article class="interactive-card rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <img src="${item.image}" alt="${item.name}" class="w-full h-36 object-cover rounded-xl mb-3">
+          <p class="font-bold text-lg">${item.name}</p>
+          <p class="text-sm text-slate-500">Categoría: ${item.category}</p>
+          <p class="text-sm text-slate-600 mb-3">Plan recomendado: ${item.plan}</p>
+          <p class="inline-flex mb-3 rounded-full bg-emerald-100 text-emerald-700 px-2 py-1 text-xs font-bold">vCard disponible</p>
+          <a href="${item.liveDemo}" target="_blank" rel="noopener noreferrer" class="inline-flex w-full justify-center rounded-xl bg-sky-500 text-white px-3 py-2 text-sm font-bold hover:bg-sky-600 btn-animate">Ver demo en vivo</a>
+        </article>
+      `).join('');
+    }
+
+    function renderAllByExample() {
+      el.exampleCards.querySelectorAll('.example-card').forEach(card => {
+        card.classList.toggle('active', card.dataset.example === currentExample.id);
+      });
+
+      el.previewImage.src = currentExample.image;
+      el.previewImage.onerror = () => { el.previewImage.src = 'https://picsum.photos/seed/uadahero/1200/800'; };
+      el.previewBadge.textContent = currentExample.category;
+      el.previewTitle.textContent = currentExample.shortName;
+      el.previewTagline.textContent = currentExample.previewTagline;
+      el.previewAction.textContent = currentExample.action;
+      el.previewServices.innerHTML = currentExample.services.map(service => `
+        <div class="rounded-lg bg-slate-100 px-2 py-2 text-slate-700 font-semibold text-center">${service}</div>
+      `).join('');
+
+      el.mockBusinessTitle.textContent = currentExample.shortName;
+      el.mockHeroImage.src = currentExample.webImage;
+      el.mockHeroImage.onerror = () => { el.mockHeroImage.src = 'https://picsum.photos/seed/uadaweb/1280/700'; };
+      if (el.totemScreenImage) {
+        el.totemScreenImage.src = currentExample.webImage;
+        el.totemScreenImage.onerror = () => { el.totemScreenImage.src = currentExample.image; };
+      }
+      if (el.totemBusinessName) el.totemBusinessName.textContent = currentExample.shortName;
+      el.mockName.textContent = currentExample.shortName;
+      el.mockTagline.textContent = currentExample.previewTagline;
+      el.mockAction.textContent = currentExample.action.includes('Reservar') ? 'Reservar' : 'Pedir';
+      el.mockServices.innerHTML = currentExample.services.map(service => `
+        <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 font-semibold">${service}</div>
+      `).join('');
+
+      el.recommendedPlan.textContent = currentExample.plan;
+      el.planReason.textContent = currentExample.planReason;
+      if (currentExample.problemChannels?.length) {
+        el.problemText.innerHTML = `
+          <p class="mb-3">${currentExample.problem}</p>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            ${currentExample.problemChannels.map(channel => `<li>${channel}</li>`).join('')}
+          </ul>
+          <p>${currentExample.problemClosing || ''}</p>
+        `;
+      } else {
+        el.problemText.innerHTML = `<p>${currentExample.problem}</p>`;
+      }
+      el.categoryText.textContent = currentExample.category;
+      el.planText.textContent = currentExample.plan;
+
+      const includes = plansConfig[currentExample.plan]?.includes || [];
+      el.planIncludes.innerHTML = includes.map(item => `<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i><span>${item}</span></li>`).join('');
+
+      lucide.createIcons();
+    }
+
+    function typeMessage(text, container) {
+      return new Promise(resolve => {
+        let idx = 0;
+        container.textContent = '';
+        container.classList.add('typing');
+        const timer = setInterval(() => {
+          container.textContent += text[idx] || '';
+          idx++;
+          if (idx > text.length) {
+            clearInterval(timer);
+            container.classList.remove('typing');
+            resolve();
+          }
+        }, 14);
+      });
+    }
+
+    async function runChat() {
+      el.chatBox.innerHTML = '';
+      for (const msg of chatMessages) {
+        if (msg.sender === 'business') {
+          const typingWrap = document.createElement('div');
+          typingWrap.className = 'max-w-[90%] sm:max-w-[75%] px-4 py-3 rounded-2xl text-sm sm:text-base leading-relaxed shadow bg-emerald-200 text-emerald-900 ml-auto rounded-tr-md';
+          typingWrap.innerHTML = '<span class="inline-flex gap-1"><span class="w-2 h-2 rounded-full bg-emerald-800/70 animate-pulse"></span><span class="w-2 h-2 rounded-full bg-emerald-800/70 animate-pulse [animation-delay:200ms]"></span><span class="w-2 h-2 rounded-full bg-emerald-800/70 animate-pulse [animation-delay:400ms]"></span></span>';
+          el.chatBox.appendChild(typingWrap);
+          el.chatBox.scrollTop = el.chatBox.scrollHeight;
+          await new Promise(r => setTimeout(r, 1000));
+          typingWrap.remove();
+        }
+
+        const wrap = document.createElement('div');
+        wrap.className = `max-w-[90%] sm:max-w-[75%] px-4 py-3 rounded-2xl text-sm sm:text-base leading-relaxed shadow ${
+          msg.sender === 'ixmati'
+            ? 'bg-white text-slate-700 rounded-tl-md'
+            : 'bg-emerald-200 text-emerald-900 ml-auto rounded-tr-md'
+        }`;
+        el.chatBox.appendChild(wrap);
+        await typeMessage(msg.text, wrap);
+        el.chatBox.scrollTop = el.chatBox.scrollHeight;
+        await new Promise(r => setTimeout(r, 280));
+      }
+    }
+
+    function getLeads() {
+      return JSON.parse(localStorage.getItem('ixmati-leads-demo') || '[]');
+    }
+
+    function saveLead(lead) {
+      const leads = getLeads();
+      leads.unshift(lead);
+      localStorage.setItem('ixmati-leads-demo', JSON.stringify(leads.slice(0, 20)));
+    }
+
+    function renderLeads() {
+      const leads = getLeads();
+      el.leadsTableBody.innerHTML = leads.length
+        ? leads.map(lead => `
+          <tr class="border-b border-slate-100">
+            <td class="py-2 pr-2">${lead.name}</td>
+            <td class="py-2 pr-2">${lead.business}</td>
+            <td class="py-2 pr-2">${lead.whatsapp}</td>
+          </tr>
+        `).join('')
+        : '<tr><td colspan="3" class="py-6 text-center text-slate-500">Aún no hay leads capturados.</td></tr>';
+    }
+
+    function startAutoExampleRotation() {
+      const demoOrder = ['uada', 'exkapa', 'moms'];
+      setInterval(() => {
+        autoCycleIndex = (autoCycleIndex + 1) % demoOrder.length;
+        const nextId = demoOrder[autoCycleIndex];
+        const selected = examples.find(item => item.id === nextId);
+        if (!selected) return;
+        currentExample = selected;
+        renderAllByExample();
+      }, 10000);
+    }
+
+    function goToSlide(index) {
+      const slides = getSlides();
+      activeSlide = Math.min(Math.max(index, 1), slides.length);
+      updateProgress();
+
+      if (isPresentationMode) {
+        slides.forEach((slide, idx) => {
+          slide.classList.toggle('active-slide', idx + 1 === activeSlide);
+        });
+      } else {
+        slides[activeSlide - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      if (activeSlide === 5 && !chatStarted) {
+        chatStarted = true;
+        runChat();
+      }
+    }
+
+    function enablePresentationMode(enable = true) {
+      isPresentationMode = Boolean(enable);
+      document.body.classList.toggle('presentation-mode', isPresentationMode);
+      if (isPresentationMode) {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      } else {
+        getSlides().forEach(slide => slide.classList.remove('active-slide'));
+      }
+      goToSlide(activeSlide);
+    }
+
+    window.enablePresentationMode = enablePresentationMode;
+
+    function bindEvents() {
+      document.querySelectorAll('[data-go-slide]').forEach(btn => {
+        btn.addEventListener('click', () => goToSlide(Number(btn.dataset.goSlide)));
+      });
+
+      el.prevSlide.addEventListener('click', () => goToSlide(activeSlide - 1));
+      el.nextSlide.addEventListener('click', () => goToSlide(activeSlide + 1));
+      document.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight') goToSlide(activeSlide + 1);
+        if (event.key === 'ArrowLeft') goToSlide(activeSlide - 1);
+      });
+
+      if (el.previewSaveContact) {
+        el.previewSaveContact.addEventListener('click', () => {
+          downloadVCard(currentExample.vcardName, currentExample.vcardPhone, currentExample.vcardUrl, currentExample.vcardEmail);
+          el.previewSaveContact.classList.remove('download-pop');
+          void el.previewSaveContact.offsetWidth;
+          el.previewSaveContact.classList.add('download-pop');
+        });
+      }
+
+      document.querySelectorAll('.save-vcard-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const example = examples.find(item => item.id === btn.dataset.vcardExample);
+          if (!example) return;
+          downloadVCard(example.vcardName, example.vcardPhone, example.vcardUrl, example.vcardEmail);
+          btn.classList.remove('download-pop');
+          void btn.offsetWidth;
+          btn.classList.add('download-pop');
+        });
+      });
+
+      el.leadForm.addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(el.leadForm);
+        const lead = {
+          name: formData.get('name').toString().trim(),
+          business: formData.get('business').toString().trim(),
+          whatsapp: formData.get('whatsapp').toString().trim(),
+          createdAt: new Date().toISOString()
+        };
+        saveLead(lead);
+        renderLeads();
+        el.leadForm.reset();
+
+        el.thankSummary.textContent = 'Gracias. Crearemos una simulación de tu negocio para mostrarte cómo podría operar con sistema digital.';
+        el.thankModal.classList.remove('hidden');
+        el.thankModal.classList.add('flex');
+      });
+
+      el.closeModal.addEventListener('click', () => {
+        el.thankModal.classList.add('hidden');
+        el.thankModal.classList.remove('flex');
+      });
+
+      el.thankModal.addEventListener('click', (e) => {
+        if (e.target === el.thankModal) {
+          el.thankModal.classList.add('hidden');
+          el.thankModal.classList.remove('flex');
+        }
+      });
+
+      let scrollTimer;
+      window.addEventListener('scroll', () => {
+        if (isPresentationMode) return;
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          const slides = getSlides();
+          const viewportCenter = window.scrollY + window.innerHeight / 2;
+          let closest = 1;
+          let minDistance = Infinity;
+
+          slides.forEach((slide, idx) => {
+            const center = slide.offsetTop + slide.offsetHeight / 2;
+            const distance = Math.abs(center - viewportCenter);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closest = idx + 1;
+            }
+          });
+
+          activeSlide = closest;
+          updateProgress();
+
+          if (activeSlide === 5 && !chatStarted) {
+            chatStarted = true;
+            runChat();
+          }
+        }, 80);
+      }, { passive: true });
+    }
+
+    function bindFlowReveal() {
+      const steps = Array.from(document.querySelectorAll('.flow-step'));
+      if (!steps.length) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, idx) => {
+          if (!entry.isIntersecting) return;
+          setTimeout(() => entry.target.classList.add('is-visible'), idx * 120);
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.2 });
+
+      steps.forEach(step => observer.observe(step));
+    }
+
+    function revealMotion() {
+      gsap.from('.reveal', {
+        y: 24,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power2.out'
+      });
+    }
+
+    function init() {
+      renderExampleCards();
+      renderParticipantCards();
+      renderAllByExample();
+      renderLeads();
+      bindEvents();
+      bindFlowReveal();
+      startAutoExampleRotation();
+      revealMotion();
+      goToSlide(1);
+      if (el.qrImage) {
+        el.qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=${encodeURIComponent(window.location.href)}`;
+      }
+      if (el.totemQrImage) {
+        el.totemQrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(window.location.href)}`;
+      }
+      if (new URLSearchParams(window.location.search).get('presentation') === '1') {
+        enablePresentationMode(true);
+      }
+      lucide.createIcons();
+    }
+
+    init();
+  </script>
+<div id="global-html-launcher" style="position:fixed;left:16px;bottom:16px;z-index:9999;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+  <button id="globalNavToggle" type="button" aria-label="Abrir navegación rápida" style="border:1px solid #cbd5e1;background:#0f172a;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(15,23,42,.2);cursor:pointer;">Navegar</button>
+  <div id="globalNavPanel" hidden style="margin-top:8px;min-width:220px;max-height:60vh;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 14px 30px rgba(15,23,42,.16);">
+    <p style="margin:2px 4px 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;">Páginas</p>
+    <div id="globalNavLinks" style="display:grid;gap:6px;"></div>
+  </div>
+</div>
+<script>
+(function(){
+  if (window.__globalNavInstalled) return;
+  window.__globalNavInstalled = true;
+  var links = [
+    { href: "index.html", label: "Inicio" },
+    { href: "restaurantes.html", label: "Planes Restaurantes" },
+    { href: "servicios.html", label: "Planes Servicios" },
+    { href: "tiendas.html", label: "Planes Tiendas" },
+    { href: "redes-sociales.html", label: "Redes Sociales" },
+    { href: "prospectos.html", label: "Prospectos" },
+    { href: "mensajes-prospectos.html", label: "Mensajes Prospectos" },
+    { href: "totem-demo.html", label: "Totem Demo" },
+    { href: "uada.html", label: "Demo Uada" },
+    { href: "exkapa.html", label: "Demo Exkapa" },
+    { href: "moms.html", label: "Demo Moms" }
+  ];
+
+  var toggle = document.getElementById("globalNavToggle");
+  var panel = document.getElementById("globalNavPanel");
+  var linksWrap = document.getElementById("globalNavLinks");
+  var root = document.getElementById("global-html-launcher");
+  if (!toggle || !panel || !linksWrap || !root) return;
+
+  var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  linksWrap.innerHTML = links.map(function(item){
+    var active = item.href.toLowerCase() === current;
+    var baseStyle = "display:block;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #e2e8f0;";
+    var activeStyle = "background:#e0f2fe;color:#075985;border-color:#7dd3fc;";
+    var normalStyle = "background:#fff;color:#0f172a;";
+    return "<a href=\"" + item.href + "\" style=\"" + baseStyle + (active ? activeStyle : normalStyle) + "\">" + item.label + "</a>";
+  }).join("");
+
+  toggle.addEventListener("click", function(){
+    panel.hidden = !panel.hidden;
+  });
+
+  document.addEventListener("click", function(e){
+    if (!root.contains(e.target)) panel.hidden = true;
+  });
+})();
+</script>
+</body>
+</html>

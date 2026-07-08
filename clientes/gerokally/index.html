@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema digital para Gerokally</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sistema digital para Gerokally" />
+  <meta property="og:description"
+    content="Una plataforma para organizar talleres, captar nuevas familias y facilitar el seguimiento de adultos mayores y actividades." />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sistema digital para Gerokally" />
+  <meta name="twitter:description"
+    content="Bienestar para adultos mayores con estructura, seguimiento y comunicación clara." />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <script src="../portal-auth.js"></script>
+  <style>
+    :root {
+      --bg: #f8f3ea;
+      --surface: #ffffff;
+      --surface-soft: #f1ede3;
+      --ink: #283640;
+      --muted: #5d6f7a;
+      --warm: #d8c3a3;
+      --warm-deep: #b8976d;
+      --blue-soft: #dcebf4;
+      --green-soft: #deebdf;
+      --line: #d9d2c5;
+      --gold-soft: #c9a56a;
+      --radius: 18px;
+      --shadow: 0 14px 30px rgba(95, 88, 73, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 10% 0%, #fef8ef 0%, transparent 28%), radial-gradient(circle at 100% 10%, #eaf3f8 0%, transparent 35%), var(--bg);
+      line-height: 1.56;
+    }
+
+    .wrap {
+      width: min(1140px, 92vw);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 56px 0 38px;
+    }
+
+    .hero {
+      background: linear-gradient(130deg, #f2e6d6 0%, #e7f1f7 56%, #e5efe5 100%);
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      padding: clamp(24px, 4vw, 50px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -40px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(201, 165, 106, 0.12);
+    }
+
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      width: clamp(100px, 19vw, 160px);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 22px rgba(60, 58, 47, 0.2);
+      background: #fff;
+    }
+
+    .brand-chip {
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(185, 151, 109, 0.36);
+      color: #5a4a31;
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: .18s ease;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn.primary {
+      background: #fff;
+      color: #35596f;
+      border-color: #d4dee5;
+    }
+
+    .btn.secondary {
+      background: #ecf3f8;
+      color: #2f546a;
+      border-color: #d0e0eb;
+    }
+
+    .btn.outline {
+      background: transparent;
+      color: #5d4a2f;
+      border-color: rgba(93, 74, 47, 0.35);
+    }
+
+    main {
+      padding-bottom: 30px;
+    }
+
+    section {
+      padding: 12px 0 30px;
+    }
+
+    .block {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 8px 20px rgba(112, 101, 78, 0.08);
+    }
+
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .flow {
+      background: linear-gradient(140deg, #f9f2e8 0%, #eaf2f8 54%, #ebf4ea 100%);
+      border: 1px dashed #c9b18d;
+      border-radius: 16px;
+      padding: 22px;
+      white-space: pre-line;
+      font-weight: 650;
+      color: #4a5d66;
+    }
+
+    .card-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #fff 0%, #fcfaf6 100%);
+      border: 1px solid #dfd6c8;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 6px 14px rgba(102, 89, 63, 0.07);
+    }
+
+    .card p {
+      margin-bottom: 0;
+    }
+
+    .panel-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .panel-item {
+      background: var(--surface-soft);
+      border: 1px solid #ddd4c8;
+      border-radius: 12px;
+      padding: 12px;
+      color: #52626c;
+      font-weight: 650;
+    }
+
+    .investment {
+      background: linear-gradient(130deg, #b7966c 0%, #a8beaf 56%, #8caec3 100%);
+      color: #fff;
+      border-radius: 24px;
+      padding: clamp(24px, 4vw, 40px);
+      border: 1px solid rgba(255, 255, 255, .35);
+      box-shadow: 0 16px 30px rgba(95, 80, 56, 0.2);
+    }
+
+    .investment h2,
+    .investment p,
+    .investment li {
+      color: #fff;
+    }
+
+    .price {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin: 8px 0 14px;
+      letter-spacing: .3px;
+    }
+
+    .investment .btn.secondary {
+      background: #fff;
+      color: #536a78;
+      border-color: #fff;
+    }
+
+    .investment .btn.outline {
+      border-color: rgba(255, 255, 255, .7);
+      color: #fff;
+    }
+
+    footer {
+      padding: 0 0 44px;
+      text-align: center;
+      color: #6d746f;
+      font-size: .95rem;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding-top: 30px;
+      }
+
+      .hero {
+        border-radius: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="hero-top">
+        <img class="logo" src="WhatsApp Image 2026-04-01 at 5.22.20 PM (1).jpeg" alt="Logo Gerokally" />
+        <span class="brand-chip">Bienestar, comunidad y acompañamiento</span>
+      </div>
+      <h1>Sistema digital para Gerokally</h1>
+      <p>Una plataforma para organizar talleres, captar nuevas familias y facilitar el seguimiento de adultos mayores y
+        actividades.</p>
+      <p><strong>El bienestar también necesita estructura, seguimiento y comunicación clara.</strong></p>
+      <div class="actions">
+        <a class="btn primary" href="#sistema">Ver sistema</a>
+        <a class="btn secondary" href="#beneficios">Ver beneficios</a>
+        <a class="btn outline" href="crecimiento.html">Ver crecimiento</a>
+      </div>
+    </div>
+  </header>
+  <main class="wrap">
+    <section id="oportunidad">
+      <div class="block">
+        <h2>Las familias buscan confianza antes de tomar una decisión</h2>
+        <p>Cuando se trata de bienestar para adultos mayores, la confianza y la claridad son esenciales. Muchas veces
+          las personas necesitan entender actividades, horarios, acompañamiento y beneficios antes de integrarse.</p>
+        <ul>
+          <li>Personas interesadas que necesitan información clara</li>
+          <li>Talleres y actividades difíciles de comunicar solo por redes</li>
+          <li>Familias que necesitan confianza antes de contactar</li>
+          <li>Seguimiento complicado entre mensajes y llamadas</li>
+          <li>Actividades que podrían llenarse mejor con organización digital</li>
+        </ul>
+        <p><strong>No se trata solo de publicar actividades. Se trata de construir confianza y seguimiento.</strong></p>
+      </div>
+    </section>
+    <section id="sistema">
+      <h2>Un sistema para informar, organizar y dar seguimiento</h2>
+      <div class="flow">Persona descubre Gerokally
+        ↓
+        Conoce talleres y actividades
+        ↓
+        Explora beneficios y programas
+        ↓
+        Solicita información o agenda
+        ↓
+        Recibe seguimiento
+        ↓
+        Participa en actividades
+        ↓
+        La familia mantiene contacto constante</div>
+    </section>
+    <section>
+      <h2>Módulos del sistema</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3>1. Página institucional</h3>
+          <p>Explica Gerokally, actividades, enfoque y beneficios.</p>
+        </article>
+        <article class="card">
+          <h3>2. Agenda de actividades</h3>
+          <p>Calendario de talleres, conferencias y activaciones.</p>
+        </article>
+        <article class="card">
+          <h3>3. Registro de interesados</h3>
+          <p>Formulario para familias y participantes.</p>
+        </article>
+        <article class="card">
+          <h3>4. Talleres y programas</h3>
+          <p>Presentación organizada de actividades y eventos.</p>
+        </article>
+        <article class="card">
+          <h3>5. Confirmaciones automáticas</h3>
+          <p>Mensajes para recordar actividades y horarios.</p>
+        </article>
+        <article class="card">
+          <h3>6. Seguimiento a participantes</h3>
+          <p>Facilita mantener comunicación después de actividades.</p>
+        </article>
+        <article class="card">
+          <h3>7. Base de datos básica</h3>
+          <p>Registro de participantes, familiares e intereses.</p>
+        </article>
+        <article class="card">
+          <h3>8. Panel administrativo</h3>
+          <p>Visualización simple de registros y actividades.</p>
+        </article>
+        <article class="card">
+          <h3>9. Eventos especiales</h3>
+          <p>Sistema adaptable para talleres, conferencias y convivencias.</p>
+        </article>
+        <article class="card">
+          <h3>10. Reportes básicos</h3>
+          <p>Actividades más solicitadas, horarios fuertes y registros.</p>
+        </article>
+      </div>
+    </section>
+    <section id="beneficios">
+      <div class="block">
+        <h2>Qué gana Gerokally con este sistema</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Más confianza</h3>
+            <p>Las familias entienden claramente el proyecto y servicios.</p>
+          </article>
+          <article class="card">
+            <h3>Más organización</h3>
+            <p>Talleres y registros dejan de depender solo de mensajes.</p>
+          </article>
+          <article class="card">
+            <h3>Más seguimiento</h3>
+            <p>Las personas pueden mantenerse conectadas con actividades futuras.</p>
+          </article>
+          <article class="card">
+            <h3>Más presencia profesional</h3>
+            <p>Gerokally se percibe como un proyecto estructurado y confiable.</p>
+          </article>
+          <article class="card">
+            <h3>Más comunidad</h3>
+            <p>El sistema ayuda a mantener relación continua con participantes y familias.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="block" style="background:linear-gradient(180deg,#fff 0%,#eff5f8 100%)">
+        <h2>Una experiencia más clara para familias y participantes</h2>
+        <p>Muchas personas mayores no toman decisiones solas. El sistema también ayuda a que hijos y familiares
+          entiendan actividades, beneficios y formas de participación.</p>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Actividades semanales</h3>
+            <p>Talleres y activaciones organizadas.</p>
+          </article>
+          <article class="card">
+            <h3>Conferencias</h3>
+            <p>Eventos especiales y temas de bienestar.</p>
+          </article>
+          <article class="card">
+            <h3>Participación sencilla</h3>
+            <p>Información clara y accesible.</p>
+          </article>
+          <article class="card">
+            <h3>Comunicación continua</h3>
+            <p>Seguimiento después de actividades.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="block" style="background:linear-gradient(180deg,#fff 0%,#f3f0e8 100%)">
+        <h2>Panel básico para organización interna</h2>
+        <div class="panel-list">
+          <div class="panel-item">Actividades programadas</div>
+          <div class="panel-item">Participantes registrados</div>
+          <div class="panel-item">Interesados nuevos</div>
+          <div class="panel-item">Seguimiento pendiente</div>
+          <div class="panel-item">Eventos próximos</div>
+          <div class="panel-item">Horarios con más registros</div>
+          <div class="panel-item">Actividades más solicitadas</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="block">
+        <h2>Implementación completa del sistema</h2>
+        <p>El sistema se desarrolla como una plataforma organizada para que Gerokally pueda informar, registrar
+          participantes y mantener seguimiento constante.</p>
+        <ul>
+          <li>página institucional</li>
+          <li>agenda de actividades</li>
+          <li>formularios</li>
+          <li>seguimiento básico</li>
+          <li>panel interno</li>
+          <li>registro de participantes</li>
+          <li>reportes básicos</li>
+          <li>diseño responsive</li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <div class="investment">
+        <h2>Inversión del sistema completo</h2>
+        <div class="price">$8,000 MXN</div>
+        <p>Implementación completa del sistema digital para Gerokally.</p>
+        <ul>
+          <li>estructura institucional</li>
+          <li>agenda</li>
+          <li>talleres</li>
+          <li>seguimiento</li>
+          <li>panel</li>
+          <li>registros</li>
+          <li>reportes básicos</li>
+        </ul>
+        <div class="actions"><a class="btn secondary" href="#">Quiero implementar el sistema</a><a class="btn outline"
+            href="crecimiento.html">Ver crecimiento</a></div>
+      </div>
+    </section>
+    <section>
+      <div class="block" style="text-align:center">
+        <h2>Más que actividades.<br />Una comunidad organizada y visible.</h2>
+        <p>Gerokally puede transformar actividades aisladas en una experiencia continua para participantes y familias.
+        </p>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap">Sistema digital enfocado en bienestar, comunidad y acompañamiento para adultos mayores.</footer>
+</body>
+
+</html>

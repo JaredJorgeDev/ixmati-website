@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Travel | Home</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <link rel="stylesheet" href="live-travel.css" />
+  <script src="../portal-auth.js"></script>
+  <script defer src="live-travel.js"></script>
+</head>
+<body data-page="home">
+  <header class="lt-nav-wrap">
+    <div class="lt-wrap lt-nav">
+      <a class="lt-brand" href="index.html"><img src="live.png" alt="Logo Live Travel" /><span><small>Live Travel</small><strong>Plataforma comercial</strong></span></a>
+      <button class="lt-burger" type="button" aria-label="Menu">☰</button>
+      <nav class="lt-menu">
+        <a data-page="home" href="index.html">Inicio</a>
+        <a data-page="destinos" href="destinos.html">Destinos</a>
+        <a data-page="experiencias" href="experiencias.html">Experiencias</a>
+        <a data-page="cotizador" href="cotizador.html">Cotizador</a>
+        <a data-page="asesoria" href="asesoria.html">Asesoría</a>
+      </nav>
+      <div class="lt-nav-actions">
+        <a class="lt-btn lt-btn-primary" href="cotizador.html">Cotizar viaje</a>
+        <a class="lt-btn lt-btn-outline" href="cotizacion.html">Volver a cotización</a>
+        <button class="lt-btn lt-btn-outline" id="logoutBtn" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="lt-hero-full lt-reveal">
+    <div class="lt-wrap">
+      <div class="lt-hero-content">
+        <h1>Viajes diseñados para disfrutarse desde el primer mensaje</h1>
+        <p>Live Travel convierte ideas de viaje en paquetes claros, cotizaciones guiadas y asesoría personalizada.</p>
+        <div class="lt-hero-actions">
+          <a class="lt-btn lt-btn-primary" href="destinos.html">Explorar destinos</a>
+          <a class="lt-btn lt-btn-gold" href="cotizador.html">Cotizar mi viaje</a>
+        </div>
+        <div class="lt-microcopy">Paquetes familiares · escapadas premium · viajes internacionales · asesoría personalizada</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="lt-page">
+    <section class="lt-section lt-reveal">
+      <div class="lt-wrap lt-grid-4">
+        <article class="lt-card"><h3>Destinos nacionales e internacionales</h3><p>Oferta completa para viajes de corto y largo alcance.</p></article>
+        <article class="lt-card"><h3>Asesoría personalizada</h3><p>Acompañamiento comercial con contexto real del viajero.</p></article>
+        <article class="lt-card"><h3>Cotización guiada</h3><p>Solicitud estructurada para agilizar propuesta y seguimiento.</p></article>
+        <article class="lt-card"><h3>Seguimiento comercial</h3><p>Leads más claros para mejorar velocidad de cierre.</p></article>
+      </div>
+    </section>
+
+    <section class="lt-section lt-reveal">
+      <div class="lt-wrap">
+        <h2>Destinos destacados</h2>
+        <div id="featuredDestinations" class="lt-grid-4"></div>
+      </div>
+    </section>
+
+    <section class="lt-section lt-reveal">
+      <div class="lt-wrap lt-card">
+        <h2>Cómo funciona</h2>
+        <div class="lt-flow">Exploras destino
+↓
+Cotizas según fechas/personas
+↓
+Agenda asesoría
+↓
+Recibes propuesta</div>
+      </div>
+    </section>
+
+    <section class="lt-section lt-reveal">
+      <div class="lt-wrap">
+        <h2>Experiencias por perfil</h2>
+        <div id="experienceGrid" class="lt-grid-auto"></div>
+      </div>
+    </section>
+
+    <section class="lt-section lt-reveal">
+      <div class="lt-wrap lt-card" style="text-align:center">
+        <h2>Tu próximo viaje puede empezar con una cotización clara</h2>
+        <a class="lt-btn lt-btn-primary" href="cotizador.html">Cotizar viaje</a>
+      </div>
+    </section>
+  </main>
+
+  <a id="floatingQuote" class="lt-btn lt-btn-primary lt-floating-cta" href="cotizador.html" style="display:none">Cotizar</a>
+  <div id="ltToast" class="lt-toast"></div>
+  <footer class="lt-wrap lt-footer">Live Travel · Demo multipágina premium</footer>
+</body>
+</html>

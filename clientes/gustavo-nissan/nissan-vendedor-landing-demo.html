@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cotiza Tu Nissan | Atención Personalizada</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:secure_url" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="nissan-vendedor-landing.css" rel="stylesheet">
+  <script src="../portal-auth.js"></script>
+</head>
+<body>
+  <button id="logoutBtn" type="button" style="position:fixed;top:14px;right:14px;z-index:9999;padding:10px 14px;border:0;border-radius:999px;background:#111;color:#fff;font-weight:700;cursor:pointer;">Cerrar sesión</button>
+  <main class="auto-page">
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="wrap hero-grid">
+        <div>
+          <div class="hero-brand">
+            <img class="nissan-logo" src="../assets/nissan-logo.png" alt="Nissan">
+            <p class="hero-kicker">Asesor Nissan · Atención directa</p>
+          </div>
+          <h1>Estrena tu Nissan con una mensualidad que sí te funcione</h1>
+          <p class="hero-copy">Compara opciones de modelo, presupuesto y enganche en minutos. Recibe una cotización clara y seguimiento personalizado por WhatsApp.</p>
+
+          <div class="price-highlight">
+            <span>Mensualidades desde</span>
+            <strong>$5,999 M.N.</strong>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/525511223344?text=Hola%2C%20quiero%20cotizar%20un%20Nissan" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+            <a class="btn btn-secondary" href="#cotizacion-form">Cotizar ahora</a>
+          </div>
+
+          <div class="hero-points">
+            <span>Opciones de crédito</span>
+            <span>Respuesta rápida</span>
+            <span>Acompañamiento personalizado</span>
+          </div>
+        </div>
+
+        <aside class="hero-panel">
+          <h3>Modelos más consultados</h3>
+          <div class="model-list">
+            <article><strong>Versa</strong><small>Ideal para ciudad y movilidad diaria</small></article>
+            <article><strong>Sentra</strong><small>Confort y diseño para uso personal o familiar</small></article>
+            <article><strong>Kicks</strong><small>SUV compacta con gran relación valor-equipamiento</small></article>
+            <article><strong>Frontier</strong><small>Potencia y versatilidad para trabajo y negocio</small></article>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section benefits">
+      <div class="wrap">
+        <h2>Beneficios de cotizar aquí</h2>
+        <div class="benefit-grid">
+          <article class="benefit-card"><h3>Atención personalizada</h3><p>Te orientamos según tu perfil y el uso que le darás al auto.</p></article>
+          <article class="benefit-card"><h3>Opciones de financiamiento</h3><p>Revisamos escenarios reales de pago de acuerdo con tu presupuesto.</p></article>
+          <article class="benefit-card"><h3>Cotización rápida</h3><p>Recibe una propuesta clara, sin procesos complicados.</p></article>
+          <article class="benefit-card"><h3>Seguimiento por WhatsApp</h3><p>Comunicación directa para resolver dudas y avanzar en tu compra.</p></article>
+          <article class="benefit-card"><h3>Modelos disponibles</h3><p>Conoce versiones, equipamiento y alternativas para elegir mejor.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lead-section" id="cotizacion-form">
+      <div class="wrap lead-grid">
+        <article class="lead-copy">
+          <p class="section-eyebrow">Cotización personalizada</p>
+          <h2>Déjanos tus datos y recibe una propuesta hecha para ti</h2>
+          <p>Comparte la información básica de compra y te contactamos con una cotización alineada a tu presupuesto, enganche y forma de pago.</p>
+
+          <div class="trust-box">
+            <h3>¿Qué puedes esperar?</h3>
+            <ul>
+              <li>Respuesta rápida por WhatsApp.</li>
+              <li>Asesoría para elegir modelo y versión.</li>
+              <li>Orientación clara de enganche y mensualidades.</li>
+              <li>Acompañamiento durante todo el proceso.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="lead-form-wrap">
+          <form id="autoLeadForm" class="lead-form">
+            <label>Nombre completo
+              <input type="text" name="nombre" placeholder="Ej. Carlos Ramírez" required>
+            </label>
+
+            <label>WhatsApp
+              <input type="tel" name="whatsapp" placeholder="Ej. 55 1234 5678" required>
+            </label>
+
+            <label>Modelo de interés
+              <select name="modelo" required>
+                <option value="" selected disabled>Selecciona un modelo</option>
+                <option>Versa</option>
+                <option>Sentra</option>
+                <option>Kicks</option>
+                <option>Frontier</option>
+                <option>X-Trail</option>
+                <option>Otro modelo Nissan</option>
+              </select>
+            </label>
+
+            <label>Presupuesto aproximado
+              <select name="presupuesto" required>
+                <option value="" selected disabled>Selecciona un rango</option>
+                <option>$250,000 - $350,000 MXN</option>
+                <option>$350,000 - $450,000 MXN</option>
+                <option>$450,000 - $550,000 MXN</option>
+                <option>$550,000+ MXN</option>
+              </select>
+            </label>
+
+            <label>Enganche disponible
+              <select name="enganche" required>
+                <option value="" selected disabled>Selecciona un rango</option>
+                <option>$30,000 - $60,000 MXN</option>
+                <option>$60,000 - $100,000 MXN</option>
+                <option>$100,000 - $150,000 MXN</option>
+                <option>$150,000+ MXN</option>
+              </select>
+            </label>
+
+            <label>Tipo de crédito o forma de pago
+              <select name="credito" required>
+                <option value="" selected disabled>Selecciona una opción</option>
+                <option>Crédito automotriz bancario</option>
+                <option>Crédito de financiera de agencia</option>
+                <option>Pago de contado</option>
+                <option>Aún por definir</option>
+              </select>
+            </label>
+
+            <button type="submit" class="btn btn-primary full">Quiero mi cotización</button>
+            <p id="autoSuccess" class="success-msg">Gracias, recibimos tu solicitud. Te contactaremos por WhatsApp en breve.</p>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <section class="section process">
+      <div class="wrap">
+        <h2>Cómo funciona</h2>
+        <div class="process-grid">
+          <article><span>1</span><h3>Eliges modelo</h3><p>Nos compartes el Nissan que te interesa.</p></article>
+          <article><span>2</span><h3>Dejas tus datos</h3><p>Registras presupuesto, enganche y forma de pago.</p></article>
+          <article><span>3</span><h3>Recibes cotización</h3><p>Te enviamos una propuesta clara y aterrizada.</p></article>
+          <article><span>4</span><h3>Te contactamos por WhatsApp</h3><p>Un asesor te da seguimiento para avanzar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta">
+      <div class="wrap final-cta-box">
+        <h2>Da el siguiente paso hacia tu Nissan</h2>
+        <p>Si ya tienes un modelo en mente, te ayudamos a cotizarlo con un plan que se ajuste a ti.</p>
+        <a class="btn btn-primary" href="https://wa.me/525511223344?text=Hola%2C%20quiero%20recibir%20mi%20cotizaci%C3%B3n%20Nissan" target="_blank" rel="noopener noreferrer">Recibir información por WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById("autoLeadForm");
+      var success = document.getElementById("autoSuccess");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        success.classList.add("show");
+      });
+    })();
+  </script>
+  <script>
+    (function () {
+      var btn = document.getElementById("logoutBtn");
+      if (btn && window.ClientPortalAuth) {
+        btn.addEventListener("click", function () {
+          window.ClientPortalAuth.logout();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

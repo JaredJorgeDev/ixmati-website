@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beneficios | Pan Comido</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:secure_url" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="../portal-auth.js"></script>
+</head>
+<body>
+  <header class="hero" id="inicio">
+    <div class="overlay"></div>
+    <nav class="topbar">
+      <a class="brand" href="index.html" aria-label="Volver a propuesta principal">
+        <img src="../assets/pan comido.png" alt="Logo Pan Comido">
+      </a>
+      <div class="topbar-actions">
+        <a href="index.html" class="nav-link">Volver a la propuesta</a>
+        <button class="btn btn-secondary solid logout-btn" id="logoutBtn" type="button">Cerrar sesión</button>
+      </div>
+    </nav>
+    <div class="hero-content">
+      <img class="hero-logo" src="../assets/pan comido.png" alt="Pan Comido Restaurante y Cafetería">
+      <p class="tag">Beneficios del sistema</p>
+      <h1>Lo que cambia cuando Pan Comido vende también en línea</h1>
+      <p class="subtitle">Más pedidos, mejor control y una nueva forma de crecer sin depender solo del local.</p>
+      <div class="actions">
+        <a href="#mas-ventas" class="btn primary">Ver beneficios</a>
+        <a href="index.html" class="btn secondary">Volver a la propuesta</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="mas-ventas">
+      <div class="section-header">
+        <p class="kicker">Impacto comercial</p>
+        <h2>Más pedidos sin depender del local</h2>
+      </div>
+      <p>El negocio deja de vender solo a quien pasa por el establecimiento.</p>
+      <ul>
+        <li>Clientes pueden pedir desde casa</li>
+        <li>Pedidos antes de llegar</li>
+        <li>Venta en horarios donde antes no había flujo</li>
+        <li>Más oportunidades de compra</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="kicker">Experiencia</p>
+        <h2>Una experiencia más cómoda para el cliente</h2>
+      </div>
+      <ul>
+        <li>Ver menú completo desde su celular</li>
+        <li>Pedir sin esperar</li>
+        <li>Elegir pickup o delivery</li>
+        <li>Menos fricción al ordenar</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="kicker">Operación</p>
+        <h2>Más claridad en la operación</h2>
+      </div>
+      <ul>
+        <li>Pedidos organizados automáticamente</li>
+        <li>Menos errores al tomar órdenes</li>
+        <li>Información clara para cocina</li>
+        <li>Flujo más ordenado</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="kicker">Rentabilidad</p>
+        <h2>Aumenta el ticket promedio</h2>
+      </div>
+      <ul>
+        <li>Sugerencias de productos</li>
+        <li>Extras automáticos</li>
+        <li>Combos</li>
+        <li>Clientes compran más sin presión</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="kicker">Inteligencia comercial</p>
+        <h2>Decisiones basadas en datos reales</h2>
+      </div>
+      <ul>
+        <li>Qué productos se venden más</li>
+        <li>Horarios más fuertes</li>
+        <li>Comportamiento de clientes</li>
+        <li>Base de datos para promociones</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="kicker">Crecimiento futuro</p>
+        <h2>Base lista para crecer</h2>
+      </div>
+      <p>El sistema no solo sirve hoy. Deja preparado el negocio para campañas, redes y crecimiento constante.</p>
+      <ul>
+        <li>Integración con anuncios</li>
+        <li>Soporte para promociones</li>
+        <li>Escalable</li>
+        <li>Preparado para nuevas estrategias</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="closing">
+    <h2>No es solo una página. Es una nueva forma de vender.</h2>
+    <p>Pan Comido ya funciona. Esto permite que funcione también fuera del local y en más momentos del día.</p>
+    <div class="actions">
+      <a href="index.html" class="btn primary">Volver a la propuesta</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById("logoutBtn");
+      if (btn && window.ClientPortalAuth) {
+        btn.addEventListener("click", function () {
+          window.ClientPortalAuth.logout();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

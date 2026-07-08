@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planes de Redes Sociales | Ixmati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08111f;
+      --bg-soft: #0d1728;
+      --panel: rgba(12, 23, 39, 0.86);
+      --panel-strong: #101d31;
+      --card: rgba(15, 26, 44, 0.96);
+      --card-alt: rgba(21, 35, 57, 0.98);
+      --text: #e8eefc;
+      --muted: #95a4c4;
+      --line: rgba(166, 187, 224, 0.18);
+      --accent: #79b8ff;
+      --accent-strong: #d8ecff;
+      --success: #62d6a6;
+      --warning: #ffc86b;
+      --danger: #ff8b8b;
+      --shadow: 0 24px 70px rgba(1, 7, 18, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(64, 110, 180, 0.22), transparent 30%),
+        radial-gradient(circle at right 10%, rgba(45, 91, 169, 0.18), transparent 26%),
+        linear-gradient(180deg, #09111e 0%, #070d18 100%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(7, 13, 24, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(166, 187, 224, 0.12);
+    }
+
+    .nav-inner,
+    .hero,
+    .section,
+    footer {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0;
+    }
+
+    .nav-brand {
+      display: grid;
+      gap: 2px;
+    }
+
+    .nav-brand strong {
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-brand span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #d9e6ff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(121, 184, 255, 0.12);
+      border-color: rgba(121, 184, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 56px 0 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-panel,
+    .section-card,
+    .plan-card,
+    .audience-card,
+    .list-card,
+    .timeline-step,
+    .integration-card,
+    .logistics-grid article {
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      background: linear-gradient(180deg, rgba(13, 23, 40, 0.9), rgba(9, 17, 31, 0.98));
+      border-radius: 28px;
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::before {
+      content: "";
+      position: absolute;
+      inset: auto -8% -38% auto;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(121, 184, 255, 0.24), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .tag,
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow {
+      background: rgba(121, 184, 255, 0.12);
+      border: 1px solid rgba(121, 184, 255, 0.16);
+      color: var(--accent-strong);
+      font-size: 12px;
+      padding: 9px 12px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: clamp(40px, 5vw, 64px);
+      line-height: 0.96;
+      max-width: 12ch;
+    }
+
+    .hero-copy .subhead {
+      margin-top: 18px;
+      max-width: 60ch;
+      color: #d5e1f9;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .hero-badges {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tag,
+    .pill {
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 1px solid rgba(166, 187, 224, 0.16);
+    }
+
+    .pill {
+      background: rgba(98, 214, 166, 0.14);
+      color: #dff8ed;
+      border: 1px solid rgba(98, 214, 166, 0.2);
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 62ch;
+    }
+
+    .hero-panel {
+      background: linear-gradient(180deg, rgba(16, 29, 49, 0.96), rgba(9, 17, 31, 0.98));
+      border-radius: 28px;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .compare-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .compare-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(166, 187, 224, 0.14);
+      border-radius: 20px;
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .compare-card strong {
+      font-size: 17px;
+    }
+
+    .compare-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .compare-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #e1ebff;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .compare-card.negative strong {
+      color: var(--danger);
+    }
+
+    .compare-card.positive strong {
+      color: var(--success);
+    }
+
+    .section {
+      padding: 18px 0 22px;
+    }
+
+    .section-head {
+      margin-bottom: 18px;
+      display: grid;
+      gap: 10px;
+      max-width: 72ch;
+    }
+
+    .section-head p,
+    .support-text,
+    .list-card p,
+    .plan-card p,
+    .timeline-step p,
+    .integration-card p,
+    footer p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .section-head h2 {
+      font-size: clamp(28px, 3vw, 40px);
+    }
+
+    .badge-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-card {
+      background: linear-gradient(180deg, rgba(13, 23, 40, 0.92), rgba(10, 18, 32, 0.98));
+      border-radius: 26px;
+      padding: 24px;
+    }
+
+    .audience-grid,
+    .plans-grid,
+    .includes-grid,
+    .logistics-grid,
+    .integration-grid,
+    .deliverables-grid,
+    .fit-grid,
+    .addons-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .audience-grid {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+
+    .audience-card,
+    .list-card,
+    .integration-card,
+    .logistics-grid article,
+    .deliverable-card,
+    .fit-card,
+    .addon-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 22px;
+      padding: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .audience-card h3,
+    .list-card h3,
+    .integration-card h3,
+    .deliverable-card h3,
+    .fit-card h3,
+    .addon-card h3 {
+      font-size: 20px;
+    }
+
+    .plans-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .plan-card {
+      background: linear-gradient(180deg, rgba(18, 31, 52, 0.94), rgba(11, 20, 35, 0.98));
+      border-radius: 24px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      gap: 14px;
+    }
+
+    .plan-card.featured::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(121, 184, 255, 0.12), transparent 40%, transparent 70%, rgba(98, 214, 166, 0.08));
+      pointer-events: none;
+    }
+
+    .plan-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .plan-card .mini {
+      color: var(--accent-strong);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+    }
+
+    .price {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #f5f8ff;
+    }
+
+    .price small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .price .currency-note {
+      display: block;
+      margin-top: 4px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    ul.clean {
+      margin: 0;
+      padding-left: 18px;
+      color: #e7eefc;
+      line-height: 1.7;
+    }
+
+    .plan-card .footnote {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(166, 187, 224, 0.14);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .includes-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .list-card ul {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.7;
+      color: #e6eefc;
+    }
+
+    .list-card.include h3 {
+      color: var(--success);
+    }
+
+    .list-card.exclude h3 {
+      color: var(--warning);
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 25px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(121, 184, 255, 0.5), rgba(121, 184, 255, 0.06));
+    }
+
+    .timeline-step {
+      position: relative;
+      margin-left: 56px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      padding: 18px 18px 18px 20px;
+    }
+
+    .timeline-step::before {
+      content: attr(data-step);
+      position: absolute;
+      left: -56px;
+      top: 18px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #8cc4ff, #4d8fe5);
+      color: #08111f;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(121, 184, 255, 0.28);
+    }
+
+    .timeline-step h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .logistics-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .logistics-grid article h3 {
+      font-size: 18px;
+    }
+
+    .note-box {
+      margin-top: 14px;
+      border-radius: 18px;
+      padding: 16px 18px;
+      background: rgba(255, 200, 107, 0.08);
+      border: 1px solid rgba(255, 200, 107, 0.16);
+      color: #ffe8bf;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .revision-note,
+    .integration-quote {
+      border-radius: 20px;
+      padding: 18px 20px;
+      border: 1px solid rgba(121, 184, 255, 0.16);
+      box-shadow: var(--shadow);
+    }
+
+    .revision-note {
+      margin-top: 16px;
+      background: rgba(255, 200, 107, 0.08);
+      color: #ffe8bf;
+      border-color: rgba(255, 200, 107, 0.18);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .deliverables-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .deliverable-card {
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      align-content: start;
+    }
+
+    .deliverable-card strong,
+    .addon-card strong {
+      color: var(--accent-strong);
+      font-size: 15px;
+    }
+
+    .fit-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fit-card {
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      align-content: start;
+    }
+
+    .fit-card.ideal h3 {
+      color: var(--success);
+    }
+
+    .fit-card.not-ideal h3 {
+      color: var(--warning);
+    }
+
+    .fit-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #e6eefc;
+      line-height: 1.75;
+    }
+
+    .integration-quote {
+      margin-top: 8px;
+      background: linear-gradient(135deg, rgba(121, 184, 255, 0.14), rgba(98, 214, 166, 0.08));
+    }
+
+    .integration-quote strong {
+      display: block;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      color: #f5f8ff;
+    }
+
+    .addons-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .addon-card {
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      align-content: center;
+      min-height: 138px;
+    }
+
+    .integration-grid {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+
+    .integration-card strong {
+      color: #f4f8ff;
+      font-size: 17px;
+    }
+
+    .signal {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(121, 184, 255, 0.1);
+      color: var(--accent-strong);
+      border: 1px solid rgba(121, 184, 255, 0.16);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stack-lines {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .stack-lines div {
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .stack-lines .attention {
+      background: rgba(121, 184, 255, 0.1);
+      color: #dcedff;
+      border: 1px solid rgba(121, 184, 255, 0.16);
+    }
+
+    .stack-lines .conversion {
+      background: rgba(98, 214, 166, 0.1);
+      color: #def8ed;
+      border: 1px solid rgba(98, 214, 166, 0.18);
+    }
+
+    footer {
+      padding: 10px 0 46px;
+    }
+
+    .closing {
+      background: linear-gradient(135deg, rgba(121, 184, 255, 0.12), rgba(8, 17, 31, 0.9) 58%);
+      border: 1px solid rgba(121, 184, 255, 0.15);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+    }
+
+    .closing h2 {
+      font-size: clamp(28px, 3vw, 40px);
+      max-width: 16ch;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .integration-grid,
+      .includes-grid,
+      .fit-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav-inner {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .hero-copy,
+      .hero-panel,
+      .section-card,
+      .plan-card,
+      .audience-card,
+      .list-card,
+      .timeline-step,
+      .integration-card,
+      .logistics-grid article,
+      .closing {
+        border-radius: 22px;
+      }
+
+      .hero-copy,
+      .hero-panel,
+      .section-card,
+      .plan-card {
+        padding: 20px;
+      }
+
+      .section {
+        padding: 14px 0 18px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+        padding: 8px 10px;
+      }
+
+      h1 {
+        max-width: 10ch;
+      }
+
+      .timeline-step {
+        margin-left: 48px;
+      }
+
+      .timeline-step::before {
+        left: -48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Navegación principal">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <strong>Ixmati Estudio Visual</strong>
+        <span>Servicio complementario a los planes web de Ixmati</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="restaurantes.html">Restaurantes</a>
+        <a href="tiendas.html">Tiendas/Productos</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="redes-sociales.html" class="active">Redes Sociales</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Planes de Redes Sociales</span>
+        <h1>Trabajo mensual de contenido para negocios locales.</h1>
+        <p class="subhead">Gestion mensual de redes para que tu negocio se vea activo, profesional y genere confianza.</p>
+        <div class="hero-badges">
+          <span class="pill">Servicio complementario a los planes web de Ixmati</span>
+          <span class="tag">Ideal para negocios que ya necesitan presencia constante</span>
+          <span class="tag">Complemento perfecto para nuestros planes web</span>
+        </div>
+        <p class="hero-note">Es un servicio mensual y complementario a los planes web: se trabaja por ciclos, con planeacion previa, entregables definidos y una aprobacion clara del cliente antes de publicar.</p>
+      </div>
+
+      <aside class="hero-panel" aria-label="Comparativa operativa">
+        <div class="compare-grid">
+          <div class="compare-card negative">
+            <strong>Negocio sin sistema de contenido</strong>
+            <p>Publica cuando hay tiempo, repite mensajes, cambia el tono cada semana y depende de ocurrencias.</p>
+            <ul>
+              <li>Perfil con huecos largos de actividad</li>
+              <li>Promociones que salen tarde o sin orden</li>
+              <li>Difícil mantener una imagen profesional</li>
+            </ul>
+          </div>
+          <div class="compare-card positive">
+            <strong>Negocio con sistema de contenido</strong>
+            <p>Trabaja con calendario, piezas listas con anticipación y una presencia continua alineada a ventas, horarios y promociones reales.</p>
+            <ul>
+              <li>Contenido mensual planificado</li>
+              <li>Diseño y copies consistentes</li>
+              <li>Publicación programada y revisada</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Resultado visible</span>
+          </div>
+          <h2>¿Qué cambia realmente al contratar esto?</h2>
+        </div>
+        <div class="includes-grid">
+          <article class="list-card">
+            <ul>
+              <li>Tu negocio deja de verse abandonado</li>
+              <li>Tus promociones salen en tiempo, no tarde</li>
+              <li>Tus clientes te recuerdan más seguido</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <ul>
+              <li>Tu perfil empieza a verse profesional</li>
+              <li>Generas más confianza antes de que te escriban</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="badge-line">
+          <span class="signal">¿Para quién es?</span>
+        </div>
+        <h2>Negocios que necesitan verse activos sin improvisar su comunicación.</h2>
+        <p>Este servicio tiene sentido cuando el negocio ya opera, tiene algo que comunicar de forma constante y quiere sostener una presencia seria sin convertir redes en una carga diaria.</p>
+      </div>
+      <div class="audience-grid">
+        <article class="audience-card">
+          <h3>Restaurantes</h3>
+          <p>Sirve para mover promociones, horarios, especiales, reservas, menú del día y reforzar una imagen viva entre semana y fines de semana.</p>
+        </article>
+        <article class="audience-card">
+          <h3>Boutiques y tiendas</h3>
+          <p>Ayuda a mostrar producto nuevo, disponibilidad, temporadas, looks, paquetes y llamadas claras hacia catálogo, pedidos o WhatsApp.</p>
+        </article>
+        <article class="audience-card">
+          <h3>Barberías y estética</h3>
+          <p>Funciona cuando necesitas mostrar trabajo constante, agenda activa, promociones por temporada y una identidad visual más cuidada.</p>
+        </article>
+        <article class="audience-card">
+          <h3>Servicios profesionales</h3>
+          <p>Ordena una presencia que inspire confianza, explique mejor el servicio y mantenga visibilidad sin caer en publicaciones vacías.</p>
+        </article>
+        <article class="audience-card">
+          <h3>Clínicas y consultorios</h3>
+          <p>Permite comunicar atención, horarios, especialidades, recordatorios y confianza institucional con un tono limpio y profesional.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Alcance claro</span>
+          </div>
+          <h2>Qué sí incluye y qué no incluye.</h2>
+          <p>La página deja claro el alcance para cuidar el trabajo mensual. Esto ayuda a evitar expectativas ambiguas y hace más fácil trabajar con tiempos y entregables reales.</p>
+        </div>
+        <div class="includes-grid">
+          <article class="list-card include">
+            <h3>Qué sí incluye</h3>
+            <ul>
+              <li>Calendario mensual de contenido</li>
+              <li>Diseño de publicaciones</li>
+              <li>Copies para cada pieza según plan</li>
+              <li>Programación o publicación de contenido</li>
+              <li>Stories según el plan contratado</li>
+              <li>Optimización básica del perfil</li>
+              <li>Acompañamiento estratégico básico</li>
+              <li>Revisión mensual con ajustes definidos</li>
+            </ul>
+          </article>
+          <article class="list-card exclude">
+            <h3>Qué no incluye automáticamente</h3>
+            <ul>
+              <li>Pauta publicitaria ni presupuesto de anuncios</li>
+              <li>Sesión de fotos</li>
+              <li>Grabación de reels</li>
+              <li>Community management 24/7</li>
+              <li>Respuesta diaria a mensajes</li>
+              <li>Campañas activas incluidas</li>
+              <li>Estrategia avanzada de embudos</li>
+              <li>Branding completo</li>
+              <li>Diseño de logotipo</li>
+              <li>Cobertura de eventos</li>
+              <li>Producción audiovisual profesional</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="badge-line">
+          <span class="signal">Planes</span>
+        </div>
+        <h2>Planes de Redes Sociales</h2>
+        <p>Tres niveles para negocios que necesitan presencia constante, mejor orden visual y una base lista para conectar con sistemas web, catálogos, citas o pedidos.</p>
+      </div>
+      <div class="plans-grid">
+        <article class="plan-card">
+          <div class="plan-top">
+            <div>
+              <div class="mini">Plan RS0</div>
+              <h3>Básico</h3>
+            </div>
+            <div class="price">$1,200 MXN<span class="currency-note">Por mes</span><small>RS0</small></div>
+          </div>
+          <p>Ideal para negocios que quieren empezar a verse activos sin una carga mensual alta.</p>
+          <ul class="clean">
+            <li>4 publicaciones</li>
+            <li>2 stories</li>
+            <li>Copies básicos</li>
+            <li>Diseño gráfico simple</li>
+            <li>Programación de contenido</li>
+            <li>1 revisión mensual</li>
+          </ul>
+          <div class="footnote">Plan mensual de entrada para empezar con contenido ordenado y presencia básica.</div>
+        </article>
+
+        <article class="plan-card">
+          <div class="plan-top">
+            <div>
+              <div class="mini">Plan RS1</div>
+              <h3>Presencia</h3>
+            </div>
+            <div class="price">$1,800 MXN<span class="currency-note">Por mes</span><small>RS1</small></div>
+          </div>
+          <p>Orientado a negocios pequeños que solo necesitan verse activos y ordenados.</p>
+          <ul class="clean">
+            <li>8 publicaciones al mes</li>
+            <li>4 stories al mes</li>
+            <li>Copies básicos</li>
+            <li>Diseño gráfico de posts</li>
+            <li>Programación de contenido</li>
+            <li>1 revisión mensual</li>
+          </ul>
+          <div class="footnote">Plan mensual para mantener presencia activa con contenido ordenado básico.</div>
+        </article>
+
+        <article class="plan-card featured">
+          <div class="plan-top">
+            <div>
+              <div class="mini">Plan RS2</div>
+              <h3>Gestión</h3>
+            </div>
+            <div class="price">$3,000 MXN<span class="currency-note">Por mes</span><small>RS2</small></div>
+          </div>
+          <p>Para negocios que necesitan mayor constancia y un perfil más trabajado.</p>
+          <ul class="clean">
+            <li>12 publicaciones al mes</li>
+            <li>8 stories al mes</li>
+            <li>Copies más trabajados</li>
+            <li>Diseño gráfico</li>
+            <li>Programación de contenido</li>
+            <li>Optimización básica del perfil</li>
+            <li>2 revisiones al mes</li>
+            <li>Lineamientos de comunicación</li>
+          </ul>
+          <div class="footnote">Plan mensual para operar una presencia más consistente y mejor alineada a promociones y comunicación.</div>
+        </article>
+
+        <article class="plan-card">
+          <div class="plan-top">
+            <div>
+              <div class="mini">Plan RS3</div>
+              <h3>Crecimiento</h3>
+            </div>
+            <div class="price">$4,500 MXN<span class="currency-note">Por mes</span><small>RS3</small></div>
+          </div>
+          <p>Para negocios que ya quieren una presencia más seria y base para campañas.</p>
+          <ul class="clean">
+            <li>16 publicaciones al mes</li>
+            <li>12 stories al mes</li>
+            <li>Copies estratégicos</li>
+            <li>Diseño gráfico</li>
+            <li>Programación de contenido</li>
+            <li>Optimización del perfil</li>
+            <li>Propuesta de contenidos promocionales</li>
+            <li>2 revisiones al mes</li>
+            <li>Guía básica para campañas futuras</li>
+          </ul>
+          <div class="footnote">Plan mensual para negocios que necesitan contenido más robusto y base para iniciativas promocionales.</div>
+        </article>
+      </div>
+      <div class="revision-note">Las revisiones incluidas aplican dentro del ciclo mensual. Cambios adicionales o fuera de calendario podrán moverse al siguiente periodo o cotizarse aparte.</div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Diferencia</span>
+          </div>
+          <h2>Esto no es manejo de redes improvisado</h2>
+        </div>
+        <div class="fit-grid">
+          <article class="fit-card not-ideal">
+            <h3>Otros</h3>
+            <ul>
+              <li>Publican sin estrategia</li>
+              <li>Diseños sin coherencia</li>
+              <li>Reaccionan tarde</li>
+            </ul>
+          </article>
+          <article class="fit-card ideal">
+            <h3>Ixmati</h3>
+            <ul>
+              <li>Planeación mensual</li>
+              <li>Diseño consistente</li>
+              <li>Publicación ordenada</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="badge-line">
+          <span class="signal">Entregables</span>
+        </div>
+        <h2>Entregables mensuales</h2>
+          <p>Cada mes el cliente recibe un paquete claro de producción y ejecución. El servicio se entrega como trabajo ordenado, no como publicaciones aisladas sin contexto.</p>
+      </div>
+      <div class="deliverables-grid">
+        <article class="deliverable-card">
+          <strong>Calendario de contenido</strong>
+          <p>Planeación del mes con orden de temas, promociones y ventanas de salida.</p>
+        </article>
+        <article class="deliverable-card">
+          <strong>Diseños finales</strong>
+          <p>Piezas listas para publicar con una línea visual consistente con el negocio.</p>
+        </article>
+        <article class="deliverable-card">
+          <strong>Copies redactados</strong>
+          <p>Textos preparados para cada publicación según el objetivo del ciclo y el tono acordado.</p>
+        </article>
+        <article class="deliverable-card">
+          <strong>Stories listas</strong>
+          <p>Stories incluidas según plan, pensadas para mantener actividad y apoyar promociones reales.</p>
+        </article>
+        <article class="deliverable-card">
+          <strong>Publicaciones programadas</strong>
+          <p>Contenido calendarizado para salir de forma ordenada durante todo el mes.</p>
+        </article>
+        <article class="deliverable-card">
+          <strong>Seguimiento básico del mes</strong>
+          <p>Revisión operativa del ciclo para validar salidas, ajustes incluidos y continuidad del siguiente bloque.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Plataformas</span>
+          </div>
+          <h2>Redes que se gestionan</h2>
+          <p>El contenido puede adaptarse según el tipo de negocio, el mercado y la forma real en que el cliente vende o se comunica.</p>
+        </div>
+        <div class="logistics-grid">
+          <article>
+            <h3>Facebook</h3>
+            <p>Útil para negocios locales que necesitan presencia estable, promociones, contacto y recordación constante.</p>
+          </article>
+          <article>
+            <h3>Instagram</h3>
+            <p>Sirve para sostener imagen visual, mostrar producto, servicios, promociones y actividad del negocio.</p>
+          </article>
+          <article>
+            <h3>TikTok</h3>
+            <p>Se integra cuando el tipo de contenido y el negocio realmente permiten una salida útil en formato corto.</p>
+          </article>
+        </div>
+        <div class="note-box">Las plataformas pueden ajustarse según el tipo de negocio, su mercado y preferencia del cliente. Algunos negocios pueden operar solo con Facebook + Instagram; otros pueden integrar TikTok si el contenido lo permite.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Proceso mensual</span>
+          </div>
+          <h2>Cómo funciona</h2>
+          <p>El servicio está planteado como una forma de trabajo mensual. El objetivo es producir contenido útil, revisarlo con tiempo y publicarlo sin improvisaciones de último minuto.</p>
+        </div>
+        <div class="timeline">
+          <article class="timeline-step" data-step="1">
+            <h3>Recolección de información del negocio</h3>
+            <p>Se recibe material, promociones, horarios, cambios del negocio y cualquier novedad del ciclo.</p>
+          </article>
+          <article class="timeline-step" data-step="2">
+            <h3>Definición de tono y objetivos</h3>
+            <p>Se ajusta el estilo de comunicación según tipo de negocio, público y prioridad del mes.</p>
+          </article>
+          <article class="timeline-step" data-step="3">
+            <h3>Planeación de contenido mensual</h3>
+            <p>Se arma calendario con publicaciones, stories y piezas promocionales según el plan.</p>
+          </article>
+          <article class="timeline-step" data-step="4">
+            <h3>Diseño y redacción</h3>
+            <p>Ixmati prepara visuales, copies y estructura final de cada entrega mensual.</p>
+          </article>
+          <article class="timeline-step" data-step="5">
+            <h3>Revisión del cliente</h3>
+            <p>El cliente valida el bloque del mes dentro del número de revisiones contratado.</p>
+          </article>
+          <article class="timeline-step" data-step="6">
+            <h3>Programación o publicación</h3>
+            <p>Con aprobación final, el contenido queda calendarizado para salir en fecha y forma.</p>
+          </article>
+        </div>
+        <div class="revision-note">Las revisiones y ajustes incluidos se resuelven dentro del ciclo mensual acordado. Si el cliente solicita cambios fuera de esa ventana, podrán pasar al siguiente bloque de trabajo o cotizarse por separado.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Publicidad</span>
+          </div>
+          <h2>Publicidad (Meta Ads y Google Ads)</h2>
+          <p>La pauta publicitaria es un servicio separado del manejo de redes. Puede complementar el trabajo, pero no forma parte automática de los planes mensuales de contenido.</p>
+        </div>
+        <div class="includes-grid">
+          <article class="list-card">
+            <h3>Lo que sí debe quedar claro</h3>
+            <ul>
+              <li>La publicidad pagada no está incluida en los planes de redes sociales</li>
+              <li>El presupuesto de anuncios siempre es cubierto directamente por el cliente</li>
+              <li>Ixmati no absorbe inversión publicitaria</li>
+              <li>Las campañas se trabajan como complemento cuando el negocio lo necesita</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <h3>Regla operativa</h3>
+            <p>El presupuesto de campañas nunca está incluido en los planes. Es una inversión directa del cliente hacia la plataforma publicitaria.</p>
+            <div class="revision-note">Ixmati no mezcla presupuesto publicitario con honorarios de servicio. La inversión en anuncios es independiente.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="badge-line">
+          <span class="signal">Inputs del cliente</span>
+        </div>
+        <h2>Lo que el cliente debe entregar para operar correctamente</h2>
+        <p>Mientras más claro y puntual sea el material base, más estable, útil y personalizado puede ser el resultado mensual.</p>
+      </div>
+      <div class="includes-grid">
+        <article class="list-card">
+          <h3>Material base</h3>
+          <ul>
+            <li>Accesos a redes sociales</li>
+            <li>Logo</li>
+            <li>Fotos del negocio, productos o servicios</li>
+            <li>Promociones vigentes</li>
+            <li>Horarios y datos correctos</li>
+            <li>Links de redes</li>
+            <li>Referencias visuales si existen</li>
+            <li>Aprobación oportuna del contenido</li>
+            <li>Material con derechos de uso</li>
+          </ul>
+        </article>
+        <article class="list-card">
+          <h3>Condición operativa</h3>
+          <p>Si la aprobación del bloque mensual se retrasa, también se mueve la programación. Este servicio depende de una ventana clara de revisión para sostener orden y continuidad.</p>
+          <div class="note-box">Si el cliente no entrega material suficiente, Ixmati podrá trabajar con stock, plantillas o contenido base, lo cual puede limitar la personalización del resultado.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Encaje del servicio</span>
+          </div>
+          <h2>¿Para quién sí funciona este servicio?</h2>
+          <p>Funciona mejor cuando el negocio ya tiene algo real que comunicar y puede sostener un ritmo mensual de trabajo y aprobación.</p>
+        </div>
+        <div class="fit-grid">
+          <article class="fit-card ideal">
+            <h3>Ideal para</h3>
+            <ul>
+              <li>Negocios con promociones frecuentes</li>
+              <li>Negocios con catálogo cambiante</li>
+              <li>Negocios que necesitan verse activos</li>
+              <li>Negocios que ya tienen algo que vender</li>
+              <li>Negocios que necesitan constancia visual</li>
+            </ul>
+          </article>
+          <article class="fit-card not-ideal">
+            <h3>No ideal para</h3>
+            <ul>
+              <li>Negocios que no entregan material</li>
+              <li>Negocios que no aprueban contenido a tiempo</li>
+              <li>Negocios que esperan ventas sin constancia</li>
+              <li>Negocios que quieren atención diaria ilimitada</li>
+              <li>Negocios que aún no tienen nada claro que comunicar</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Operación interna</span>
+          </div>
+          <h2>Cómo se opera este servicio</h2>
+          <p>Se vende como un trabajo mensual ordenado. No está planteado para reaccionar diario a cualquier solicitud, sino para sostener presencia con contenido ordenado.</p>
+        </div>
+        <div class="logistics-grid">
+          <article>
+            <h3>Ciclos mensuales</h3>
+            <p>Se trabaja por ciclos mensuales definidos, con fechas de entrega, revisión y salida de contenido.</p>
+          </article>
+          <article>
+            <h3>Planeación previa</h3>
+            <p>El contenido se planea; no se improvisa diario ni se arma sobre la marcha sin orden.</p>
+          </article>
+          <article>
+            <h3>Aprobación del cliente</h3>
+            <p>Se requiere aprobación del cliente para publicar. Sin aprobación, el calendario también se ajusta.</p>
+          </article>
+          <article>
+            <h3>No es atención instantánea</h3>
+            <p>El servicio no funciona como atención bajo demanda ni como respuesta inmediata a cualquier cambio diario.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Logística mensual</span>
+          </div>
+          <h2>Cómo se maneja la logística del mes</h2>
+          <p>El trabajo mensual se organiza por ciclos. No se trabaja improvisando publicaciones aisladas todos los días.</p>
+        </div>
+        <div class="logistics-grid">
+          <article>
+            <h3>Inicio de ciclo</h3>
+            <p>Se recopila información, promociones, prioridades y cambios relevantes para el siguiente mes o periodo activo.</p>
+          </article>
+          <article>
+            <h3>Producción en bloque</h3>
+            <p>Las piezas se diseñan y redactan como paquete para mantener coherencia visual y acelerar revisiones.</p>
+          </article>
+          <article>
+            <h3>Revisión controlada</h3>
+            <p>Se hacen los ajustes dentro del número de revisiones del plan. Cambios extra o fuera de tiempo pueden cotizarse aparte.</p>
+          </article>
+          <article>
+            <h3>Publicación calendarizada</h3>
+            <p>Una vez aprobado, el contenido se agenda para que el perfil mantenga ritmo estable durante el mes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Integración con web</span>
+          </div>
+          <h2>Redes sociales funcionan mejor cuando tienen a dónde llevar la atención.</h2>
+          <p>La red social ayuda a generar visibilidad, recordación y movimiento. El sistema web es lo que convierte esa atención en una acción concreta del cliente.</p>
+          <div class="integration-quote">
+            <strong>Las redes sociales atraen atención. El sistema web convierte esa atención en pedidos, citas o contacto real.</strong>
+          </div>
+        </div>
+        <div class="includes-grid" style="margin-bottom:16px;">
+          <article class="list-card">
+            <h3>Cómo se integra con los planes web</h3>
+            <ul>
+              <li>Tier 1: no incluye campañas</li>
+              <li>Tier 2: incluye configuración de Google Ads, pero no incluye presupuesto</li>
+              <li>Tier 3: incluye configuración de Google Ads + Meta Ads, pero no incluye presupuesto</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <h3>Relación entre web y campañas</h3>
+            <p>Los planes web incluyen la preparación de campañas (estructura, copies, configuración), pero la inversión publicitaria corre por cuenta del cliente.</p>
+            <div class="note-box">La configuración técnica y la inversión publicitaria son cosas distintas. Ixmati prepara la base; el cliente fondea la campaña.</div>
+          </article>
+        </div>
+        <div class="integration-grid">
+          <article class="integration-card">
+            <strong>Redes sociales atraen atención</strong>
+            <p>Mueven alcance, muestran actividad, presentan promociones, recuerdan horarios y mantienen al negocio visible.</p>
+            <div class="stack-lines">
+              <div class="attention">Stories, posts y promociones atraen miradas y generan interés.</div>
+            </div>
+          </article>
+          <article class="integration-card">
+            <strong>Sistema web convierte la atención en acción</strong>
+            <p>La acción ocurre cuando el usuario aterriza en una página, catálogo, menú digital, sistema de citas o sistema de pedidos listo para cerrar el siguiente paso.</p>
+            <div class="stack-lines">
+              <div class="conversion">Página web para explicar mejor el negocio</div>
+              <div class="conversion">Catálogo online para mostrar productos</div>
+              <div class="conversion">Menú digital para restaurantes</div>
+              <div class="conversion">Sistema de citas para servicios</div>
+              <div class="conversion">Sistema de pedidos para trabajo diario</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Sistema completo</span>
+          </div>
+          <h2>Cómo trabajan juntos</h2>
+          <p>Cada servicio cumple una función distinta dentro del sistema. No se sustituyen entre sí.</p>
+        </div>
+        <div class="integration-grid">
+          <article class="integration-card">
+            <strong>Redes</strong>
+            <p>Generan presencia y atención con contenido constante, promociones, actividad y recordación del negocio.</p>
+          </article>
+          <article class="integration-card">
+            <strong>Ads</strong>
+            <p>Aceleran alcance y tráfico cuando se necesita empujar promociones, captar demanda o mover campañas específicas.</p>
+          </article>
+        </div>
+        <div class="integration-grid" style="margin-top:16px;grid-template-columns:1fr;">
+          <article class="integration-card">
+            <strong>Web</strong>
+            <p>Convierte la atención en pedidos, citas o contacto real mediante una página, catálogo, menú o sistema listo para cerrar el siguiente paso.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="badge-line">
+            <span class="signal">Mes tipo</span>
+          </div>
+          <h2>Ejemplo de un mes</h2>
+          <p>Así se ve un mes típico de contenido bien organizado.</p>
+        </div>
+        <div class="logistics-grid">
+          <article>
+            <h3>Semana 1</h3>
+            <p>Promoción</p>
+          </article>
+          <article>
+            <h3>Semana 2</h3>
+            <p>Producto / servicio</p>
+          </article>
+          <article>
+            <h3>Semana 3</h3>
+            <p>Recordatorio / confianza</p>
+          </article>
+          <article>
+            <h3>Semana 4</h3>
+            <p>Oferta o cierre</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="badge-line">
+          <span class="signal">Complementos</span>
+        </div>
+        <h2>Complementos disponibles</h2>
+        <p>Cuando el trabajo lo necesita, este servicio puede complementarse con piezas y apoyos adicionales contratados por separado.</p>
+      </div>
+      <div class="addons-grid">
+        <article class="addon-card">
+          <strong>Fotografía de producto</strong>
+          <p>Material visual adicional para mejorar personalización y calidad del contenido.</p>
+        </article>
+        <article class="addon-card">
+          <strong>Reels / video corto</strong>
+          <p>Piezas específicas para campañas, lanzamientos o contenido con más movimiento.</p>
+        </article>
+        <article class="addon-card">
+          <strong>Pauta publicitaria</strong>
+          <p>Apoyo para campañas pagadas cuando el negocio necesita más alcance o activación.</p>
+        </article>
+        <article class="addon-card">
+          <strong>Branding visual</strong>
+          <p>Ajustes o desarrollo visual complementario para ordenar mejor la identidad.</p>
+        </article>
+        <article class="addon-card">
+          <strong>Campañas promocionales</strong>
+          <p>Soporte para temporadas, aperturas, lanzamientos o activaciones específicas.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="closing">
+      <span class="eyebrow">Cierre</span>
+      <h2>Ixmati no maneja redes para subir por subir.</h2>
+      <p>Las gestiona como parte de un sistema digital que ayuda a que el negocio se vea activo, confiable y listo para vender. Cuando redes y web trabajan juntas, la presencia deja de ser decorativa y empieza a servir al negocio.</p>
+      <p>Trabajamos con pocos negocios por zona para mantener calidad y control del contenido.</p>
+    </div>
+  </footer>
+
+  <div id="global-html-launcher" style="position:fixed;left:16px;bottom:16px;z-index:9999;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+    <button id="globalNavToggle" type="button" aria-label="Abrir navegación rápida" style="border:1px solid #cbd5e1;background:#0f172a;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(15,23,42,.2);cursor:pointer;">Navegar</button>
+    <div id="globalNavPanel" hidden style="margin-top:8px;min-width:220px;max-height:60vh;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 14px 30px rgba(15,23,42,.16);">
+      <p style="margin:2px 4px 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;">Páginas</p>
+      <div id="globalNavLinks" style="display:grid;gap:6px;"></div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    if (window.__globalNavInstalled) return;
+    window.__globalNavInstalled = true;
+    var links = [
+      { href: "index.html", label: "Inicio" },
+      { href: "restaurantes.html", label: "Planes Restaurantes" },
+      { href: "servicios.html", label: "Planes Servicios" },
+      { href: "tiendas.html", label: "Planes Tiendas" },
+      { href: "redes-sociales.html", label: "Redes Sociales" },
+      { href: "prospectos.html", label: "Prospectos" },
+      { href: "mensajes-prospectos.html", label: "Mensajes Prospectos" },
+      { href: "totem-demo.html", label: "Totem Demo" },
+      { href: "uada.html", label: "Demo Uada" },
+      { href: "exkapa.html", label: "Demo Exkapa" },
+      { href: "moms.html", label: "Demo Moms" }
+    ];
+
+    var toggle = document.getElementById("globalNavToggle");
+    var panel = document.getElementById("globalNavPanel");
+    var linksWrap = document.getElementById("globalNavLinks");
+    var root = document.getElementById("global-html-launcher");
+    if (!toggle || !panel || !linksWrap || !root) return;
+
+    var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    linksWrap.innerHTML = links.map(function(item){
+      var active = item.href.toLowerCase() === current;
+      var baseStyle = "display:block;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #e2e8f0;";
+      var activeStyle = "background:#e0f2fe;color:#075985;border-color:#7dd3fc;";
+      var normalStyle = "background:#fff;color:#0f172a;";
+      return "<a href=\"" + item.href + "\" style=\"" + baseStyle + (active ? activeStyle : normalStyle) + "\">" + item.label + "</a>";
+    }).join("");
+
+    toggle.addEventListener("click", function(){
+      panel.hidden = !panel.hidden;
+    });
+
+    document.addEventListener("click", function(e){
+      if (!root.contains(e.target)) panel.hidden = true;
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exkapa | Demo Digital</title>
+  <meta name="description" content="Demo digital de Exkapa: catálogo, pedidos por WhatsApp y operación asistida." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html, body { font-family: "Inter", sans-serif; }
+    body {
+      background:
+        radial-gradient(circle at 8% 5%, rgba(251, 191, 36, 0.16), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(244, 114, 182, 0.12), transparent 28%),
+        #fffbf7;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 420ms ease, transform 420ms ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hover-lift {
+      transition: transform 250ms ease, box-shadow 250ms ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+    }
+    .premium-card {
+      border-color: #f3e8dd;
+      background: linear-gradient(180deg, #fffefc 0%, #fff9f4 100%);
+    }
+    .premium-title {
+      color: #6b2f14;
+    }
+  </style>
+</head>
+<body class="text-slate-900 antialiased">
+  <header class="sticky top-0 z-40 border-b border-amber-100/90 bg-white/90 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
+      <a href="#" class="inline-flex items-center gap-3" aria-label="Inicio Exkapa">
+        <img src="./img/exkapa/492062649_1223123616486991_1948757496249815245_n.jpg" alt="Logo Exkapa" class="h-9 w-9 rounded-lg border border-slate-200 object-cover bg-white" />
+        <div>
+          <p class="font-extrabold leading-none">Exkapa</p>
+          <p class="text-xs text-slate-500">Repostería fina</p>
+        </div>
+      </a>
+      <nav class="hidden sm:flex items-center gap-2 text-sm">
+        <a href="#catalogo" class="rounded-lg px-3 py-2 font-semibold text-slate-600 hover:bg-amber-50 hover:text-amber-900">Catálogo</a>
+        <a href="#promociones" class="rounded-lg px-3 py-2 font-semibold text-slate-600 hover:bg-amber-50 hover:text-amber-900">Promociones</a>
+        <a href="#operacion" class="rounded-lg px-3 py-2 font-semibold text-slate-600 hover:bg-amber-50 hover:text-amber-900">Pedidos</a>
+        <a href="#vcard" class="rounded-lg px-3 py-2 font-semibold text-slate-600 hover:bg-amber-50 hover:text-amber-900">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+    <section class="grid lg:grid-cols-2 gap-8 items-center min-h-[86vh]">
+      <div class="reveal space-y-6">
+        <span class="inline-flex items-center rounded-full bg-rose-100 text-rose-700 px-3 py-1 text-xs font-bold">Demo de feria • Ixmati</span>
+        <div class="space-y-3">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight premium-title">Exkapa</h1>
+          <p class="text-lg sm:text-xl text-slate-600 max-w-xl">Catálogo digital de repostería premium, pedidos por WhatsApp y confirmación asistida.</p>
+          <p class="text-sm text-slate-500 max-w-xl">Una muestra de cómo Exkapa puede recibir pedidos más claros y responder más rápido en horas pico.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="#catalogo" class="hover-lift inline-flex items-center justify-center rounded-xl bg-amber-900 px-5 py-3 text-white font-semibold" aria-label="Ver catálogo de Exkapa">Ver catálogo</a>
+          <a href="https://wa.me/527753483159?text=Hola%20Exkapa%2C%20quiero%20hacer%20un%20pedido%20%F0%9F%8D%B0" target="_blank" rel="noopener noreferrer" class="hover-lift inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-white font-semibold" aria-label="Pedir por WhatsApp">
+            <i data-lucide="message-circle" class="h-4 w-4"></i>Pedir por WhatsApp
+          </a>
+          <button id="heroSaveContact" class="hover-lift inline-flex items-center justify-center gap-2 rounded-xl border border-amber-200 bg-white px-5 py-3 font-semibold text-amber-900" aria-label="Guardar contacto Exkapa">
+            <i data-lucide="contact-round" class="h-4 w-4"></i>Guardar contacto
+          </button>
+        </div>
+      </div>
+      <div class="reveal">
+        <img src="./img/exkapa/492062649_1223123616486991_1948757496249815245_n.jpg" alt="Imagen principal de Exkapa" class="w-full h-[340px] sm:h-[460px] object-cover rounded-3xl shadow-xl bg-white" />
+      </div>
+    </section>
+
+    <section id="catalogo" class="py-10 sm:py-14">
+      <div class="reveal mb-6">
+        <h2 class="text-3xl sm:text-4xl font-black premium-title">Catálogo de temporada</h2>
+      </div>
+      <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+    </section>
+
+    <section id="promociones" class="py-10 sm:py-14">
+      <div class="reveal mb-6">
+        <h2 class="text-3xl sm:text-4xl font-black premium-title">Promociones</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <article class="reveal hover-lift premium-card rounded-2xl border p-5 shadow-sm">
+          <span class="inline-flex rounded-full bg-rose-100 text-rose-700 px-2.5 py-1 text-xs font-bold mb-3">Hoy</span>
+          <h3 class="text-lg font-bold mb-2">Caja degustación</h3>
+          <p class="text-slate-600 mb-4">6 mini postres surtidos para compartir.</p>
+          <a href="#catalogo" class="text-amber-800 font-semibold">Ver detalles</a>
+        </article>
+        <article class="reveal hover-lift premium-card rounded-2xl border p-5 shadow-sm">
+          <span class="inline-flex rounded-full bg-rose-100 text-rose-700 px-2.5 py-1 text-xs font-bold mb-3">Hoy</span>
+          <h3 class="text-lg font-bold mb-2">2x1 en rebanadas</h3>
+          <p class="text-slate-600 mb-4">Aplicable de 4:00 pm a 6:00 pm.</p>
+          <a href="#catalogo" class="text-amber-800 font-semibold">Ver detalles</a>
+        </article>
+        <article class="reveal hover-lift premium-card rounded-2xl border p-5 shadow-sm">
+          <span class="inline-flex rounded-full bg-rose-100 text-rose-700 px-2.5 py-1 text-xs font-bold mb-3">Hoy</span>
+          <h3 class="text-lg font-bold mb-2">Combo cumpleaños</h3>
+          <p class="text-slate-600 mb-4">Pastel + velitas + tarjeta personalizada.</p>
+          <a href="#catalogo" class="text-amber-800 font-semibold">Ver detalles</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="operacion" class="py-10 sm:py-14">
+      <div class="reveal mb-6">
+        <h2 class="text-3xl sm:text-4xl font-black premium-title">Pedidos asistidos</h2>
+        <p class="text-slate-600 mt-2 max-w-3xl">Los pedidos entran por WhatsApp, pero se organizan internamente en una sola vista para preparar y entregar sin confusiones.</p>
+      </div>
+      <div class="grid xl:grid-cols-2 gap-5">
+        <article class="reveal hover-lift premium-card rounded-2xl border p-6 shadow-sm">
+          <h3 class="text-xl font-bold mb-4">Flujo en tiempo real</h3>
+          <div class="grid sm:grid-cols-3 gap-3 text-sm">
+            <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <p class="text-slate-500 mb-1">Nuevo</p>
+              <p class="font-bold">4 pedidos</p>
+            </div>
+            <div class="rounded-xl border border-amber-200 bg-amber-50 p-3">
+              <p class="text-amber-700 mb-1">Preparando</p>
+              <p class="font-bold">3 pedidos</p>
+            </div>
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
+              <p class="text-emerald-700 mb-1">Listo</p>
+              <p class="font-bold">6 pedidos</p>
+            </div>
+          </div>
+          <ul class="text-slate-600 mt-4 text-sm list-disc pl-5 space-y-1">
+            <li>Confirmación rápida al cliente.</li>
+            <li>Menos pedidos perdidos entre chats.</li>
+            <li>Equipo enfocado en producción y entrega.</li>
+          </ul>
+        </article>
+        <article class="reveal hover-lift premium-card rounded-2xl border p-6 shadow-sm">
+          <h3 class="text-xl font-bold mb-4">Resumen del día</h3>
+          <div class="grid sm:grid-cols-2 gap-3 text-sm">
+            <div class="rounded-xl border border-slate-200 p-3">
+              <p class="text-slate-500">Producto top</p>
+              <p class="font-bold">Cheesecake de frutos rojos</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-3">
+              <p class="text-slate-500">Hora pico</p>
+              <p class="font-bold">5:00 PM - 7:00 PM</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-3">
+              <p class="text-slate-500">Pedidos hoy</p>
+              <p class="font-bold">26</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-3">
+              <p class="text-slate-500">Canal principal</p>
+              <p class="font-bold">WhatsApp + QR</p>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="rounded-full bg-slate-900 text-white px-3 py-1 text-xs font-semibold">Confirmaciones automáticas</span>
+            <span class="rounded-full bg-slate-900 text-white px-3 py-1 text-xs font-semibold">Vista de estatus</span>
+            <span class="rounded-full bg-slate-100 text-slate-700 px-3 py-1 text-xs font-semibold">Atención más rápida</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="ubicacion" class="py-10 sm:py-14">
+      <div class="reveal mb-6">
+        <h2 class="text-3xl sm:text-4xl font-black premium-title">Visítanos</h2>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-5 items-stretch">
+        <div class="reveal premium-card rounded-2xl border p-5 shadow-sm flex items-center justify-center min-h-[260px]">
+          <div class="text-center">
+            <i data-lucide="map-pinned" class="h-10 w-10 mx-auto text-slate-500 mb-3"></i>
+            <p class="font-semibold">Mapa</p>
+            <p class="text-slate-600 text-sm">Tulancingo, Hidalgo</p>
+          </div>
+        </div>
+        <div class="reveal premium-card rounded-2xl border p-6 shadow-sm">
+          <p class="text-slate-600 mb-2">Ubicación</p>
+          <p class="text-2xl font-bold mb-4">Tulancingo, Hidalgo</p>
+          <a href="https://maps.google.com/?q=Tulancingo,Hidalgo" target="_blank" rel="noopener noreferrer" class="hover-lift inline-flex items-center gap-2 rounded-xl bg-amber-900 px-5 py-3 text-white font-semibold" aria-label="Abrir cómo llegar en Google Maps">
+            <i data-lucide="navigation" class="h-4 w-4"></i>Cómo llegar
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="vcard" class="py-10 sm:py-14">
+      <div class="reveal premium-card rounded-3xl border p-6 sm:p-8 shadow-sm">
+        <h2 class="text-3xl sm:text-4xl font-black mb-3 premium-title">Guardar contacto</h2>
+        <p class="text-slate-600 mb-5">Guarda el contacto de Exkapa en tu celular (vCard).</p>
+        <button id="saveContactBtn" class="hover-lift inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-4 text-white text-lg font-bold" aria-label="Guardar contacto Exkapa">
+          <i data-lucide="id-card" class="h-5 w-5"></i>Guardar contacto Exkapa
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-amber-100 bg-white/80">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 grid md:grid-cols-3 gap-6 items-start">
+      <div>
+        <p class="font-extrabold text-slate-900">Exkapa</p>
+        <p class="text-sm text-slate-600 mt-1">Catálogo digital y pedidos asistidos por WhatsApp.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-slate-900 mb-2">Navegación</p>
+        <div class="flex flex-col gap-1 text-sm">
+          <a href="#catalogo" class="text-slate-600 hover:text-amber-900">Catálogo</a>
+          <a href="#promociones" class="text-slate-600 hover:text-amber-900">Promociones</a>
+          <a href="#operacion" class="text-slate-600 hover:text-amber-900">Pedidos</a>
+          <a href="#vcard" class="text-slate-600 hover:text-amber-900">Guardar contacto</a>
+        </div>
+      </div>
+      <div class="md:text-right">
+        <p class="text-sm text-slate-600">Simulación digital creada por Ixmati para la feria de negocios de Tulancingo.</p>
+        <p class="font-bold text-slate-800 mt-2">Ixmati</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/527753483159?text=Hola%20Exkapa%2C%20quiero%20hacer%20un%20pedido%20%F0%9F%8D%B0" target="_blank" rel="noopener noreferrer" aria-label="Pedir por WhatsApp a Exkapa" class="hover-lift fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-white font-semibold shadow-lg">
+    <i data-lucide="message-circle" class="h-5 w-5"></i>
+    <span class="hidden sm:inline">Pedir por WhatsApp</span>
+  </a>
+
+  <div id="toast" class="fixed top-5 right-5 z-[60] hidden rounded-xl bg-slate-900 text-white px-4 py-3 shadow-lg">
+    Contacto descargado. Ábrelo para guardarlo.
+  </div>
+
+  <script>
+    const catalogItems = [
+      { name: "Cheesecake frutos rojos", price: 95, image: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80" },
+      { name: "Pastel de chocolate", price: 120, image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80" },
+      { name: "Tarta de limón", price: 88, image: "https://images.unsplash.com/photo-1621743478914-cc8a86d7e7b5?auto=format&fit=crop&w=1200&q=80" },
+      { name: "Brownie artesanal", price: 65, image: "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=1200&q=80" },
+      { name: "Cupcake vainilla", price: 45, image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80" },
+      { name: "Galletas surtidas", price: 55, image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=80" },
+      { name: "Pay de queso", price: 92, image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1200&q=80" },
+      { name: "Caja mini postres", price: 150, image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" }
+    ];
+
+    function waOrderLink(product) {
+      const text = `Hola Exkapa, quiero pedir: ${product} 🍰`;
+      return `https://wa.me/527753483159?text=${encodeURIComponent(text)}`;
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById("catalogGrid");
+      grid.innerHTML = catalogItems.map(item => `
+        <article class="reveal hover-lift premium-card rounded-2xl border overflow-hidden shadow-sm">
+          <img src="${item.image}" alt="${item.name}" class="w-full h-44 object-cover" loading="lazy" />
+          <div class="p-4">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <h3 class="text-lg font-bold">${item.name}</h3>
+              <span class="rounded-full bg-rose-100 text-rose-700 px-2.5 py-1 text-sm font-bold">$${item.price}</span>
+            </div>
+            <a href="${waOrderLink(item.name)}" target="_blank" rel="noopener noreferrer" aria-label="Pedir ${item.name} por WhatsApp" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-white font-semibold hover:bg-emerald-700 transition-colors duration-200">
+              <i data-lucide="message-circle" class="h-4 w-4"></i>Pedir este
+            </a>
+          </div>
+        </article>
+      `).join("");
+      lucide.createIcons();
+      bindReveal();
+    }
+
+    function downloadVCard() {
+      const vcard = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "FN:Exkapa",
+        "ORG:Exkapa",
+        "TEL:+527753483159",
+        "EMAIL:contacto@exkapa.com",
+        "URL:https://ixmati.mx/demo/exkapa",
+        "END:VCARD"
+      ].join("\n");
+
+      const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "contacto-exkapa.vcf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast("Contacto descargado. Ábrelo para guardarlo.");
+    }
+
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.remove("hidden");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.add("hidden"), 2300);
+    }
+
+    function bindReveal() {
+      const revealElements = document.querySelectorAll(".reveal:not(.is-visible)");
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          obs.unobserve(entry.target);
+        });
+      }, { threshold: 0.12 });
+      revealElements.forEach(el => observer.observe(el));
+    }
+
+    function bindEvents() {
+      document.getElementById("saveContactBtn").addEventListener("click", downloadVCard);
+      document.getElementById("heroSaveContact").addEventListener("click", downloadVCard);
+    }
+
+    function init() {
+      renderCatalog();
+      bindEvents();
+      bindReveal();
+      lucide.createIcons();
+    }
+
+    init();
+  </script>
+<div id="global-html-launcher" style="position:fixed;left:16px;bottom:16px;z-index:9999;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+  <button id="globalNavToggle" type="button" aria-label="Abrir navegación rápida" style="border:1px solid #cbd5e1;background:#0f172a;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(15,23,42,.2);cursor:pointer;">Navegar</button>
+  <div id="globalNavPanel" hidden style="margin-top:8px;min-width:220px;max-height:60vh;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 14px 30px rgba(15,23,42,.16);">
+    <p style="margin:2px 4px 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;">Páginas</p>
+    <div id="globalNavLinks" style="display:grid;gap:6px;"></div>
+  </div>
+</div>
+<script>
+(function(){
+  if (window.__globalNavInstalled) return;
+  window.__globalNavInstalled = true;
+  var links = [
+    { href: "index.html", label: "Inicio" },
+    { href: "restaurantes.html", label: "Planes Restaurantes" },
+    { href: "servicios.html", label: "Planes Servicios" },
+    { href: "tiendas.html", label: "Planes Tiendas" },
+    { href: "redes-sociales.html", label: "Redes Sociales" },
+    { href: "prospectos.html", label: "Prospectos" },
+    { href: "mensajes-prospectos.html", label: "Mensajes Prospectos" },
+    { href: "totem-demo.html", label: "Totem Demo" },
+    { href: "uada.html", label: "Demo Uada" },
+    { href: "exkapa.html", label: "Demo Exkapa" },
+    { href: "moms.html", label: "Demo Moms" }
+  ];
+
+  var toggle = document.getElementById("globalNavToggle");
+  var panel = document.getElementById("globalNavPanel");
+  var linksWrap = document.getElementById("globalNavLinks");
+  var root = document.getElementById("global-html-launcher");
+  if (!toggle || !panel || !linksWrap || !root) return;
+
+  var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  linksWrap.innerHTML = links.map(function(item){
+    var active = item.href.toLowerCase() === current;
+    var baseStyle = "display:block;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #e2e8f0;";
+    var activeStyle = "background:#e0f2fe;color:#075985;border-color:#7dd3fc;";
+    var normalStyle = "background:#fff;color:#0f172a;";
+    return "<a href=\"" + item.href + "\" style=\"" + baseStyle + (active ? activeStyle : normalStyle) + "\">" + item.label + "</a>";
+  }).join("");
+
+  toggle.addEventListener("click", function(){
+    panel.hidden = !panel.hidden;
+  });
+
+  document.addEventListener("click", function(e){
+    if (!root.contains(e.target)) panel.hidden = true;
+  });
+})();
+</script>
+</body>
+</html>

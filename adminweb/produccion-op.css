@@ -1,0 +1,39 @@
+:root { --bg:#f5f7fb; --panel:#fff; --text:#111827; --muted:#64748b; --line:#e2e8f0; --ink:#0f172a; --brand:#0f766e; --blue:#2563eb; --ok:#15803d; }
+* { box-sizing:border-box; }
+body { margin:0; min-height:100vh; font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif; background:linear-gradient(180deg,rgba(15,118,110,.08),transparent 260px),var(--bg); color:var(--text); }
+.shell { width:min(1240px,calc(100% - 32px)); margin:0 auto; padding:24px 0 56px; }
+.topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:18px; }
+.brand { display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); font-weight:950; }
+.brand span { display:grid; place-items:center; width:38px; height:38px; border-radius:8px; background:var(--ink); color:#fff; }
+nav { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+nav a,.button { display:inline-flex; align-items:center; justify-content:center; min-height:38px; border:1px solid var(--line); border-radius:8px; padding:9px 12px; background:#fff; color:#334155; text-decoration:none; font:850 13px/1.2 inherit; cursor:pointer; }
+.button.primary { background:var(--ink); border-color:var(--ink); color:#fff; width:100%; margin-top:10px; }
+.hero { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:18px; margin-bottom:18px; }
+.panel { border:1px solid var(--line); border-radius:8px; background:#fff; box-shadow:0 18px 45px rgba(15,23,42,.07); padding:20px; }
+.eyebrow { margin:0 0 10px; color:var(--brand); font-size:12px; font-weight:950; letter-spacing:.12em; text-transform:uppercase; }
+h1 { margin:0; color:var(--ink); font-size:clamp(34px,5vw,58px); line-height:.98; }
+h2,h3 { margin:0 0 10px; color:var(--ink); }
+p { color:#475569; line-height:1.6; }
+select,input,textarea { width:100%; border:1px solid var(--line); border-radius:8px; padding:10px 12px; font:inherit; background:#fff; margin:6px 0 10px; }
+.kpi { display:flex; justify-content:space-between; gap:12px; border:1px solid var(--line); border-radius:8px; padding:12px; margin-top:10px; background:#f8fafc; }
+.kpi span { color:var(--muted); font-weight:850; } .kpi strong { color:var(--ink); }
+.detail-layout { display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:18px; align-items:start; }
+.side { display:grid; gap:14px; position:sticky; top:16px; }
+.slide-list { display:grid; gap:12px; }
+.work-guide { display:grid; gap:14px; margin-bottom:24px; border-bottom:1px solid var(--line); padding-bottom:20px; }
+.guide-block { border:1px solid var(--line); border-radius:8px; padding:14px; background:#f8fafc; }
+.guide-block ul { margin:0; padding-left:20px; color:#475569; line-height:1.55; }
+.guide-block li + li { margin-top:7px; }
+.slide { display:grid; grid-template-columns:90px minmax(0,1fr); gap:14px; border:1px solid var(--line); border-radius:8px; padding:14px; background:#f8fafc; }
+.slide-num { display:grid; place-items:center; height:56px; border-radius:8px; background:#e0f2fe; color:#075985; font-weight:950; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; }
+.chips span { border:1px solid var(--line); border-radius:999px; padding:7px 10px; background:#f8fafc; color:#334155; font-weight:850; font-size:12px; }
+.checklist { display:grid; gap:8px; }
+.checklist label { display:flex; gap:9px; align-items:center; border:1px solid var(--line); border-radius:8px; padding:10px; background:#f8fafc; font-weight:850; color:#334155; }
+.deliveries { display:grid; gap:8px; margin-top:12px; }
+.delivery-status { min-height:20px; color:#475569; font-weight:850; font-size:13px; margin-top:8px; }
+.delivery-status.error { color:#b91c1c; }
+.delivery { border:1px solid var(--line); border-radius:8px; padding:10px; background:#f8fafc; color:#334155; font-size:13px; }
+.file-list { display:grid; gap:6px; margin:8px 0; }
+.file-list a { color:#1d4ed8; font-weight:900; word-break:break-word; }
+@media (max-width:920px){ .hero,.detail-layout{grid-template-columns:1fr}.side{position:static}.slide{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column} }

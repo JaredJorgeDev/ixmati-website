@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulación de Digitalización de Negocios Locales — Tulancingo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Poppins", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial"],
+          },
+          boxShadow: {
+            soft: "0 24px 60px rgba(15, 23, 42, 0.12)",
+            glow: "0 0 0 1px rgba(255,255,255,0.25), 0 40px 90px rgba(2, 6, 23, 0.22)",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    .reveal {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
+  <!-- Background (keep base style) -->
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div
+      class="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-500/35 via-sky-500/25 to-violet-500/25 blur-3xl">
+    </div>
+    <div
+      class="absolute -bottom-56 right-[-120px] h-[520px] w-[520px] rounded-full bg-gradient-to-tr from-sky-500/20 via-indigo-500/20 to-violet-500/15 blur-3xl">
+    </div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08),transparent_58%)]"></div>
+    <div
+      class="absolute inset-0 opacity-50 [background-image:linear-gradient(to_right,rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.08)_1px,transparent_1px)] [background-size:68px_68px]">
+    </div>
+  </div>
+
+  <header class="relative">
+    <div class="mx-auto max-w-6xl px-5 pt-10 pb-6 sm:pt-12">
+      <div class="reveal flex flex-col gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div
+            class="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 shadow-[0_1px_0_rgba(255,255,255,0.08)]">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10">
+              <i data-lucide="sparkles" class="h-4 w-4 text-sky-200"></i>
+            </span>
+            Panel de oportunidades • Tulancingo
+          </div>
+
+          <div class="flex items-center gap-2 text-xs text-slate-300">
+            <i data-lucide="clock" class="h-4 w-4 text-slate-300"></i>
+            Decide hoy: a quién escribir, qué gancho y qué plan.
+          </div>
+        </div>
+
+        <h1 class="text-balance text-2xl font-semibold leading-tight text-white sm:text-4xl">
+          Prospección operativa — páginas web para negocios locales
+        </h1>
+        <p class="max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
+          Abre esta página y elige en segundos: prospecto, problema dominante y plan recomendado.
+        </p>
+      </div>
+
+      <!-- Control bar -->
+      <section class="reveal mt-5 rounded-3xl border border-white/10 bg-white/5 p-4 shadow-glow sm:p-5">
+        <div class="grid gap-3 lg:grid-cols-12 lg:items-center">
+          <div class="lg:col-span-7">
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-5">
+              <div class="rounded-2xl border border-white/10 bg-slate-900/35 p-3">
+                <div class="text-[11px] font-semibold text-slate-300">Total prospectos</div>
+                <div id="countTotal" class="mt-1 text-xl font-semibold text-white">—</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-slate-900/35 p-3">
+                <div class="text-[11px] font-semibold text-slate-300">A</div>
+                <div id="countA" class="mt-1 text-xl font-semibold text-white">—</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-slate-900/35 p-3">
+                <div class="text-[11px] font-semibold text-slate-300">B</div>
+                <div id="countB" class="mt-1 text-xl font-semibold text-white">—</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-slate-900/35 p-3">
+                <div class="text-[11px] font-semibold text-slate-300">C</div>
+                <div id="countC" class="mt-1 text-xl font-semibold text-white">—</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-slate-900/35 p-3">
+                <div class="text-[11px] font-semibold text-slate-300">Hoy</div>
+                <div class="mt-1 text-sm font-semibold text-white">Escribe a los A</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="flex flex-wrap items-center justify-start gap-2 lg:justify-end">
+              <span class="text-xs font-semibold text-slate-300">Filtros:</span>
+              <button type="button"
+                class="filter-chip rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-white/10"
+                data-filter="opp" data-value="A">A</button>
+              <button type="button"
+                class="filter-chip rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-white/10"
+                data-filter="opp" data-value="B">B</button>
+              <button type="button"
+                class="filter-chip rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-white/10"
+                data-filter="opp" data-value="C">C</button>
+              <span class="hidden text-xs font-semibold text-slate-500 sm:inline">|</span>
+              <button type="button"
+                class="filter-chip rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-white/10"
+                data-filter="tier" data-value="1">Tier 1</button>
+              <button type="button"
+                class="filter-chip rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-white/10"
+                data-filter="tier" data-value="2">Tier 2</button>
+              <button type="button"
+                class="filter-chip rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-white/10"
+                data-filter="tier" data-value="3">Tier 3</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-300">
+          <span class="font-semibold text-slate-200">Categoría:</span>
+          <button type="button"
+            class="filter-chip rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-semibold text-slate-200 hover:bg-white/10"
+            data-filter="cat" data-value="Restaurantes">Restaurantes</button>
+          <button type="button"
+            class="filter-chip rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-semibold text-slate-200 hover:bg-white/10"
+            data-filter="cat" data-value="Servicios">Servicios</button>
+          <button type="button"
+            class="filter-chip rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-semibold text-slate-200 hover:bg-white/10"
+            data-filter="cat" data-value="Productos">Tiendas/Productos</button>
+          <span class="hidden text-slate-500 sm:inline">•</span>
+          <button type="button"
+            class="filter-chip rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-semibold text-slate-200 hover:bg-white/10"
+            data-filter="noweb" data-value="1">Solo sin web</button>
+          <span class="hidden text-slate-500 sm:inline">•</span>
+          <button type="button" id="clearFilters"
+            class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-semibold text-slate-200 hover:bg-white/10">Limpiar</button>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-300">
+          <span class="font-semibold text-slate-200">Estado del prospecto (visual):</span>
+          <span
+            class="rounded-full border border-white/10 bg-sky-500/15 px-2.5 py-1 font-semibold text-sky-200">Nuevo</span>
+          <span
+            class="rounded-full border border-white/10 bg-amber-500/15 px-2.5 py-1 font-semibold text-amber-200">Contactado</span>
+          <span
+            class="rounded-full border border-white/10 bg-orange-500/15 px-2.5 py-1 font-semibold text-orange-200">Seguimiento</span>
+          <span
+            class="rounded-full border border-white/10 bg-emerald-500/15 px-2.5 py-1 font-semibold text-emerald-200">Cerrado</span>
+          <span class="rounded-full border border-white/10 bg-slate-500/15 px-2.5 py-1 font-semibold text-slate-200">No
+            interesado</span>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <main class="relative">
+    <section class="mx-auto max-w-6xl px-5 pb-14">
+      <div class="reveal mb-4 flex items-end justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-semibold leading-tight text-white sm:text-2xl">Prospectos</h2>
+          <p class="mt-1 text-sm text-slate-200">Cada tarjeta te deja listo: gancho + plan + acción rápida.</p>
+        </div>
+        <div class="hidden items-center gap-2 text-xs text-slate-300 sm:flex">
+          <i data-lucide="mouse-pointer-click" class="h-4 w-4"></i>
+          Selecciona estado y luego escribe.
+        </div>
+      </div>
+
+      <div id="prospectsGrid" class="grid gap-4 md:grid-cols-2"></div>
+      <div id="noResults"
+        class="mt-4 hidden rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200 shadow-soft">
+        No hay prospectos con esos filtros.
+      </div>
+
+      <div
+        class="reveal mt-6 rounded-3xl border border-white/10 bg-gradient-to-br from-white/8 to-white/4 p-5 shadow-glow">
+        <p class="text-sm font-semibold text-white">
+          Ixmati no vende páginas web. Implementa sistemas digitales que ayudan a los negocios locales a operar mejor.
+        </p>
+        <p class="mt-1 text-sm text-slate-200">
+          Menos WhatsApp caótico. Menos confusión. Más orden. Más ingresos sin depender de estar contestando.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Plan modal -->
+  <div id="planModal" class="fixed inset-0 z-50 hidden items-end justify-center p-4 sm:items-center">
+    <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-sm" data-close-plan-modal="1"></div>
+    <div role="dialog" aria-modal="true" aria-label="Detalle del plan"
+      class="relative w-full max-w-xl overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 shadow-glow">
+      <div class="flex items-center justify-between gap-3 border-b border-white/10 bg-white/5 px-5 py-4">
+        <div class="min-w-0">
+          <div class="text-xs font-semibold text-slate-300">Plan</div>
+          <div id="planModalTitle" class="truncate text-base font-semibold text-white">—</div>
+        </div>
+        <button type="button"
+          class="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2 text-slate-200 hover:bg-white/10"
+          data-close-plan-modal="1" aria-label="Cerrar">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+      </div>
+      <div class="p-5">
+        <div id="planModalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script>
+    const PROSPECTS = [
+      {
+        name: "Rādical",
+        category: "Productos",
+        phone: "7751992544",
+        maps: "https://maps.app.goo.gl/qaWjNrm46CENi2w79",
+        social: "https://www.facebook.com/radicaldistribuidoramx",
+        hasWeb: "No",
+        priority: "A+",
+        zone: "",
+      },
+      {
+        name: "Yasirs Store",
+        category: "Productos",
+        phone: "7752054389",
+        maps: "https://maps.app.goo.gl/KsQ7mZ4BBpqoDKVC8",
+        social: "https://www.instagram.com/yasirstoretulancingo/",
+        hasWeb: "No",
+        priority: "A+",
+        zone: "",
+      },
+      {
+        name: "Tacos Memo",
+        category: "Restaurantes",
+        phone: "7759743948",
+        maps: "https://maps.app.goo.gl/y2Fe8xBY3mTFziZT8",
+        social: "https://www.facebook.com/tacosmemoslamorena",
+        hasWeb: "No",
+        priority: "A+",
+        zone: "",
+      },
+      {
+        name: "exkapa",
+        category: "Restaurantes",
+        phone: "7753483159",
+        maps: "https://maps.app.goo.gl/vwcvo4PfKcuruQuJA",
+        social: "https://www.facebook.com/ExkapaReposteriaFina",
+        hasWeb: "No",
+        priority: "A+",
+        zone: "",
+      },
+      {
+        name: "El Café Tulancingo",
+        category: "Restaurantes",
+        phone: "7757557393",
+        maps: "https://maps.app.goo.gl/kAvEKPGGNZe6Bgqt6",
+        social: "https://www.facebook.com/elcafetulancingo",
+        hasWeb: "Sí",
+        priority: "A+",
+        planOverride: "R2",
+        problemsOverride: [
+          "Tiene web, pero no se puede pedir en línea",
+          "No hay WhatsApp directo para pedir",
+          "Reservas llevan a llamada (no a pedido)",
+        ],
+        zone: "",
+      },
+      {
+        name: "Mom's Boutique",
+        category: "Productos",
+        phone: "7751797886",
+        maps: "https://maps.app.goo.gl/ZS9LEFoG2Z7C9Hsw9",
+        social:
+          "https://www.instagram.com/moms_boutiquee/?fbclid=IwY2xjawP4kL9leHRuA2FlbQIxMABicmlkETFjRmFpbURzZmUwbFNVTWJUc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHtbV5GRC_7MftNXqne304-k4eU8YQYFyUB46Oa4xEpabO5-FOl54VQWWB9nN_aem_XIaXqKN515_8awgglySZBA",
+        hasWeb: "No",
+        priority: "A+",
+        zone: "",
+      },
+      {
+        name: "VIRUZ X GREEN",
+        category: "Productos",
+        phone: "7757849409",
+        maps: "https://maps.app.goo.gl/UhAdzhmPGEg4uiPk8",
+        social: "https://www.facebook.com/juancarlos.avila.3990",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "Casa Emiliano",
+        category: "Productos",
+        phone: "7757531586",
+        maps: "https://maps.app.goo.gl/awKkG14rKhTbsjif7",
+        social: "https://www.facebook.com/profile.php?id=100063521422619",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "Jc Estilistas",
+        category: "Productos",
+        phone: "7752019325",
+        maps: "https://maps.app.goo.gl/qTaMPV8WLvhmBQkH8",
+        social: "https://www.facebook.com/EstilistasJC",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "Dental Design Tulancingo",
+        category: "Servicios",
+        phone: "7757538682",
+        maps: "https://maps.app.goo.gl/Mwv594ufepQEyx5f9",
+        social: "https://www.facebook.com/dentaldesigntulancing",
+        hasWeb: "No",
+        priority: "A+",
+        zone: "",
+      },
+      {
+        name: "Consutorio Dental Odontologia Integral. C.D. JORGE ISLAS SOTO",
+        category: "Servicios",
+        phone: "7751222114",
+        maps: "https://maps.app.goo.gl/q4e7xEr6Z8G4KMg17",
+        social: "https://www.facebook.com/profile.php?id=100063450026245",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "Only For Men Barber Shop",
+        category: "Servicios",
+        phone: "7751413305",
+        maps: "https://maps.app.goo.gl/B2r9joEzLsGyaMoe9",
+        social: "https://www.facebook.com/profile.php?id=100089307470421",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "Nancy Nails",
+        category: "Servicios",
+        phone: "7751063128",
+        maps: "https://maps.app.goo.gl/cwDRCVRK8DSpN5198",
+        social: "https://www.facebook.com/Nancy.Nails.Studioo/",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "NM Fisioterapia y Entrenamiento",
+        category: "Servicios",
+        phone: "7751208889",
+        maps: "https://maps.app.goo.gl/ymWacbyJy4VqW84x9",
+        social: "https://www.facebook.com/profile.php?id=100089829443957",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "Fisioterapeuta Alondra Trejo",
+        category: "Servicios",
+        phone: "7751386695",
+        maps: "https://maps.app.goo.gl/nHFHoKFP1BnjTaJM7",
+        social: "https://www.facebook.com/fisioAlondraTrejo",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "Fisioterapia & Rehabilitación \"Lux\" Tulancingo",
+        category: "Servicios",
+        phone: "7751396702",
+        maps: "https://maps.app.goo.gl/6T24B5Zf6TePF4wx7",
+        social: "https://www.facebook.com/FisioLux10",
+        hasWeb: "No",
+        priority: "B+",
+        zone: "",
+      },
+      {
+        name: "LuxStore",
+        category: "Productos",
+        phone: "7717777604",
+        maps: "https://maps.app.goo.gl/2ZwquGoUDRYgpCcf8",
+        social: "https://www.facebook.com/profile.php?id=61575812518331",
+        hasWeb: "No",
+        priority: "C+",
+        zone: "",
+      },
+      {
+        name: "Natural Sushi",
+        category: "Restaurantes",
+        phone: "7756880414",
+        maps: "https://maps.app.goo.gl/L766rNWvrpaSFMM98",
+        social: "https://www.facebook.com/naturalsushitulancingo",
+        hasWeb: "No",
+        priority: "C+",
+        zone: "",
+      },
+      {
+        name: "Clinica Dental Orthodontics",
+        category: "Servicios",
+        phone: "7757583469",
+        maps: "https://maps.app.goo.gl/Kayp7FzddJ8Z4meX9",
+        social: "https://www.facebook.com/orthodonticstulancing/",
+        hasWeb: "No",
+        priority: "C+",
+        zone: "",
+      },
+      {
+        name: "The King Barber Shop",
+        category: "Servicios",
+        phone: "7751673008",
+        maps: "https://maps.app.goo.gl/Wu4KhLNYMP9pCYnN8",
+        social: "https://www.facebook.com/tkingbarber",
+        hasWeb: "No",
+        priority: "C+",
+        zone: "",
+      },
+      {
+        name: "La Frida Naails",
+        category: "Servicios",
+        phone: "7751099012",
+        maps: "",
+        social:
+          "https://www.instagram.com/la_frida_naails_/?fbclid=IwY2xjawP4mU1leHRuA2FlbQIxMABicmlkETE0NlFhZUVHWmJPZnFic21Hc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHpJC2LuZC-NiqJVl7oqUz6UExW7PKWlL3C5vjnEQnyC7wJdGS1T2ftVnAA77_aem_rtztmdCiftz99z5Rgvzn6Q",
+        hasWeb: "No",
+        priority: "C+",
+        zone: "",
+      },
+      {
+        name: "Nails Bar Tulancingo",
+        category: "Servicios",
+        phone: "7755935770",
+        maps: "https://maps.app.goo.gl/32xsFX6yg3gG4eiW9",
+        social: "https://www.facebook.com/NailBarTulancingo",
+        hasWeb: "No",
+        priority: "C+",
+        zone: "",
+      },
+    ];
+
+    const state = { opp: "", tier: "", cat: "", noWebOnly: false };
+
+    const el = {
+      grid: document.getElementById("prospectsGrid"),
+      noResults: document.getElementById("noResults"),
+      countTotal: document.getElementById("countTotal"),
+      countA: document.getElementById("countA"),
+      countB: document.getElementById("countB"),
+      countC: document.getElementById("countC"),
+      clearFilters: document.getElementById("clearFilters"),
+    };
+
+    const normalizeOpp = (priority) => {
+      const p = String(priority || "").trim().toUpperCase();
+      if (p.startsWith("A")) return "A";
+      if (p.startsWith("B")) return "B";
+      return "C";
+    };
+
+    const tierFromOpp = (opp) => (opp === "A" ? 3 : opp === "B" ? 2 : 1);
+
+    const planFromCategoryTier = (category, tier) => {
+      const c = String(category || "").trim();
+      const prefix = c === "Restaurantes" ? "R" : c === "Productos" ? "T" : "S";
+      return `${prefix}${tier}`;
+    };
+
+    const planTitle = (plan) => {
+      const map = {
+        R1: "Menú y contacto",
+        R2: "Pedidos organizados",
+        R3: "Operación y crecimiento",
+        T1: "Catálogo online",
+        T2: "Pedidos organizados",
+        T3: "Ecommerce",
+        S1: "Presencia básica",
+        S2: "Sistema de citas",
+        S3: "Sistema + clientes nuevos",
+      };
+      return map[String(plan || "").toUpperCase()] || "Plan recomendado";
+    };
+
+    const hookForPlan = (plan) => {
+      const hooks = {
+        R1: "Dejas de mandar fotos y precios uno por uno. El menú queda claro y la gente pide sin confusiones.",
+        R2: "Las órdenes ya no se revisan en conversaciones: llegan como lista clara y el equipo solo prepara.",
+        R3: "Ya no dependes de estar contestando: ves qué se pide más y en qué horas se llena.",
+        T1: "Dejas de enviar precios y fotos uno por uno. Tu catálogo queda ordenado en un solo lugar.",
+        T2: "Los pedidos llegan claros desde la web, no como mensajes mezclados. Sabes qué pidió cada cliente.",
+        T3: "Las compras se hacen directo sin que tengas que responder mensajes. Tú solo gestionas pedidos confirmados.",
+        S1: "Tus futuros clientes ven información clara y dejan de preguntarte horarios o datos básicos.",
+        S2: "La gente agenda sola y tú solo ves tu agenda lista. Menos llamadas y menos mensajes.",
+        S3: "Tu negocio se muestra cuando alguien busca tu servicio y agendan sin estar contestando mensajes.",
+      };
+      return hooks[String(plan || "").toUpperCase()] || "Gancho listo para escribir hoy.";
+    };
+
+    const iconForCategory = (category) => {
+      const c = String(category || "").trim();
+      if (c === "Restaurantes") return "utensils";
+      if (c === "Productos") return "shopping-bag";
+      return "briefcase";
+    };
+
+    const mapsUrl = (mapsValue, name) => {
+      const v = String(mapsValue || "").trim();
+      if (v.startsWith("http://") || v.startsWith("https://")) return v;
+      const q = v ? v : `${name} Tulancingo`;
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+    };
+
+    const socialUrl = (socialValue, name) => {
+      const v = String(socialValue || "").trim();
+      if (v.startsWith("http://") || v.startsWith("https://")) return v;
+      // If the text includes an Instagram handle like "(@mi_tienda)", prefer a direct IG profile.
+      const m = v.match(/\(@([A-Za-z0-9._]+)\)/);
+      if (m && /instagram/i.test(v)) return `https://www.instagram.com/${m[1]}/`;
+      const q = v ? v : `${name} Tulancingo`;
+      return `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+    };
+
+    const whatsappUrl = (phoneDigits, name, plan) => {
+      const digits = String(phoneDigits || "").replace(/\\D/g, "");
+      const msg =
+        `Hola, buen día. Soy de Ixmati. Vi tu negocio ${name} en Tulancingo. ` +
+        `Te puedo mostrar una página web lista para que te encuentren, vean información clara y te escriban sin preguntas repetidas. ` +
+        `Te recomiendo ${plan}. ¿Te interesa que te la enseñe?`;
+      return `https://wa.me/52${digits}?text=${encodeURIComponent(msg)}`;
+    };
+
+    const problemsFor = (category, tier, hasWeb) => {
+      const c = String(category || "").trim();
+      const hw = String(hasWeb || "").trim().toLowerCase();
+      const hasSite = hw === "sí" || hw === "si" || hw === "s" || hw === "true" || hw === "1";
+      const items = [hasSite ? "Tiene web, pero no resuelve pedidos/citas" : "No tiene página web", "WhatsApp sin flujo organizado"];
+      if (c === "Restaurantes") {
+        items.push("No tiene menú online");
+        items.push(hasSite ? "No se puede pedir en línea" : "No se puede pedir en línea");
+        items.push(tier >= 2 ? "Pedidos llegan como mensajes mezclados" : "Pedidos por mensajes dispersos");
+      } else if (c === "Productos") {
+        items.push("Catálogo no está en un solo lugar");
+        items.push("No se puede comprar online");
+      } else {
+        items.push("No tiene sistema de citas");
+        items.push(tier >= 2 ? "Citas se confirman por mensajes" : "Preguntan horarios y datos básicos");
+      }
+      return items;
+    };
+
+    const opportunityBadgeClasses = (opp) => {
+      if (opp === "A") return "bg-rose-500/15 text-rose-100";
+      if (opp === "B") return "bg-amber-500/15 text-amber-100";
+      return "bg-slate-500/15 text-slate-100";
+    };
+
+    const setupReveal = () => {
+      const show = (node) => node.classList.add("is-visible");
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              show(entry.target);
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      for (const node of document.querySelectorAll(".reveal")) io.observe(node);
+    };
+
+    const updateCounts = () => {
+      let a = 0,
+        b = 0,
+        c = 0;
+      for (const p of PROSPECTS) {
+        const opp = normalizeOpp(p.priority);
+        if (opp === "A") a += 1;
+        else if (opp === "B") b += 1;
+        else c += 1;
+      }
+      el.countTotal.textContent = String(PROSPECTS.length);
+      el.countA.textContent = String(a);
+      el.countB.textContent = String(b);
+      el.countC.textContent = String(c);
+    };
+
+    const applyFilters = () => {
+      const cards = Array.from(document.querySelectorAll(".prospect-card"));
+      let visible = 0;
+      for (const card of cards) {
+        const okOpp = !state.opp || card.dataset.opp === state.opp;
+        const okTier = !state.tier || card.dataset.tier === state.tier;
+        const okCat = !state.cat || card.dataset.cat === state.cat;
+        const okNoWeb = !state.noWebOnly || card.dataset.hasweb === "no";
+        const ok = okOpp && okTier && okCat && okNoWeb;
+        card.classList.toggle("hidden", !ok);
+        if (ok) visible += 1;
+      }
+      el.noResults.classList.toggle("hidden", visible !== 0);
+    };
+
+    const updateFilterUI = () => {
+      for (const btn of document.querySelectorAll(".filter-chip")) {
+        const filter = btn.getAttribute("data-filter");
+        const value = btn.getAttribute("data-value");
+        const selected =
+          (filter === "opp" && state.opp === value) ||
+          (filter === "tier" && state.tier === value) ||
+          (filter === "cat" && state.cat === value) ||
+          (filter === "noweb" && state.noWebOnly);
+
+        btn.classList.toggle("bg-sky-500/15", selected);
+        btn.classList.toggle("text-sky-200", selected);
+        btn.classList.toggle("bg-white/5", !selected);
+        btn.classList.toggle("text-slate-200", !selected);
+      }
+    };
+
+    const planCatalog = {
+      R1: {
+        title: "R1 — Menú y contacto",
+        price: "$3,000",
+        delivery: "Entrega: 3–5 días",
+        includes: [
+          "Menú web con fotos y precios",
+          "WhatsApp con mensajes automáticos (flujo listo, no solo botón)",
+          "Horarios y ubicación",
+          "Código QR del menú",
+          "Guía rápida en video",
+          "Soporte 7 días",
+        ],
+        result:
+          "Dejas de mandar fotos y precios uno por uno. El menú queda claro y la gente pide con información completa, sin confusiones.",
+        tier: 1,
+        page: "restaurantes.html",
+      },
+      R2: {
+        title: "R2 — Pedidos organizados",
+        price: "$7,000",
+        delivery: "Entrega: 7–10 días",
+        includes: [
+          "Todo R1",
+          "Órdenes como lista clara en pantalla",
+          "Estado de pedidos (nuevo / en preparación / listo)",
+          "Confirmaciones automáticas",
+          "Guía rápida en video",
+          "Soporte 10 días",
+        ],
+        result:
+          "Las órdenes ya no se revisan en conversaciones. Llegan como lista clara y el equipo solo prepara, sin errores ni mensajes perdidos.",
+        tier: 2,
+        page: "restaurantes.html",
+      },
+      R3: {
+        title: "R3 — Operación y crecimiento",
+        price: "$12,000",
+        delivery: "Entrega: 10–15 días",
+        includes: [
+          "Todo R2",
+          "Plataforma integral con datos y reportes detallados",
+          "Tu negocio se muestra cuando alguien busca comida como la tuya",
+          "Guía rápida en video",
+          "Soporte 14 días",
+        ],
+        result:
+          "Ya no dependes de estar contestando para que el negocio funcione. Ves qué se pide más y en qué horas se llena para tomar mejores decisiones.",
+        tier: 3,
+        page: "restaurantes.html",
+      },
+      T1: {
+        title: "T1 — Catálogo online",
+        price: "$3,500",
+        delivery: "Entrega: 4–6 días",
+        includes: [
+          "Hasta 50 productos",
+          "Productos con fotos y precios",
+          "WhatsApp con mensaje listo (flujo, no solo botón)",
+          "Ubicación y datos de contacto",
+          "Guía rápida en video",
+          "Soporte 7 días",
+        ],
+        result:
+          "Dejas de enviar fotos y precios uno por uno. Tu catálogo queda ordenado y la gente pregunta menos.",
+        tier: 1,
+        page: "tiendas.html",
+      },
+      T2: {
+        title: "T2 — Pedidos organizados",
+        price: "$7,500",
+        delivery: "Entrega: 7–12 días",
+        includes: [
+          "Hasta 300 productos",
+          "Formulario + vista clara de pedidos",
+          "Productos destacados",
+          "Pedidos sin mensajes mezclados",
+          "Guía rápida en video",
+          "Soporte 10 días",
+        ],
+        result:
+          "Los pedidos llegan claros desde la web. Sabes exactamente qué pidió cada cliente sin estar pegado al WhatsApp.",
+        tier: 2,
+        page: "tiendas.html",
+      },
+      T3: {
+        title: "T3 — Ecommerce",
+        price: "$15,000",
+        delivery: "Entrega: 12–20 días",
+        includes: [
+          "500+ productos",
+          "Carrito de compras",
+          "Pagos en línea",
+          "Correos automáticos",
+          "Panel de pedidos",
+          "Guía rápida en video",
+          "Soporte 14 días",
+        ],
+        result:
+          "Las compras se hacen directo sin que tengas que responder mensajes. Tú solo gestionas pedidos ya confirmados.",
+        tier: 3,
+        page: "tiendas.html",
+      },
+      S1: {
+        title: "S1 — Presencia básica",
+        price: "$3,000",
+        delivery: "Entrega: 3–5 días",
+        includes: [
+          "Página informativa del servicio",
+          "WhatsApp con mensaje listo (flujo, no solo botón)",
+          "Ubicación y datos clave visibles",
+          "Guía rápida en video",
+          "Soporte 7 días",
+        ],
+        result:
+          "Tus futuros clientes ven información clara y dejan de preguntarte horarios o datos básicos.",
+        tier: 1,
+        page: "servicios.html",
+      },
+      S2: {
+        title: "S2 — Sistema de citas",
+        price: "$8,000",
+        delivery: "Entrega: 7–10 días",
+        includes: [
+          "Calendario para agendar",
+          "Confirmación automática",
+          "Recordatorios",
+          "WhatsApp listo",
+          "Guía rápida en video",
+          "Soporte 10 días",
+        ],
+        result:
+          "La gente agenda sola y tú solo ves tu agenda lista. Menos llamadas y menos mensajes todo el día.",
+        tier: 2,
+        page: "servicios.html",
+      },
+      S3: {
+        title: "S3 — Sistema + clientes nuevos",
+        price: "$14,000",
+        delivery: "Entrega: 10–15 días",
+        includes: [
+          "Todo S2",
+          "Tu negocio se muestra cuando alguien busca tu servicio",
+          "Mostrar el negocio a personas cercanas interesadas",
+          "Opción de anticipos/pagos",
+          "Guía rápida en video",
+          "Soporte 14 días",
+        ],
+        result:
+          "Más personas te encuentran y pueden agendar sin que tú estés contestando mensajes. Más visibilidad sin más carga.",
+        tier: 3,
+        page: "servicios.html",
+      },
+    };
+
+    const planModal = {
+      root: document.getElementById("planModal"),
+      title: document.getElementById("planModalTitle"),
+      body: document.getElementById("planModalBody"),
+    };
+
+    const tierAccent = (tier) => {
+      if (tier === 1) return { dot: "bg-emerald-400", bar: "bg-emerald-400", soft: "bg-emerald-500/10 text-emerald-200" };
+      if (tier === 2) return { dot: "bg-amber-400", bar: "bg-amber-400", soft: "bg-amber-500/10 text-amber-200" };
+      return { dot: "bg-rose-400", bar: "bg-rose-400", soft: "bg-rose-500/10 text-rose-200" };
+    };
+
+    const openPlanModal = (code) => {
+      const key = String(code || "").toUpperCase();
+      const plan = planCatalog[key];
+      if (!plan) return;
+      const acc = tierAccent(plan.tier);
+      planModal.title.textContent = plan.title;
+      planModal.body.innerHTML = `
+<div class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 shadow-soft">
+  <div class="absolute left-0 top-0 h-full w-1.5 ${acc.bar}"></div>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/35 px-3 py-2 text-sm font-semibold text-white">
+      <span class="h-2.5 w-2.5 rounded-full ${acc.dot}"></span>
+      ${plan.title}
+    </span>
+    <span class="inline-flex items-center rounded-full border border-white/10 px-3 py-1.5 text-xs font-semibold ${acc.soft}">Tier ${plan.tier}</span>
+  </div>
+  <div class="mt-4 flex flex-col gap-1">
+    <div class="text-4xl font-semibold tracking-tight text-white">${plan.price}</div>
+    <div class="text-sm text-slate-200">${plan.delivery}</div>
+  </div>
+  <div class="mt-4">
+    <div class="text-sm font-semibold text-white">Incluye</div>
+    <ul class="mt-2 grid gap-2 text-sm text-slate-200">
+      ${plan.includes
+          .map((x) => `<li class="flex gap-2"><i data-lucide="check-circle-2" class="mt-0.5 h-4 w-4 text-emerald-200"></i><span>${x}</span></li>`)
+          .join("")}
+    </ul>
+  </div>
+  <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-100">
+    <div class="text-xs font-semibold text-slate-300">Resultado</div>
+    <div class="mt-1 font-semibold text-white">${plan.result}</div>
+  </div>
+  <div class="mt-4 grid gap-2 sm:grid-cols-2">
+    <a href="${plan.page}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/10">
+      <i data-lucide="layout-template" class="h-4 w-4"></i>
+      Abrir página de planes
+    </a>
+    <button type="button" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-sky-500 px-4 py-2.5 text-sm font-semibold text-white shadow-soft" data-close-plan-modal="1">
+      <i data-lucide="check" class="h-4 w-4"></i>
+      Listo, entendido
+    </button>
+  </div>
+</div>
+	        `.trim();
+
+      planModal.root.classList.remove("hidden");
+      planModal.root.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+      lucide.createIcons();
+    };
+
+    const closePlanModal = () => {
+      planModal.root.classList.add("hidden");
+      planModal.root.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    };
+
+    const renderCard = (p) => {
+      const opp = normalizeOpp(p.priority);
+      const tier = tierFromOpp(opp);
+      const plan = p.planOverride ? String(p.planOverride) : planFromCategoryTier(p.category, tier);
+      const planTier = planCatalog[String(plan).toUpperCase()]?.tier || tier;
+      const title = planTitle(plan);
+      const hook = hookForPlan(plan);
+      const categoryIcon = iconForCategory(p.category);
+      const mapsHref = mapsUrl(p.maps, p.name);
+      const socialHref = socialUrl(p.social, p.name);
+      const waHref = whatsappUrl(p.phone, p.name, plan);
+      const problems = Array.isArray(p.problemsOverride) && p.problemsOverride.length ? p.problemsOverride : problemsFor(p.category, planTier, p.hasWeb);
+
+      return `
+<article class="prospect-card reveal rounded-3xl border border-white/10 bg-white/5 p-5 shadow-soft" data-opp="${opp}" data-tier="${planTier}" data-cat="${p.category}" data-plan="${plan}" data-hasweb="${String(p.hasWeb || "").toLowerCase()}">
+  <div class="flex items-start justify-between gap-3">
+    <div class="min-w-0">
+      <div class="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-300">
+		        <span class="inline-flex items-center gap-2">
+		          <i data-lucide="${categoryIcon}" class="h-4 w-4 text-sky-200"></i>
+		          ${p.category}
+		        </span>
+		      </div>
+	      <h3 class="mt-2 text-lg font-semibold leading-snug text-white break-words">${p.name}</h3>
+      <div class="mt-1 text-xs text-slate-300">Tel: ${p.phone}</div>
+    </div>
+
+    <div class="flex flex-col items-end gap-2">
+      <span class="inline-flex items-center rounded-2xl border border-white/10 px-3 py-1.5 text-xs font-semibold ${opportunityBadgeClasses(opp)}">
+        ${opp} — ${opp === "A" ? "Alta" : opp === "B" ? "Media" : "Baja"}
+      </span>
+      <div class="flex max-w-[280px] flex-wrap justify-end gap-1.5">
+        <button type="button" class="status-chip rounded-full border border-white/10 bg-sky-500/15 px-2.5 py-1 text-[11px] font-semibold text-sky-200" data-status="nuevo">Nuevo</button>
+        <button type="button" class="status-chip rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-slate-200 hover:bg-white/10" data-status="contactado">Contactado</button>
+        <button type="button" class="status-chip rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-slate-200 hover:bg-white/10" data-status="seguimiento">Seguimiento</button>
+        <button type="button" class="status-chip hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-slate-200 hover:bg-white/10 sm:inline-flex" data-status="cerrado">Cerrado</button>
+        <button type="button" class="status-chip hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-slate-200 hover:bg-white/10 sm:inline-flex" data-status="nointeresado">No interesado</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+    <div class="flex items-center justify-between gap-3">
+      <div class="text-sm font-semibold text-white">Problemas detectados</div>
+      <i data-lucide="alert-triangle" class="h-4 w-4 text-rose-200"></i>
+    </div>
+    <ul class="mt-3 grid gap-2 text-sm text-slate-200">
+      ${problems
+          .map((x) => `<li class="flex gap-2"><i data-lucide="x-circle" class="mt-0.5 h-4 w-4 text-rose-300"></i>${x}</li>`)
+          .join("")}
+    </ul>
+  </div>
+
+	  <div class="mt-4 grid gap-3 sm:grid-cols-2">
+	    <div class="rounded-2xl border border-white/10 bg-slate-900/35 p-4">
+	      <div class="flex items-center justify-between gap-2">
+	        <div class="text-xs font-semibold text-slate-300">Plan que encaja</div>
+	        <button type="button" class="view-plan inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold text-slate-200 hover:bg-white/10" data-view-plan="${plan}">
+	          <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+	          Ver plan
+	        </button>
+	      </div>
+	      <div class="mt-1 flex items-center gap-2">
+	        <span class="rounded-full bg-sky-500/15 px-3 py-1 text-xs font-semibold text-sky-200 ring-1 ring-white/10">${plan}</span>
+	        <span class="text-sm font-semibold text-white">${title}</span>
+	      </div>
+      <p class="mt-2 text-xs text-slate-200">Gancho: “${hook}”</p>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-slate-900/35 p-4">
+      <div class="text-xs font-semibold text-slate-300">Potencial</div>
+      <p class="mt-1 text-sm text-slate-200">Este negocio puede mejorar su operación y captar más clientes con sistema web.</p>
+    </div>
+  </div>
+
+  <div class="mt-4 grid grid-cols-3 gap-2">
+    <a href="${mapsHref}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-white/10">
+      <i data-lucide="map" class="h-4 w-4"></i> Maps
+    </a>
+    <a href="${socialHref}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-white/10">
+      <i data-lucide="instagram" class="h-4 w-4"></i> Redes
+    </a>
+    <a href="${waHref}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-sky-500 px-3 py-2 text-xs font-semibold text-white shadow-soft">
+      <i data-lucide="message-circle" class="h-4 w-4"></i> WhatsApp
+    </a>
+  </div>
+</article>
+	        `.trim();
+    };
+
+    const render = () => {
+      el.grid.innerHTML = PROSPECTS.map((p) => renderCard(p)).join("\n");
+      lucide.createIcons();
+      setupReveal();
+      updateCounts();
+      updateFilterUI();
+      applyFilters();
+    };
+
+    document.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+
+      const viewPlanBtn = target.closest("[data-view-plan]");
+      if (viewPlanBtn) {
+        openPlanModal(viewPlanBtn.getAttribute("data-view-plan"));
+        return;
+      }
+
+      const closePlanBtn = target.closest("[data-close-plan-modal]");
+      if (closePlanBtn) {
+        closePlanModal();
+        return;
+      }
+
+      const filterBtn = target.closest(".filter-chip");
+      if (filterBtn) {
+        const filter = filterBtn.getAttribute("data-filter");
+        const value = filterBtn.getAttribute("data-value") || "";
+        if (filter === "noweb") {
+          state.noWebOnly = !state.noWebOnly;
+        } else {
+          state[filter] = state[filter] === value ? "" : value;
+        }
+        updateFilterUI();
+        applyFilters();
+        return;
+      }
+
+      const statusBtn = target.closest(".status-chip");
+      if (statusBtn) {
+        const card = statusBtn.closest("article");
+        if (!card) return;
+        const chips = Array.from(card.querySelectorAll(".status-chip"));
+        for (const c of chips) {
+          c.classList.remove("bg-sky-500/15", "text-sky-200");
+          c.classList.add("bg-white/5", "text-slate-200");
+        }
+        statusBtn.classList.remove("bg-white/5", "text-slate-200");
+        statusBtn.classList.add("bg-sky-500/15", "text-sky-200");
+      }
+    });
+
+    el.clearFilters.addEventListener("click", () => {
+      state.opp = "";
+      state.tier = "";
+      state.cat = "";
+      state.noWebOnly = false;
+      updateFilterUI();
+      applyFilters();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !planModal.root.classList.contains("hidden")) closePlanModal();
+    });
+
+    render();
+  </script>
+<div id="global-html-launcher" style="position:fixed;left:16px;bottom:16px;z-index:9999;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+  <button id="globalNavToggle" type="button" aria-label="Abrir navegación rápida" style="border:1px solid #cbd5e1;background:#0f172a;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(15,23,42,.2);cursor:pointer;">Navegar</button>
+  <div id="globalNavPanel" hidden style="margin-top:8px;min-width:220px;max-height:60vh;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 14px 30px rgba(15,23,42,.16);">
+    <p style="margin:2px 4px 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;">Páginas</p>
+    <div id="globalNavLinks" style="display:grid;gap:6px;"></div>
+  </div>
+</div>
+<script>
+(function(){
+  if (window.__globalNavInstalled) return;
+  window.__globalNavInstalled = true;
+  var links = [
+    { href: "index.html", label: "Inicio" },
+    { href: "restaurantes.html", label: "Planes Restaurantes" },
+    { href: "servicios.html", label: "Planes Servicios" },
+    { href: "tiendas.html", label: "Planes Tiendas" },
+    { href: "redes-sociales.html", label: "Redes Sociales" },
+    { href: "prospectos.html", label: "Prospectos" },
+    { href: "mensajes-prospectos.html", label: "Mensajes Prospectos" },
+    { href: "totem-demo.html", label: "Totem Demo" },
+    { href: "uada.html", label: "Demo Uada" },
+    { href: "exkapa.html", label: "Demo Exkapa" },
+    { href: "moms.html", label: "Demo Moms" }
+  ];
+
+  var toggle = document.getElementById("globalNavToggle");
+  var panel = document.getElementById("globalNavPanel");
+  var linksWrap = document.getElementById("globalNavLinks");
+  var root = document.getElementById("global-html-launcher");
+  if (!toggle || !panel || !linksWrap || !root) return;
+
+  var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  linksWrap.innerHTML = links.map(function(item){
+    var active = item.href.toLowerCase() === current;
+    var baseStyle = "display:block;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #e2e8f0;";
+    var activeStyle = "background:#e0f2fe;color:#075985;border-color:#7dd3fc;";
+    var normalStyle = "background:#fff;color:#0f172a;";
+    return "<a href=\"" + item.href + "\" style=\"" + baseStyle + (active ? activeStyle : normalStyle) + "\">" + item.label + "</a>";
+  }).join("");
+
+  toggle.addEventListener("click", function(){
+    panel.hidden = !panel.hidden;
+  });
+
+  document.addEventListener("click", function(e){
+    if (!root.contains(e.target)) panel.hidden = true;
+  });
+})();
+</script>
+</body>
+
+</html>

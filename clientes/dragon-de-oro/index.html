@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda digital para Dragón de Oro</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tienda digital para Dragón de Oro" />
+  <meta property="og:description"
+    content="Convertir toda la atención que Dragón de Oro ya genera en un sistema permanente de ventas." />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tienda digital para Dragón de Oro" />
+  <meta name="twitter:description"
+    content="Operación digital para vender fuera del live con pedidos organizados y control de productos." />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <script src="../portal-auth.js"></script>
+  <style>
+    :root {
+      --bg: #fff7f4;
+      --surface: #ffffff;
+      --ink: #2c2024;
+      --muted: #6b5960;
+      --line: #e8d5d8;
+      --brand: #b63a4a;
+      --brand-deep: #922f3b;
+      --gold: #caa46a;
+      --rose-soft: #f7e7ea;
+      --radius: 18px;
+      --shadow: 0 14px 28px rgba(109, 54, 64, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 100% -10%, #fde7db 0%, transparent 34%), radial-gradient(circle at 0% 15%, #faecef 0%, transparent 35%), var(--bg);
+      line-height: 1.56;
+    }
+
+    .wrap {
+      width: min(1140px, 92vw);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 56px 0 36px;
+    }
+
+    .hero {
+      background: linear-gradient(132deg, #fff2ea 0%, #fbe8eb 52%, #fff8ef 100%);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: clamp(24px, 4vw, 48px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -40px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(182, 58, 74, 0.08);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      width: clamp(100px, 18vw, 160px);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(96, 45, 53, 0.2);
+    }
+
+    .chip {
+      background: rgba(182, 58, 74, 0.1);
+      color: #7e2934;
+      border: 1px solid rgba(182, 58, 74, 0.28);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 2.5vw, 2.08rem);
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1.04rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn.primary {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .btn.secondary {
+      background: #f6e7d0;
+      color: #775427;
+      border-color: #e6d1af;
+    }
+
+    .btn.outline {
+      background: transparent;
+      border-color: rgba(146, 47, 59, .35);
+      color: var(--brand-deep);
+    }
+
+    main {
+      padding-bottom: 34px;
+    }
+
+    section {
+      padding: 12px 0 30px;
+    }
+
+    .block {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 8px 18px rgba(112, 66, 76, 0.08);
+    }
+
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .flow {
+      background: linear-gradient(145deg, #fff 0%, #faecef 56%, #fdf4e7 100%);
+      border: 1px dashed #cc93a0;
+      border-radius: 16px;
+      padding: 22px;
+      white-space: pre-line;
+      font-weight: 650;
+      color: #6f3f49;
+    }
+
+    .grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #fff 0%, #fff9f9 100%);
+      border: 1px solid #e9d9dd;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 6px 14px rgba(119, 70, 80, 0.08);
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .plan {
+      background: #fff;
+      border: 1px solid #e7d4d8;
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .plan.pro {
+      border-color: rgba(202, 164, 106, 0.65);
+      background: linear-gradient(180deg, #fffaf0 0%, #fff7fb 100%);
+      box-shadow: 0 10px 24px rgba(122, 71, 81, 0.15);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(202, 164, 106, 0.2);
+      color: #7b5a28;
+      border: 1px solid rgba(202, 164, 106, 0.5);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
+      font-weight: 800;
+      color: var(--ink);
+      margin: 8px 0 10px;
+    }
+
+    .note {
+      border: 1px solid #eadadf;
+      border-left: 4px solid var(--brand);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff9fb;
+      color: #70545c;
+      margin-top: 10px;
+    }
+
+    .cta-center {
+      text-align: center;
+    }
+
+    .cta-center .btn {
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid #e5d4d9;
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: .95rem;
+    }
+
+    th,
+    td {
+      padding: 11px 10px;
+      text-align: left;
+      border-bottom: 1px solid #ecdde1;
+      color: #654f56;
+    }
+
+    th {
+      background: #fff4f6;
+      color: #51343c;
+    }
+
+    td:nth-child(3),
+    th:nth-child(3) {
+      background: #fff7eb;
+      color: #705228;
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 0 0 44px;
+      text-align: center;
+      color: #7d666d;
+      font-size: .95rem;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding-top: 28px;
+      }
+
+      .hero {
+        border-radius: 20px;
+      }
+
+      table {
+        font-size: .88rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="hero-top">
+        <img class="logo" src="logo dragon.png" alt="Logo Dragón de Oro" />
+        <span class="chip">Operación digital con ventas permanentes</span>
+      </div>
+      <h1>Tienda digital para Dragón de Oro</h1>
+      <p>Una plataforma para organizar productos, recibir pedidos y convertir la atención de redes en ventas
+        permanentes.</p>
+      <p><strong>Los lives ya generan interés. La tienda permite que ese interés siga vendiendo incluso cuando el live
+          termina.</strong></p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <div class="block">
+        <h2>El live vende, pero la tienda mantiene la venta viva</h2>
+        <p>Los lives funcionan porque ya existe comunidad, atención y confianza. El siguiente paso es que cada producto
+          también pueda encontrarse, consultarse y comprarse fuera del live.</p>
+        <ul>
+          <li>Los productos dejan de depender solo del momento del en vivo</li>
+          <li>Los clientes pueden consultar disponibilidad después</li>
+          <li>Las compras se organizan en pedidos claros</li>
+          <li>El catálogo queda visible todo el tiempo</li>
+          <li>Cada nuevo ingreso puede quedarse vendiendo durante más días</li>
+          <li>La tienda se convierte en un activo propio de Dragón de Oro</li>
+        </ul>
+        <p><strong>No se trata de apagar los lives. Se trata de convertirlos en tráfico para una tienda propia.</strong>
+        </p>
+      </div>
+    </section>
+
+    <section id="flujo">
+      <h2>De live a tienda propia</h2>
+      <div class="flow">Dragón de Oro muestra productos en redes
+        ↓
+        El cliente entra a la tienda
+        ↓
+        Busca o filtra productos
+        ↓
+        Agrega al carrito
+        ↓
+        Envía pedido
+        ↓
+        Dragón de Oro recibe orden organizada
+        ↓
+        Se confirma disponibilidad y entrega
+        ↓
+        El producto sigue visible para nuevas compras</div>
+    </section>
+
+    <section id="sistema">
+      <h2>Módulos del sistema</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>1. Catálogo digital</h3>
+          <p>Productos organizados por categoría, precio, foto y disponibilidad.</p>
+        </article>
+        <article class="card">
+          <h3>2. Hasta 500 productos</h3>
+          <p>Base preparada para manejar volumen real de inventario.</p>
+        </article>
+        <article class="card">
+          <h3>3. Buscador de productos</h3>
+          <p>Los clientes encuentran artículos sin depender de preguntar por mensaje.</p>
+        </article>
+        <article class="card">
+          <h3>4. Filtros por categoría</h3>
+          <p>Permite navegar por tipo de producto, novedad o disponibilidad.</p>
+        </article>
+        <article class="card">
+          <h3>5. Carrito de compra</h3>
+          <p>El cliente arma su pedido completo antes de enviarlo.</p>
+        </article>
+        <article class="card">
+          <h3>6. Panel de pedidos</h3>
+          <p>Las órdenes llegan organizadas con productos, cantidades y datos del cliente.</p>
+        </article>
+        <article class="card">
+          <h3>7. Inventario visual</h3>
+          <p>Productos disponibles, agotados o con pocas piezas.</p>
+        </article>
+        <article class="card">
+          <h3>8. Productos destacados</h3>
+          <p>Espacios para empujar artículos nuevos, de temporada o de alta rotación.</p>
+        </article>
+        <article class="card">
+          <h3>9. Base de clientes</h3>
+          <p>Registro de compradores, pedidos e historial básico.</p>
+        </article>
+        <article class="card">
+          <h3>10. Reportes básicos</h3>
+          <p>Productos con más interés, pedidos recibidos y categorías fuertes.</p>
+        </article>
+        <article class="card">
+          <h3>11. Preparado para crecimiento</h3>
+          <p>La tienda queda lista para crecimiento comercial posterior sin rehacer estructura.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Qué cambia con esta plataforma</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Más orden</h3>
+            <p>Los pedidos dejan de depender de mensajes mezclados.</p>
+          </article>
+          <article class="card">
+            <h3>Más vida para cada producto</h3>
+            <p>Lo que se muestra en vivo puede seguir vendiendo después.</p>
+          </article>
+          <article class="card">
+            <h3>Más control</h3>
+            <p>El catálogo y los pedidos se consultan desde una estructura clara.</p>
+          </article>
+          <article class="card">
+            <h3>Más ventas fuera del live</h3>
+            <p>El cliente puede comprar aunque no haya visto la transmisión.</p>
+          </article>
+          <article class="card">
+            <h3>Más independencia</h3>
+            <p>Dragón de Oro empieza a construir un activo propio, no solo audiencia en redes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="block cta-center">
+        <h2>Veamos cómo compraría un cliente</h2>
+        <p>Antes de hablar de inversión, esta es la experiencia que tendría una persona al entrar a la tienda de Dragón
+          de Oro fuera del live.</p>
+        <a class="btn primary" href="tienda-demo.html">Ver demo de tienda</a>
+      </div>
+    </section>
+
+    <section id="inversion-18">
+      <div class="block">
+        <h2>Inversión · Tienda Ecommerce Operativa</h2>
+        <article class="plan">
+          <div class="price">$8,000 MXN</div>
+          <p>Para lanzar la tienda con catálogo, carrito y pedidos organizados.</p>
+          <ul>
+            <li>Tienda digital para hasta 500 productos</li>
+            <li>Catálogo organizado por categorías</li>
+            <li>Buscador, filtros y carrito de compra</li>
+            <li>Panel de pedidos para recibir órdenes claras</li>
+            <li>Inventario visual</li>
+            <li>Base inicial de clientes</li>
+            <li>Reportes básicos</li>
+          </ul>
+          <div class="note"><strong>Condición comercial:</strong> Este plan NO incluye CMS privado para que Dragón de
+            Oro suba productos por su cuenta.</div>
+          <p><strong>En este plan, la tienda funciona completa, pero las cargas, cambios y actualizaciones de catálogo
+              dependen del estudio.</strong></p>
+          <div class="note"><strong>Mantenimiento requerido después de publicación: $3,000 MXN mensuales.</strong></div>
+          <p><strong>Si la tienda se actualiza cada semana, el mantenimiento mensual puede volverse más caro que
+              implementar un CMS privado desde el inicio.</strong></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="ventajas-cms">
+      <div class="block">
+        <h2>Ventajas de implementar CMS privado</h2>
+        <p>Para una operación que recibe mercancía nueva cada semana, el CMS privado evita depender del estudio para
+          cada alta, cambio o baja de producto.</p>
+        <div class="grid">
+          <article class="card">
+            <h3>Control directo</h3>
+            <p>Dragón de Oro puede crear, editar, pausar o eliminar productos desde su panel.</p>
+          </article>
+          <article class="card">
+            <h3>Publicación inmediata</h3>
+            <p>La nueva mercancía puede publicarse el mismo día que llega.</p>
+          </article>
+          <article class="card">
+            <h3>Menos costo operativo</h3>
+            <p>Evita pagar mantenimiento mensual solo para cambios normales de catálogo.</p>
+          </article>
+          <article class="card">
+            <h3>Menos dependencia</h3>
+            <p>El equipo no necesita esperar al estudio para cambios simples.</p>
+          </article>
+          <article class="card">
+            <h3>Más velocidad comercial</h3>
+            <p>Si un producto se vende rápido, puede marcarse como agotado al momento.</p>
+          </article>
+          <article class="card">
+            <h3>Mejor manejo de inventario</h3>
+            <p>Disponibilidad, precios y categorías se actualizan desde el panel.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="block cta-center">
+        <h2>Ahora veamos cómo Dragón de Oro administraría productos</h2>
+        <p>Esta es la diferencia entre depender del estudio para cada cambio y tener control directo del catálogo.</p>
+        <a class="btn secondary" href="cms-demo.html">Ver demo del CMS privado</a>
+      </div>
+    </section>
+
+    <section id="inversion-25">
+      <div class="block">
+        <h2>Inversión · Tienda Ecommerce con CMS Privado</h2>
+        <article class="plan pro">
+          <span class="badge">Recomendado</span>
+          <div class="price">$12,000 MXN</div>
+          <p>Para que Dragón de Oro pueda administrar productos sin depender del estudio.</p>
+          <ul>
+            <li>Todo lo incluido en la tienda ecommerce operativa</li>
+            <li>CMS privado para alta, edición y baja de productos</li>
+            <li>Gestión de fotos, precios, categorías y disponibilidad</li>
+            <li>Inventario visual administrable</li>
+            <li>Productos destacados administrables</li>
+            <li>Base de clientes, pedidos y reportes básicos</li>
+          </ul>
+          <p><strong>La opción recomendada para una operación con mercancía nueva cada semana.</strong></p>
+          <p><strong>Con el CMS privado, el pago inicial es mayor, pero evita depender de mantenimiento mensual solo
+              para cargar productos.</strong></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="comparativa">
+      <div class="block">
+        <h2>Comparativa final</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th>Ecommerce Operativa</th>
+              <th>CMS Privado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hasta 500 productos</td>
+              <td>Sí</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Catálogo digital</td>
+              <td>Sí</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Carrito</td>
+              <td>Sí</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Panel de pedidos</td>
+              <td>Sí</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Buscador y filtros</td>
+              <td>Sí</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Inventario visual</td>
+              <td>Sí</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Reportes básicos</td>
+              <td>Sí</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Editar productos sin el estudio</td>
+              <td>No</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Subir productos nuevos directamente</td>
+              <td>No</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Actualizar precios directamente</td>
+              <td>No</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Cambiar disponibilidad directamente</td>
+              <td>No</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>Mantenimiento para cambios de catálogo</td>
+              <td>$3,000/mes requerido</td>
+              <td>No requerido para cambios normales de catálogo</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:14px"><strong>Si Dragón de Oro actualiza mercancía cada semana, el CMS privado evita
+            depender del estudio para cada carga de productos.</strong></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="block cta-center">
+        <h2>Que cada live siga vendiendo después de terminar</h2>
+        <p>Dragón de Oro ya tiene comunidad y atención. La tienda digital permite convertir esa atención en pedidos
+          organizados y ventas permanentes.</p>
+        <a class="btn primary" href="#inversion-25">Elegir CMS Privado</a>
+        <a class="btn outline" href="#comparativa">Ver comparativa</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">Sistema propio de tienda digital para operación ecommerce de Dragón de Oro.</footer>
+</body>
+
+</html>

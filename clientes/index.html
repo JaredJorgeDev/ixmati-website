@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal de Clientes | Ixmati</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:secure_url" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+  <script src="portal-auth.js"></script>
+</head>
+<body class="portal-body">
+  <header class="portal-top">
+    <div class="portal-shell portal-nav">
+      <a class="brand-wrap" href="index.html">
+        <span class="brand-dot"></span>
+        <span>
+          <small class="brand-title">Ixmati</small>
+          <strong class="brand-main">Portal de clientes</strong>
+        </span>
+      </a>
+      <div class="nav-actions">
+        <a class="btn btn-outline" href="../index.html">Volver al sitio</a>
+        <button class="btn btn-primary" id="logoutBtn" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="portal-shell page-space">
+    <section class="card">
+      <div class="badge">Acceso privado activo</div>
+      <h1 class="hero-title">Acceso privado por cliente</h1>
+      <p class="lead">Cada proyecto está organizado en su carpeta y protegido por credenciales independientes.</p>
+    </section>
+
+    <section class="card" style="margin-top:18px;">
+      <h2 style="margin:0 0 14px;">Proyectos disponibles</h2>
+      <div class="project-list">
+        <article class="project-item">
+          <div>
+            <h4>Live Travel</h4>
+            <p>Propuesta comercial, flujo interactivo y plataforma digital de seguimiento.</p>
+          </div>
+          <a class="btn btn-cta" href="live-travel/index.html">Abrir proyecto</a>
+        </article>
+        <article class="project-item">
+          <div>
+            <h4>Gustavo Nissan</h4>
+            <p>Propuesta de captación automotriz y landing comercial para generación de prospectos.</p>
+          </div>
+          <a class="btn btn-cta" href="gustavo-nissan/index.html">Abrir proyecto</a>
+        </article>
+        <article class="project-item">
+          <div>
+            <h4>Pan Comido</h4>
+            <p>Sistema de pedidos online, beneficios e iniciativa de crecimiento digital.</p>
+          </div>
+          <a class="btn btn-cta" href="pan-comido/index.html">Abrir proyecto</a>
+        </article>
+        <article class="project-item">
+          <div>
+            <h4>Nutrivida</h4>
+            <p>Sistema digital para captación, seguimiento, programas y recompra de clientes.</p>
+          </div>
+          <a class="btn btn-cta" href="nutrivida/index.html">Abrir proyecto</a>
+        </article>
+        <article class="project-item">
+          <div>
+            <h4>Gerokally</h4>
+            <p>Sistema digital para bienestar, comunidad y seguimiento de actividades para familias.</p>
+          </div>
+          <a class="btn btn-cta" href="gerokally/index.html">Abrir proyecto</a>
+        </article>
+        <article class="project-item">
+          <div>
+            <h4>Photos Time</h4>
+            <p>Plataforma privada de galerias por codigo para ventas fotográficas con pagos locales en Mexico.</p>
+          </div>
+          <a class="btn btn-cta" href="photos-time/index.html">Abrir proyecto</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      window.ClientPortalAuth.logout();
+    });
+  </script>
+</body>
+</html>

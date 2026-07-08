@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consultoría Kii | Cotización Estratégica</title>
+  <meta name="description" content="Cotización comercial premium para Consultoría Kii: posicionamiento local rápido y plataforma empresarial completa." />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #e9eff7;
+      --primary: #0f2747;
+      --primary-2: #173b69;
+      --text: #152235;
+      --muted: #516176;
+      --line: #d6deea;
+      --accent: #1d4f8c;
+      --ok: #0f5a3f;
+      --shadow: 0 18px 42px rgba(15, 39, 71, 0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --container: 1140px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 88% 2%, rgba(23, 59, 105, 0.12), transparent 36%),
+        radial-gradient(circle at 5% 32%, rgba(15, 39, 71, 0.08), transparent 32%),
+        var(--bg);
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(100% - 2.2rem, var(--container));
+      margin-inline: auto;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+      background: rgba(244, 247, 251, 0.9);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-wrap {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 6px 14px rgba(15, 39, 71, 0.14);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .93rem;
+      padding: .45rem .7rem;
+      border-radius: 8px;
+      transition: .2s ease;
+    }
+
+    .nav-links a:hover { background: var(--surface-2); color: var(--primary); }
+
+    section { padding: 5.5rem 0; }
+
+    .hero {
+      padding-top: 6.8rem;
+      padding-bottom: 4.2rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: .35rem .8rem;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--primary-2);
+      font-size: .82rem;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 1rem; color: var(--primary); }
+    h1 { font-size: clamp(2rem, 3.6vw, 3.2rem); max-width: 900px; margin-top: 1.1rem; }
+    h2 { font-size: clamp(1.55rem, 2.7vw, 2.25rem); }
+    h3 { font-size: 1.18rem; }
+
+    .lead {
+      font-size: clamp(1.03rem, 1.6vw, 1.18rem);
+      color: var(--muted);
+      max-width: 900px;
+      margin-bottom: .7rem;
+    }
+
+    .support {
+      color: var(--text);
+      font-weight: 600;
+      margin-top: 1.2rem;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(1.2rem, 2.4vw, 2rem);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    .cards-3 > article { grid-column: span 4; }
+    .cards-4 > article { grid-column: span 3; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 1.2rem;
+      transition: transform .26s ease, box-shadow .26s ease, border-color .26s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #b9cbe4;
+      box-shadow: 0 12px 28px rgba(15, 39, 71, 0.11);
+    }
+
+    .card p { margin: 0; color: var(--muted); }
+
+    .list { margin: .5rem 0 0; padding: 0; list-style: none; }
+    .list li {
+      padding-left: 1.35rem;
+      margin: .42rem 0;
+      position: relative;
+      color: var(--text);
+    }
+    .list li::before {
+      content: "";
+      width: .52rem;
+      height: .52rem;
+      border-radius: 50%;
+      background: var(--accent);
+      position: absolute;
+      left: 0;
+      top: .58rem;
+    }
+
+    .cta {
+      display: grid;
+      gap: 1.1rem;
+      align-items: center;
+      grid-template-columns: 1fr auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: .78rem 1.2rem;
+      border-radius: 10px;
+      border: 1px solid var(--primary);
+      text-decoration: none;
+      color: #fff;
+      background: var(--primary);
+      font-weight: 600;
+      transition: .2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: var(--primary-2); border-color: var(--primary-2); }
+
+    .microcopy { margin: .2rem 0 0; font-size: .9rem; color: var(--muted); }
+
+    .price-box {
+      border: 1px solid #b8c9e0;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .price {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--primary);
+      margin: .3rem 0 .8rem;
+    }
+
+    .transition-block {
+      background: linear-gradient(130deg, #0f2747, #173b69);
+      color: #f2f6fd;
+      border-radius: var(--radius);
+      padding: clamp(1.5rem, 2.6vw, 2.4rem);
+      box-shadow: var(--shadow);
+    }
+
+    .transition-block h2,
+    .transition-block p { color: #f2f6fd; }
+
+    .strong-line {
+      margin-top: .95rem;
+      font-weight: 700;
+      font-size: 1.07rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: .33rem .68rem;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .25px;
+      text-transform: uppercase;
+      background: #e2ecf9;
+      color: var(--primary);
+      margin-bottom: .8rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    th, td {
+      text-align: left;
+      padding: .85rem .8rem;
+      border-bottom: 1px solid var(--line);
+      font-size: .95rem;
+    }
+
+    th {
+      background: #edf3fb;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .yes { color: var(--ok); font-weight: 700; }
+    .no { color: #7c8897; font-weight: 600; }
+
+    .section-note {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .footer-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .9rem;
+      margin-top: 1rem;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--primary);
+    }
+
+    .btn.secondary:hover { background: var(--surface-2); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .66s ease, transform .66s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .cards-3 > article,
+      .cards-4 > article { grid-column: span 6; }
+      .cta { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      section { padding: 4.2rem 0; }
+      .cards-3 > article,
+      .cards-4 > article { grid-column: span 12; }
+      th, td { padding: .7rem .56rem; font-size: .88rem; }
+      .brand span { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio">
+        <img src="logo png consultoria kii.png" alt="Logo Consultoría Kii" />
+        <span>Consultoría Kii</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#plan1">Plan 1</a>
+        <a href="#plan2">Plan 2</a>
+        <a href="#comparativa">Comparativa</a>
+        <a href="#cierre">Cierre</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio" class="container">
+    <section class="hero reveal">
+      <span class="eyebrow">Cotización Estratégica</span>
+      <h1>Consultoría psicológica aplicada al crecimiento empresarial</h1>
+      <p class="lead">Consultoría Kii transforma bienestar organizacional en estrategias reales para equipos, liderazgo y cultura empresarial.</p>
+      <p class="support">Desde posicionamiento profesional local hasta proyectos corporativos de alto valor.</p>
+    </section>
+
+    <section class="reveal">
+      <div class="panel">
+        <h2>El mercado no busca solo terapia. Busca soluciones organizacionales.</h2>
+        <p class="lead">La mayoría de psicólogos compiten únicamente por consultas individuales. El verdadero crecimiento está en posicionarse frente a empresas que necesitan liderazgo, salud emocional laboral y desarrollo organizacional.</p>
+        <div class="grid cards-3" style="margin-top:1rem;">
+          <article class="card"><h3>Burnout laboral</h3><p>Prevención y gestión de desgaste profesional en equipos.</p></article>
+          <article class="card"><h3>Rotación de personal</h3><p>Intervención sobre causas emocionales y culturales de salida.</p></article>
+          <article class="card"><h3>Estrés organizacional</h3><p>Diagnóstico y mejora de factores psicosociales en operación.</p></article>
+          <article class="card"><h3>Liderazgo emocional</h3><p>Desarrollo de líderes con enfoque humano y resultados.</p></article>
+          <article class="card"><h3>Cultura empresarial</h3><p>Alineación de valores, prácticas y bienestar interno.</p></article>
+          <article class="card"><h3>Bienestar laboral</h3><p>Programas sostenibles para productividad y estabilidad de equipos.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="plan1" class="reveal">
+      <div class="panel">
+        <h2>Plan 1 · Posicionamiento profesional local</h2>
+        <p class="lead">Una estrategia rápida para comenzar a generar presencia digital, consultas y autoridad local.</p>
+        <p>Este plan busca posicionarlo localmente, generar presencia constante, captar consultas y construir confianza inicial.</p>
+        <ul class="list">
+          <li>Landing profesional</li>
+          <li>Integración WhatsApp</li>
+          <li>Optimización visual</li>
+          <li>Contenido dinámico RSS</li>
+          <li>Posicionamiento local inicial</li>
+          <li>Formulario de contacto</li>
+          <li>Integración redes sociales</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="panel cta">
+        <div>
+          <h2>Así se vería la primera etapa de posicionamiento</h2>
+          <p>Una landing enfocada en presencia digital rápida y captación inicial de clientes.</p>
+          <p class="microcopy">La estructura visual se adaptaría completamente a Consultoría Kii.</p>
+        </div>
+        <a class="btn" href="https://gustavomolinanissan.com" target="_blank" rel="noopener noreferrer">Ver demo del plan inicial</a>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="panel price-box">
+        <h2>Inversión · Posicionamiento profesional local</h2>
+        <div class="price">$3,800 MXN mensuales</div>
+        <p class="lead">Ideal para comenzar a construir presencia, autoridad y captación local rápidamente.</p>
+        <p>Este modelo funciona muy bien para posicionamiento rápido y generación constante de contenido.</p>
+        <p class="strong-line">Si el objetivo es atraer empresas y proyectos corporativos grandes, se necesita una estructura mucho más sólida.</p>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="transition-block">
+        <h2>Ahora pensemos en proyectos grandes</h2>
+        <p>Las empresas no buscan solamente un psicólogo. Buscan una estructura profesional que transmita capacidad organizacional, liderazgo y confianza corporativa.</p>
+        <p class="strong-line">Aquí es donde una plataforma completa cambia completamente la percepción del servicio.</p>
+      </div>
+    </section>
+
+    <section id="plan2" class="reveal">
+      <div class="panel">
+        <span class="badge">Recomendado</span>
+        <h2>Plan 2 · Plataforma de consultoría empresarial</h2>
+        <p class="lead">Diseñado para posicionar Consultoría Kii frente a empresas y proyectos corporativos.</p>
+        <p>Este sistema transforma la percepción del servicio y crea una presencia profesional enfocada en negocios, equipos y organizaciones.</p>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="grid cards-4">
+        <article class="card"><h3>Plataforma corporativa multipágina</h3><p>Estructura seria y profesional orientada a empresas.</p></article>
+        <article class="card"><h3>Sistema de citas y asesoría empresarial</h3><p>Agendamiento organizado para sesiones y consultorías.</p></article>
+        <article class="card"><h3>Panel de captación de leads</h3><p>Formularios organizados para seguimiento comercial.</p></article>
+        <article class="card"><h3>Preparado para campañas futuras</h3><p>Base sólida para Google Ads y Meta Ads posteriormente.</p></article>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="panel cta">
+        <div>
+          <h2>Así se vería una plataforma empresarial completa</h2>
+          <p>Una estructura enfocada en transmitir autoridad, organización y capacidad profesional frente a empresas.</p>
+          <p class="microcopy">Demo conceptual de funcionamiento y estructura empresarial.</p>
+        </div>
+        <a class="btn" href="demo-corporativa.html">Ver demo de plataforma empresarial</a>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="panel price-box">
+        <span class="badge">Recomendado</span>
+        <h2>Inversión · Plataforma empresarial completa</h2>
+        <div class="price">$8,000 MXN pago único</div>
+        <p class="lead">La opción enfocada en construir autoridad y atraer proyectos empresariales de mayor valor.</p>
+        <ul class="list">
+          <li>Plataforma multipágina</li>
+          <li>Sistema de citas</li>
+          <li>Diagnóstico empresarial</li>
+          <li>Blog profesional</li>
+          <li>Recursos organizacionales</li>
+          <li>Captación de leads</li>
+          <li>Arquitectura corporativa</li>
+          <li>Optimización mobile</li>
+          <li>Preparado para campañas futuras</li>
+        </ul>
+        <p>Este modelo no busca únicamente captar consultas individuales. Busca posicionar Consultoría Kii frente a empresas y proyectos corporativos de mayor escala.</p>
+        <p class="strong-line">La percepción profesional correcta cambia completamente el tipo de cliente que llega.</p>
+      </div>
+    </section>
+
+    <section id="cierre" class="reveal" style="padding-bottom:6.5rem;">
+      <div class="panel">
+        <h2>No se trata solo de verse profesional.<br />Se trata de atraer clientes más grandes.</h2>
+        <p class="lead">Consultoría Kii puede posicionarse rápidamente a nivel local, pero una plataforma empresarial completa cambia completamente el tipo de oportunidades que llegan.</p>
+        <div class="footer-cta">
+          <a class="btn secondary" href="https://gustavomolinanissan.com" target="_blank" rel="noopener noreferrer">Ver demo inicial</a>
+          <a class="btn" href="demo-corporativa.html">Ver plataforma empresarial</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach((el, idx) => {
+      el.style.transitionDelay = `${Math.min(idx * 40, 240)}ms`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

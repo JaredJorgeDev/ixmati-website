@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planes digitales para negocios locales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --accent: #0f3d6f;
+      --muted: #5a6475;
+      --border: #dfe5f1;
+      --shadow: 0 20px 50px rgba(15, 61, 111, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, #eef2f8, var(--bg)), radial-gradient(circle at 80% 0%, #e7edf8, transparent 45%), var(--bg);
+      color: #0f1a2a;
+    }
+    header {
+      padding: 40px 20px 10px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    h1 { margin: 0; font-size: 30px; color: var(--accent); letter-spacing: -0.5px; }
+    .intro { margin: 12px auto 30px; max-width: 720px; color: var(--muted); line-height: 1.7; }
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,61,111,0.06), transparent 60%);
+      pointer-events: none;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eef2f8;
+      font-weight: 700;
+      color: #0f1a2a;
+      width: fit-content;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+    h2 { margin: 0; font-size: 22px; color: #122037; }
+    p { margin: 0; color: var(--muted); line-height: 1.5; }
+    a.card-link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.1px;
+      box-shadow: 0 12px 30px rgba(15, 61, 111, 0.2);
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+    }
+    a.card-link:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(15,61,111,0.24); }
+    nav {
+      background: var(--accent);
+      box-shadow: 0 6px 18px rgba(15,61,111,0.25);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    nav a {
+      color: #eef4ff;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    nav a:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+	    footer { display: none; }
+		    @media (max-width: 640px) {
+		      body { overflow-x: hidden; }
+		      .nav-inner {
+		        padding: 10px 12px;
+		        gap: 6px;
+		        flex-wrap: wrap;
+		        justify-content: center;
+		      }
+	      nav a {
+	        font-size: 12px;
+	        padding: 6px 8px;
+	        line-height: 1.1;
+	        min-width: 0;
+	        overflow-wrap: anywhere;
+	      }
+	      h1 { font-size: 26px; }
+	    }
+	  </style>
+</head>
+<body>
+  <nav aria-label="Navegación principal">
+    <div class="nav-inner">
+      <a href="index.html">Inicio</a>
+      <a href="restaurantes.html">Restaurantes</a>
+      <a href="tiendas.html">Tiendas/Productos</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="redes-sociales.html">Redes Sociales</a>
+    </div>
+  </nav>
+  <header>
+    <h1>Planes digitales listos para tu negocio local</h1>
+    <p class="intro">Creamos desde landing pages hasta sitios robustos con gestión integrada, más redes y anuncios en paquetes claros. Elige la categoría y revisa los planes.</p>
+  </header>
+
+  <div class="grid">
+    <article class="card">
+      <span class="pill"><span class="dot"></span>Restaurantes / Cafés</span>
+      <h2>Menú, pedidos y crecimiento</h2>
+      <p>De un menú claro hasta panel para varias sucursales y base para campañas.</p>
+      <a class="card-link" href="restaurantes.html">Ver planes</a>
+    </article>
+
+    <article class="card">
+      <span class="pill"><span class="dot"></span>Tiendas / Productos</span>
+      <h2>Catálogo, pedidos y ecommerce</h2>
+      <p>Vitrina digital con stock definido, pedidos ordenados y pagos en línea cuando lo necesites.</p>
+      <a class="card-link" href="tiendas.html">Ver planes</a>
+    </article>
+
+    <article class="card">
+      <span class="pill"><span class="dot"></span>Servicios</span>
+      <h2>Citas y alcance</h2>
+      <p>Desde presencia básica hasta sistema de citas con recordatorios y alcance para nuevos clientes.</p>
+      <a class="card-link" href="servicios.html">Ver planes</a>
+    </article>
+
+    <article class="card">
+      <span class="pill"><span class="dot"></span>Redes Sociales</span>
+      <h2>Contenido, constancia y operación mensual</h2>
+      <p>Presencia activa con publicaciones, stories, copies y programación pensada para negocios locales.</p>
+      <a class="card-link" href="redes-sociales.html">Ver planes</a>
+    </article>
+  </div>
+
+<div id="global-html-launcher" style="position:fixed;left:16px;bottom:16px;z-index:9999;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+  <button id="globalNavToggle" type="button" aria-label="Abrir navegación rápida" style="border:1px solid #cbd5e1;background:#0f172a;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(15,23,42,.2);cursor:pointer;">Navegar</button>
+  <div id="globalNavPanel" hidden style="margin-top:8px;min-width:220px;max-height:60vh;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 14px 30px rgba(15,23,42,.16);">
+    <p style="margin:2px 4px 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;">Páginas</p>
+    <div id="globalNavLinks" style="display:grid;gap:6px;"></div>
+  </div>
+</div>
+<script>
+(function(){
+  if (window.__globalNavInstalled) return;
+  window.__globalNavInstalled = true;
+  var links = [
+    { href: "index.html", label: "Inicio" },
+    { href: "restaurantes.html", label: "Planes Restaurantes" },
+    { href: "servicios.html", label: "Planes Servicios" },
+    { href: "tiendas.html", label: "Planes Tiendas" },
+    { href: "redes-sociales.html", label: "Redes Sociales" },
+    { href: "prospectos.html", label: "Prospectos" },
+    { href: "mensajes-prospectos.html", label: "Mensajes Prospectos" },
+    { href: "totem-demo.html", label: "Totem Demo" },
+    { href: "uada.html", label: "Demo Uada" },
+    { href: "exkapa.html", label: "Demo Exkapa" },
+    { href: "moms.html", label: "Demo Moms" }
+  ];
+
+  var toggle = document.getElementById("globalNavToggle");
+  var panel = document.getElementById("globalNavPanel");
+  var linksWrap = document.getElementById("globalNavLinks");
+  var root = document.getElementById("global-html-launcher");
+  if (!toggle || !panel || !linksWrap || !root) return;
+
+  var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  linksWrap.innerHTML = links.map(function(item){
+    var active = item.href.toLowerCase() === current;
+    var baseStyle = "display:block;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #e2e8f0;";
+    var activeStyle = "background:#e0f2fe;color:#075985;border-color:#7dd3fc;";
+    var normalStyle = "background:#fff;color:#0f172a;";
+    return "<a href=\"" + item.href + "\" style=\"" + baseStyle + (active ? activeStyle : normalStyle) + "\">" + item.label + "</a>";
+  }).join("");
+
+  toggle.addEventListener("click", function(){
+    panel.hidden = !panel.hidden;
+  });
+
+  document.addEventListener("click", function(e){
+    if (!root.contains(e.target)) panel.hidden = true;
+  });
+})();
+</script>
+</body>
+</html>

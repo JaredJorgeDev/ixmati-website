@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planes digitales para Servicios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --accent: #0f3d6f;
+      --muted: #5a6475;
+      --border: #dfe5f1;
+      --shadow: 0 18px 45px rgba(15, 61, 111, 0.08);
+      --green: #22b573;
+      --amber: #f5a524;
+      --red: #e04646;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 10% 70%, #eef2f8, var(--bg)), var(--bg);
+      color: #0f1a2a;
+    }
+
+    nav {
+      background: var(--accent);
+      box-shadow: 0 6px 18px rgba(15, 61, 111, 0.25);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    nav a {
+      color: #eef4ff;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    header {
+      padding: 32px 20px 18px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+    }
+
+    .intro {
+      margin-top: 8px;
+      max-width: 700px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      padding: 0 20px 10px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.25s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 61, 111, 0.05), transparent 60%);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 55px rgba(15, 61, 111, 0.14);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      color: #0f1a2a;
+      background: #eef2f8;
+      width: fit-content;
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .price {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ads-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: #e9f1ff;
+      color: #0f3d6f;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 10px 25px rgba(15, 61, 111, 0.12);
+    }
+
+    .ads-icon {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #dce6fb;
+      padding: 2px;
+      position: relative;
+    }
+
+    .ads-icon img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    .ads-icon .g {
+      font-weight: 800;
+      color: #4285f4;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .ads-icon .check {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #22b573;
+      color: #fff;
+      font-size: 10px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 10px rgba(34, 181, 115, 0.35);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #1f2a3a;
+      line-height: 1.5;
+    }
+
+    .result {
+      margin-top: 6px;
+      padding: 10px 12px;
+      background: #eef4ff;
+      border-radius: 10px;
+      color: var(--accent);
+      font-weight: 600;
+      border: 1px solid #d6e4ff;
+    }
+
+    .ads-section {
+      margin: 36px auto 0;
+      max-width: 1100px;
+      padding: 0 20px 10px;
+    }
+
+    .ads-hero {
+      background: linear-gradient(135deg, #0f3d6f, #1f5aa5);
+      color: #e9f1ff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 22px 50px rgba(15, 61, 111, 0.25);
+      display: grid;
+      gap: 8px;
+    }
+
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .ads-card {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      transition: transform 0.18s ease, box-shadow 0.25s ease;
+    }
+
+    .ads-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 55px rgba(15, 61, 111, 0.16);
+    }
+
+    /* Campaign explainer */
+    .campaigns {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      padding: 0 20px 12px;
+      display: grid;
+      gap: 14px;
+    }
+    .camp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .camp-title {
+      margin: 4px 0 6px;
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: -0.1px;
+    }
+    .camp-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #eef4ff;
+      color: var(--accent);
+      border-radius: 999px;
+      font-weight: 700;
+      width: fit-content;
+    }
+    .mock {
+      background: linear-gradient(135deg, #e9f1ff, #f9fbff);
+      border: 1px dashed #cfdaf3;
+      border-radius: 12px;
+      padding: 12px;
+      color: #0f1a2a;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .mock b { color: var(--accent); }
+
+    .ads-head {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .ads-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #f1f5ff;
+    }
+
+    .ads-logo img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .ads-steps {
+      margin: 0;
+      padding-left: 18px;
+      color: #1f2a3a;
+      line-height: 1.5;
+    }
+
+    .ads-note {
+      margin: 12px 0 0;
+      color: #e9f1ff;
+    }
+
+    .cta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 25px rgba(15, 61, 111, 0.18);
+      text-decoration: none;
+      letter-spacing: 0.1px;
+    }
+
+    .cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(15, 61, 111, 0.22);
+    }
+
+    .badge-green {
+      border-left: 6px solid var(--green);
+    }
+
+    .badge-amber {
+      border-left: 6px solid var(--amber);
+    }
+
+    .badge-red {
+      border-left: 6px solid var(--red);
+    }
+
+    .pill.green .dot {
+      background: var(--green);
+    }
+
+    .pill.amber .dot {
+      background: var(--amber);
+    }
+
+    .pill.red .dot {
+      background: var(--red);
+    }
+
+    section.faq {
+      max-width: 900px;
+      margin: 36px auto 60px;
+      padding: 0 20px;
+    }
+
+    section.faq h2 {
+      color: var(--accent);
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    details {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #132033;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+		    @media (max-width: 640px) {
+		      body { overflow-x: hidden; }
+		      .nav-inner {
+		        padding: 10px 12px;
+		        gap: 6px;
+		        flex-wrap: wrap;
+		        justify-content: center;
+		      }
+
+	      nav a {
+	        font-size: 12px;
+	        padding: 6px 8px;
+	        line-height: 1.1;
+	        min-width: 0;
+	        overflow-wrap: anywhere;
+	      }
+
+	      h1 {
+	        font-size: 24px;
+	      }
+
+      .card {
+        padding: 18px;
+      }
+
+	      .grid {
+	        gap: 14px;
+	      }
+	    }
+  </style>
+</head>
+
+<body>
+  <nav aria-label="Navegación principal">
+    <div class="nav-inner">
+      <a href="index.html">Inicio</a>
+      <a href="restaurantes.html">Restaurantes</a>
+      <a href="tiendas.html">Tiendas/Productos</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="redes-sociales.html">Redes Sociales</a>
+    </div>
+  </nav>
+  <header>
+    <h1>Planes digitales para Servicios</h1>
+    <p class="intro">Agenda, contacto y visibilidad para dentistas, talleres, técnicos y más.</p>
+  </header>
+
+	  <div class="grid">
+	    <article class="card badge-green">
+	      <span class="pill green"><span class="dot"></span>S1 · Presencia básica</span>
+	      <div class="price">$3,000</div>
+	      <div class="subtitle">Para iniciar: información clara y contacto inmediato.</div>
+      <ul>
+        <li>Página informativa del servicio.</li>
+        <li>WhatsApp preparado con mensaje automático.</li>
+        <li>Ubicación y datos clave visibles.</li>
+      </ul>
+		      <div class="result">Tus futuros clientes encuentran información clara y dejan de preguntarte horarios o datos básicos. Menos tiempo explicando lo mismo a cada persona.</div>
+	      <a class="cta" href="#">Quiero este plan</a>
+	    </article>
+
+    <article class="card badge-amber">
+      <span class="pill amber"><span class="dot"></span>S2 · Sistema de citas</span>
+      <div class="price">$8,000 <span class="ads-tag"><span class="ads-icon"><svg width="18" height="18"
+              viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg" role="img">
+              <path fill="#4285F4"
+                d="M255.68 133.45c0-9.63-.78-16.67-2.47-23.98H130.7v43.48h71.47c-1.44 10.82-9.23 27.1-26.56 38.03l-.24 1.6 38.56 29.86 2.67.27c24.54-22.63 38.08-55.95 38.08-89.26" />
+              <path fill="#34A853"
+                d="M130.7 261.1c34.55 0 63.5-11.42 84.67-31.04l-40.36-31.26c-10.8 7.42-25.33 12.65-44.3 12.65-33.76 0-62.45-22.62-72.68-53.88l-1.5.13-39.5 30.55-.52 1.48c21.03 41.79 64.3 71.37 114.19 71.37" />
+              <path fill="#FBBC05"
+                d="M58.02 157.57c-2.72-8.11-4.28-16.78-4.28-25.64 0-8.86 1.56-17.53 4.1-25.64l-.07-1.72-40.01-31.12-1.31.62c-8.77 17.36-13.8 36.71-13.8 56.86 0 20.15 5.03 39.5 13.8 56.86" />
+              <path fill="#EB4335"
+                d="M130.7 52.84c24.04 0 40.24 10.4 49.5 19.09l36.12-35.24C193.94 13.26 165.25.65 130.7.65 80.81.65 37.54 30.23 16.51 72.02l40.04 31.12c10.26-31.26 38.95-53.88 72.68-53.88" />
+            </svg><span class="check">✓</span></span>Incluye Google Ads</span></div>
+      <div class="subtitle">Para volumen medio: agenda organizada con confirmaciones automáticas.</div>
+      <ul>
+        <li>Calendario conectado a tu web, con slots y reglas.</li>
+        <li>Confirmación automática al cliente.</li>
+        <li>Recordatorios para reducir ausencias.</li>
+      </ul>
+		      <div class="result">Los clientes agendan solos y reciben confirmación automática. Tú solo ves tu agenda llena. Menos tiempo contestando llamadas y mensajes.</div>
+	      <a class="cta" href="#">Quiero este plan</a>
+	    </article>
+
+    <article class="card badge-red">
+      <span class="pill red"><span class="dot"></span>S3 · Sistema + clientes nuevos</span>
+      <div class="price">$14,000 <span class="ads-tag"><span class="ads-icon"><img src="metalogo.png" alt="Meta"><span
+              class="check">✓</span></span>Incluye Google + Meta Ads</span></div>
+		      <div class="subtitle">Tu negocio se muestra cuando alguien busca tu servicio.</div>
+      <ul>
+        <li>Todo lo anterior.</li>
+        <li>Sistema para que personas que buscan ese servicio te encuentren primero.</li>
+        <li>Mostrar el negocio a personas de la zona interesadas.</li>
+      </ul>
+		      <div class="result">Tu negocio se muestra cuando alguien busca tu servicio y pueden agendar sin preguntar. Más personas te encuentran y pueden agendar sin que tú estés contestando mensajes. Ya no dependes de estar contestando para que el negocio funcione.</div>
+	      <a class="cta" href="#">Quiero este plan</a>
+	    </article>
+	  </div>
+
+  <section class="ads-section" aria-label="Anuncios digitales">
+    <div class="ads-hero">
+      <strong style="letter-spacing:0.3px;">Anuncios digitales que llenan agenda</strong>
+      <span>Mostramos tu servicio a quien lo busca ahora y a personas cercanas que podrían necesitarlo. Mensajes claros
+        para que agenden o escriban.</span>
+      <p class="ads-note">El presupuesto de anuncios se cotiza aparte según tu zona y los costos actuales por palabra
+        clave.</p>
+    </div>
+    <div class="ads-grid">
+      <div class="ads-card">
+        <div class="ads-head">
+          <div class="ads-logo" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg" role="img">
+              <path fill="#4285F4"
+                d="M255.68 133.45c0-9.63-.78-16.67-2.47-23.98H130.7v43.48h71.47c-1.44 10.82-9.23 27.1-26.56 38.03l-.24 1.6 38.56 29.86 2.67.27c24.54-22.63 38.08-55.95 38.08-89.26">
+              </path>
+              <path fill="#34A853"
+                d="M130.7 261.1c34.55 0 63.5-11.42 84.67-31.04l-40.36-31.26c-10.8 7.42-25.33 12.65-44.3 12.65-33.76 0-62.45-22.62-72.68-53.88l-1.5.13-39.5 30.55-.52 1.48c21.03 41.79 64.3 71.37 114.19 71.37">
+              </path>
+              <path fill="#FBBC05"
+                d="M58.02 157.57c-2.72-8.11-4.28-16.78-4.28-25.64 0-8.86 1.56-17.53 4.1-25.64l-.07-1.72-40.01-31.12-1.31.62c-8.77 17.36-13.8 36.71-13.8 56.86 0 20.15 5.03 39.5 13.8 56.86">
+              </path>
+              <path fill="#EB4335"
+                d="M130.7 52.84c24.04 0 40.24 10.4 49.5 19.09l36.12-35.24C193.94 13.26 165.25.65 130.7.65 80.81.65 37.54 30.23 16.51 72.02l40.04 31.12c10.26-31.26 38.95-53.88 72.68-53.88">
+              </path>
+            </svg>
+          </div>
+          <div>
+            <strong>Google Ads · personas que ya buscan</strong><br>
+            Sales arriba cuando alguien necesita justo tu servicio.
+          </div>
+        </div>
+        <ul class="ads-steps">
+          <li>Anuncios de búsqueda con frases como “dentista cerca de mí”, “técnico refrigeración urgente”.</li>
+          <li>Si entraron a tu página y no agendaron, les recordamos que pueden reservar.</li>
+          <li>Medimos cuántas personas escriben, llaman o reservan, y en qué horarios.</li>
+          <li>Página lista para que los anuncios funcionen sin rehacer nada al invertir.</li>
+        </ul>
+      </div>
+
+      <div class="ads-card">
+        <div class="ads-head">
+          <div class="ads-logo" aria-hidden="true" style="background:#e9f2ff;">
+            <img src="metalogo.png" alt="Meta">
+          </div>
+          <div>
+            <strong>Meta Ads · personas cercanas</strong><br>
+            Mostramos tu servicio a gente de la zona que podría necesitarlo aunque no lo busque aún.
+          </div>
+        </div>
+        <ul class="ads-steps">
+          <li>Anuncios con fotos del consultorio/taller y mensajes claros para agendar.</li>
+          <li>Segmentamos por radio y por intereses (familias, autos, mantenimiento, salud, etc.).</li>
+          <li>Si alguien ya vio tu página, volvemos a aparecerle con un recordatorio de cita.</li>
+          <li>Reporte fácil: cuántos vieron, clics, mensajes y citas solicitadas.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="campaigns" aria-label="Cómo trabajamos los anuncios">
+    <h3 class="camp-title">¿Cómo funcionan los anuncios en Google?</h3>
+    <div class="camp-grid">
+      <div class="camp-card">
+        <span class="chip">Búsqueda · intención directa</span>
+        <div class="mock"><b>Ejemplo:</b> “dentista cerca” o “técnico refrigeración urgente”. Sale tu anuncio arriba con botones de agendar y llamar.</div>
+        <ul class="ads-steps">
+          <li>Frases claras: servicio + zona + urgencia.</li>
+          <li>Botones: agendar, llamar o WhatsApp.</li>
+          <li>Horarios con más citas: mañana y tarde.</li>
+          <li>Métricas: clics que terminan en mensajes o reservas.</li>
+        </ul>
+      </div>
+      <div class="camp-card">
+        <span class="chip">Urgencia / mismo día</span>
+        <div class="mock"><b>Ejemplo:</b> “Reparación hoy” o “cita hoy”.</div>
+        <ul class="ads-steps">
+          <li>Textos breves con promesa de tiempo.</li>
+          <li>Segmentamos por radio cercano.</li>
+          <li>Botón directo a llamar o agenda rápida.</li>
+          <li>Medimos llamadas, mensajes y citas del día.</li>
+        </ul>
+      </div>
+      <div class="camp-card">
+        <span class="chip">Reimpacto · no reservaron</span>
+        <div class="mock"><b>Ejemplo:</b> Visitaron tu página y no agendaron; ven “Citas hoy, agenda en 1 minuto”.</div>
+        <ul class="ads-steps">
+          <li>Solo S3: reimpacto a visitantes previos.</li>
+          <li>Recordatorio corto + llamada a agendar.</li>
+          <li>Frecuencia moderada para no molestar.</li>
+          <li>Métricas: regresos, citas recuperadas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="camp-title">¿Cómo funcionan los anuncios en Meta?</h3>
+    <div class="camp-grid">
+      <div class="camp-card">
+        <span class="chip">Zona cercana · descubrimiento</span>
+        <div class="mock"><b>Ejemplo:</b> Imagen del consultorio/taller + “Agenda para hoy”. Se muestra a personas cercanas.</div>
+        <ul class="ads-steps">
+          <li>Segmentamos por radio y afinidad (hogar, autos, salud, mascotas según el giro).</li>
+          <li>Botón directo a WhatsApp o agenda.</li>
+          <li>Variamos mensajes por día y hora.</li>
+          <li>Reporte: vistas, clics, mensajes y citas solicitadas.</li>
+        </ul>
+      </div>
+      <div class="camp-card">
+        <span class="chip">Prueba social</span>
+        <div class="mock"><b>Ejemplo:</b> Testimonio corto o antes/después con “Agenda en 1 minuto”.</div>
+        <ul class="ads-steps">
+          <li>Creativos con resultado visible o frase del cliente.</li>
+          <li>Botón a agenda o llamada.</li>
+          <li>Segmentamos por intereses del servicio.</li>
+          <li>Métricas: clics, mensajes, solicitudes de cita.</li>
+        </ul>
+      </div>
+      <div class="camp-card">
+        <span class="chip">Recordatorio en redes</span>
+        <div class="mock"><b>Ejemplo:</b> Si alguien vio tu página, le aparece “Confirma tu cita aquí”.</div>
+        <ul class="ads-steps">
+          <li>Solo S3: público de quienes visitaron.</li>
+          <li>Mensaje claro de siguiente paso (agenda / llamada).</li>
+          <li>Frecuencia controlada.</li>
+          <li>Medimos regresos y citas confirmadas.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+	  <section class="faq">
+	    <h2>Preguntas frecuentes</h2>
+	    <details>
+	      <summary>Cuando alguien busca tu servicio o producto, tu página aparece con información clara para que te contacten o pidan.</summary>
+	      <p>Tu página aparece con información clara para que te contacten o pidan.</p>
+	    </details>
+	    <details>
+	      <summary>¿Los anuncios se pagan aparte?</summary>
+	      <p>Sí. Lo que se paga para mostrar tu negocio se paga por separado según tu inversión.</p>
+	    </details>
+	    <details>
+	      <summary>¿Necesito conocimientos técnicos?</summary>
+	      <p>No. Nosotros dejamos todo listo y te damos guía rápida.</p>
+	    </details>
+	    <details>
+	      <summary>¿En cuánto tiempo está listo?</summary>
+	      <p>Cada plan tiene su tiempo de entrega al lado del precio.</p>
+	    </details>
+	    <details>
+	      <summary>Cuando alguien busca tu servicio o producto, tu página aparece con información clara para que te contacten o pidan.</summary>
+	      <p>Tu página aparece con información clara para que te contacten o pidan.</p>
+	    </details>
+	    <details>
+	      <summary>¿Los anuncios se pagan aparte?</summary>
+	      <p>Sí. Lo que se paga para mostrar tu negocio se paga por separado según tu inversión.</p>
+	    </details>
+	    <details>
+	      <summary>¿Necesito conocimientos técnicos?</summary>
+	      <p>No. Nosotros dejamos todo listo y te damos guía rápida.</p>
+	    </details>
+	  </section>
+<div id="global-html-launcher" style="position:fixed;left:16px;bottom:16px;z-index:9999;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+  <button id="globalNavToggle" type="button" aria-label="Abrir navegación rápida" style="border:1px solid #cbd5e1;background:#0f172a;color:#fff;padding:10px 12px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(15,23,42,.2);cursor:pointer;">Navegar</button>
+  <div id="globalNavPanel" hidden style="margin-top:8px;min-width:220px;max-height:60vh;overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 14px 30px rgba(15,23,42,.16);">
+    <p style="margin:2px 4px 8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:700;">Páginas</p>
+    <div id="globalNavLinks" style="display:grid;gap:6px;"></div>
+  </div>
+</div>
+<script>
+(function(){
+  if (window.__globalNavInstalled) return;
+  window.__globalNavInstalled = true;
+  var links = [
+    { href: "index.html", label: "Inicio" },
+    { href: "restaurantes.html", label: "Planes Restaurantes" },
+    { href: "servicios.html", label: "Planes Servicios" },
+    { href: "tiendas.html", label: "Planes Tiendas" },
+    { href: "redes-sociales.html", label: "Redes Sociales" },
+    { href: "prospectos.html", label: "Prospectos" },
+    { href: "mensajes-prospectos.html", label: "Mensajes Prospectos" },
+    { href: "totem-demo.html", label: "Totem Demo" },
+    { href: "uada.html", label: "Demo Uada" },
+    { href: "exkapa.html", label: "Demo Exkapa" },
+    { href: "moms.html", label: "Demo Moms" }
+  ];
+
+  var toggle = document.getElementById("globalNavToggle");
+  var panel = document.getElementById("globalNavPanel");
+  var linksWrap = document.getElementById("globalNavLinks");
+  var root = document.getElementById("global-html-launcher");
+  if (!toggle || !panel || !linksWrap || !root) return;
+
+  var current = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  linksWrap.innerHTML = links.map(function(item){
+    var active = item.href.toLowerCase() === current;
+    var baseStyle = "display:block;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #e2e8f0;";
+    var activeStyle = "background:#e0f2fe;color:#075985;border-color:#7dd3fc;";
+    var normalStyle = "background:#fff;color:#0f172a;";
+    return "<a href=\"" + item.href + "\" style=\"" + baseStyle + (active ? activeStyle : normalStyle) + "\">" + item.label + "</a>";
+  }).join("");
+
+  toggle.addEventListener("click", function(){
+    panel.hidden = !panel.hidden;
+  });
+
+  document.addEventListener("click", function(e){
+    if (!root.contains(e.target)) panel.hidden = true;
+  });
+})();
+</script>
+</body>
+
+</html>

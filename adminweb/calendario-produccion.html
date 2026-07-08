@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendario de Produccion - Ixmati</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="auth-guard.js?v=20260629-supabase-only"></script>
+  <script src="produccion-data.js?v=20260708-one-per-day"></script>
+  <link rel="stylesheet" href="su-admin.css">
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --soft: #f8fafc;
+      --teal: #0f766e;
+      --blue: #2563eb;
+      --rose: #be123c;
+      --amber: #b45309;
+      --shadow: 0 16px 42px rgba(15, 23, 42, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      background:
+        linear-gradient(180deg, rgba(15, 118, 110, .10), transparent 300px),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    .shell {
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .page-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    h2, h3 { color: var(--ink); }
+    p { color: var(--muted); line-height: 1.55; }
+
+    .summary {
+      display: grid;
+      gap: 10px;
+    }
+
+    .kpi {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--soft);
+    }
+
+    .kpi span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .kpi strong {
+      color: var(--ink);
+      font-size: 22px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .calendar {
+      display: grid;
+      gap: 16px;
+    }
+
+    .month {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .month-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .month-head h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .weekdays,
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .weekdays span {
+      padding: 10px 12px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .day {
+      min-height: 132px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+      background: #fff;
+    }
+
+    .day:nth-child(7n) { border-right: 0; }
+    .day.empty { background: #f8fafc; }
+
+    .day-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 12px;
+      font-weight: 950;
+      margin-bottom: 8px;
+    }
+
+    .event {
+      display: grid;
+      gap: 6px;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 9px;
+      background: #f8fafc;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .event.design {
+      border-color: #dbeafe;
+      border-left-color: var(--blue);
+      background: #eff6ff;
+    }
+
+    .event.review {
+      border-color: #fef3c7;
+      border-left-color: var(--amber);
+      background: #fffbeb;
+    }
+
+    .event.done,
+    .event.scheduled {
+      border-color: #bbf7d0;
+      border-left-color: #15803d;
+      background: #f0fdf4;
+    }
+
+    .event.high {
+      border-color: #fecdd3;
+      border-left-color: var(--rose);
+      background: #fff1f2;
+    }
+
+    .event strong {
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .event span {
+      color: #475569;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .agenda {
+      display: grid;
+      gap: 10px;
+    }
+
+    .agenda-card {
+      display: grid;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+      color: inherit;
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, .05);
+    }
+
+    .agenda-card:hover,
+    .event:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .date-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .date-pill,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .date-pill {
+      background: #111827;
+      color: #fff;
+    }
+
+    .badge {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .badge.design {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .badge.review {
+      background: #fef3c7;
+      color: var(--amber);
+    }
+
+    .badge.done,
+    .badge.scheduled {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge.high {
+      background: #ffe4e6;
+      color: var(--rose);
+    }
+
+    .badge.pending {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta span {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      background: var(--soft);
+      color: #475569;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    @media (max-width: 1080px) {
+      .page-head,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 22px, 1280px); }
+      .weekdays { display: none; }
+      .days { grid-template-columns: 1fr; }
+      .day,
+      .day:nth-child(7n) { border-right: 0; }
+      .day.empty { display: none; }
+      .month-head { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="su-topbar">
+      <a class="su-brand" href="calendario-produccion.html"><span>IX</span><strong>Calendario Ixmati</strong></a>
+      <nav class="su-menu" id="calendarMenu">
+        <a href="admin-su.html" data-admin-link>Inicio SU</a>
+        <a href="progreso-estudiantes.html" data-admin-link>Estudiantes</a>
+        <a href="produccion-admin.html" data-admin-link>Produccion</a>
+        <a href="produccion-flor.html" data-flor-link>Tablero</a>
+        <a href="calendario-produccion.html" aria-current="page">Calendario</a>
+        <a href="cms-op.html" data-admin-link>CMS OPs</a>
+      </nav>
+    </header>
+
+    <section class="page-head">
+      <div class="panel">
+        <p class="eyebrow">Centro de Produccion Ixmati</p>
+        <h1>Calendario editorial</h1>
+        <p>Fechas reprogramadas para publicar contenidos pendientes. Las entradas salen de las mismas OPs del tablero de Flor y del panel SuperSU.</p>
+      </div>
+      <aside class="panel">
+        <p class="eyebrow">Resumen</p>
+        <div class="summary">
+          <div class="kpi"><span>Publicaciones</span><strong id="totalItems">0</strong></div>
+          <div class="kpi"><span>Productos</span><strong id="productItems">0</strong></div>
+          <div class="kpi"><span>Proyectos</span><strong id="projectItems">0</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="layout">
+      <div class="calendar" id="calendarRoot"></div>
+      <aside class="panel">
+        <p class="eyebrow">Agenda</p>
+        <h2>Orden de publicacion</h2>
+        <div class="agenda" id="agendaRoot"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var api = window.IxmatiProduction;
+      var monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+      var monthIndex = monthNames.reduce(function (map, name, index) {
+        map[name] = index;
+        return map;
+      }, {});
+      var weekdayNames = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
+      var calendarWeekdays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+
+      function syncMenu() {
+        var user = window.AdminWebAuth && window.AdminWebAuth.currentUser && window.AdminWebAuth.currentUser();
+        var isFlor = user && user.role === "flor";
+        Array.prototype.forEach.call(document.querySelectorAll("[data-admin-link]"), function (link) {
+          if (isFlor) link.remove();
+        });
+        Array.prototype.forEach.call(document.querySelectorAll("[data-flor-link]"), function (link) {
+          if (!isFlor) link.remove();
+        });
+      }
+
+      function parseDate(value) {
+        var parts = String(value || "").toLowerCase().split(/\s+/);
+        if (parts.length < 3 || monthIndex[parts[1]] === undefined) return null;
+        return new Date(Number(parts[2]), monthIndex[parts[1]], Number(parts[0]));
+      }
+
+      function dateLabel(date) {
+        return weekdayNames[date.getDay()] + " " + date.getDate() + " " + monthNames[date.getMonth()];
+      }
+
+      function calendarKey(date) {
+        return date.getFullYear() + "-" + date.getMonth();
+      }
+
+      function isProject(op) {
+        return String(op.calendarType || "").toLowerCase().indexOf("trabajo") !== -1 || String(op.type || "").toLowerCase().indexOf("reel") !== -1;
+      }
+
+      function scheduledOps() {
+        return api.allOps().map(function (op) {
+          var date = parseDate(op.dueDate);
+          return date ? Object.assign({}, op, { date: date }) : null;
+        }).filter(function (op) {
+          return op && op.calendarType;
+        }).sort(function (a, b) {
+          return a.date - b.date;
+        });
+      }
+
+      function renderAgenda(ops) {
+        document.getElementById("agendaRoot").innerHTML = ops.map(function (op) {
+          var status = api.currentStatus(op);
+          var statusClass = api.statusClass(status);
+          var href = op.page || ("op-detalle.html?id=" + encodeURIComponent(op.id));
+          return [
+            '<a class="agenda-card" href="' + href + '">',
+            '<div class="date-row"><span class="date-pill">' + dateLabel(op.date) + '</span><span class="badge ' + statusClass + '">' + status + '</span></div>',
+            '<div><h3>' + op.title + '</h3><p>' + op.objective + '</p></div>',
+            '<div class="meta"><span>' + op.id + '</span><span>' + op.platform + '</span><span>' + op.type + '</span><span>' + (op.publishUrl || "-") + '</span></div>',
+            '</a>'
+          ].join("");
+        }).join("");
+      }
+
+      function renderCalendar(ops) {
+        var grouped = {};
+        ops.forEach(function (op) {
+          var key = calendarKey(op.date);
+          if (!grouped[key]) grouped[key] = [];
+          grouped[key].push(op);
+        });
+        document.getElementById("calendarRoot").innerHTML = Object.keys(grouped).map(function (key) {
+          var rows = grouped[key];
+          var date = rows[0].date;
+          return renderMonth(date.getFullYear(), date.getMonth(), rows);
+        }).join("");
+      }
+
+      function renderMonth(year, month, ops) {
+        var byDay = {};
+        ops.forEach(function (op) {
+          var day = op.date.getDate();
+          if (!byDay[day]) byDay[day] = [];
+          byDay[day].push(op);
+        });
+        var first = new Date(year, month, 1);
+        var offset = (first.getDay() + 6) % 7;
+        var totalDays = new Date(year, month + 1, 0).getDate();
+        var cells = [];
+        for (var i = 0; i < offset; i += 1) cells.push('<div class="day empty"></div>');
+        for (var day = 1; day <= totalDays; day += 1) {
+          cells.push(renderDay(day, byDay[day] || []));
+        }
+        while (cells.length % 7 !== 0) cells.push('<div class="day empty"></div>');
+        return [
+          '<section class="month">',
+          '<div class="month-head"><h2>' + monthNames[month].charAt(0).toUpperCase() + monthNames[month].slice(1) + ' ' + year + '</h2><span class="badge">' + ops.length + ' publicaciones</span></div>',
+          '<div class="weekdays">' + calendarWeekdays.map(function (dayName) { return '<span>' + dayName + '</span>'; }).join("") + '</div>',
+          '<div class="days">' + cells.join("") + '</div>',
+          '</section>'
+        ].join("");
+      }
+
+      function renderDay(day, ops) {
+        return [
+          '<div class="day">',
+          '<span class="day-number">' + day + '</span>',
+          ops.map(function (op) {
+            var href = op.page || ("op-detalle.html?id=" + encodeURIComponent(op.id));
+            var status = api.currentStatus(op);
+            return '<a class="event ' + api.statusClass(status) + '" href="' + href + '"><strong>' + op.title + '</strong><span>' + op.id + ' / ' + status + '</span></a>';
+          }).join(""),
+          '</div>'
+        ].join("");
+      }
+
+      function render() {
+        var ops = scheduledOps();
+        syncMenu();
+        renderCalendar(ops);
+        renderAgenda(ops);
+        document.getElementById("totalItems").textContent = ops.length;
+        document.getElementById("productItems").textContent = ops.filter(function (op) { return !isProject(op); }).length;
+        document.getElementById("projectItems").textContent = ops.filter(isProject).length;
+      }
+
+      api.ready(render);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema digital para Nutrivida</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sistema digital para Nutrivida" />
+  <meta property="og:description" content="Plataforma para captar personas interesadas, agendar valoraciones y dar seguimiento para convertir citas en clientes recurrentes." />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:secure_url" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sistema digital para Nutrivida" />
+  <meta name="twitter:description" content="Sistema digital enfocado en seguimiento, programas y clientes recurrentes para Nutrivida." />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <script src="../portal-auth.js"></script>
+  <style>
+    :root {
+      --bg: #f4f8ee;
+      --surface: #ffffff;
+      --surface-soft: #edf6e5;
+      --hero: #8fbe67;
+      --hero-deep: #76ab53;
+      --ink: #1f301c;
+      --muted: #4f624b;
+      --brand: #7ab457;
+      --brand-dark: #5f9641;
+      --accent: #d9ebc8;
+      --line: #cfe0bf;
+      --soft-blue: #eaf3f8;
+      --radius: 18px;
+      --shadow: 0 14px 30px rgba(74, 111, 45, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 100% -10%, #d7ebc4 0%, transparent 40%),
+        radial-gradient(circle at 0% 15%, #f0f8e8 0%, transparent 35%),
+        var(--bg);
+      line-height: 1.56;
+    }
+
+    .wrap {
+      width: min(1140px, 92vw);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 56px 0 40px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      background: linear-gradient(130deg, var(--hero) 0%, var(--hero-deep) 58%, #6ea446 100%);
+      color: #f8fff3;
+      padding: clamp(24px, 4vw, 50px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -40px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .hero-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .brand-chip {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      color: #f2ffe7;
+      padding: 8px 13px;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .logo {
+      width: clamp(110px, 20vw, 170px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 18px rgba(30, 66, 18, 0.23);
+    }
+
+    h1, h2, h3 { margin-top: 0; line-height: 1.2; }
+    h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 12px; color: #fff; }
+    h2 { font-size: clamp(1.55rem, 2.6vw, 2.15rem); margin-bottom: 10px; color: #22391f; }
+    h3 { font-size: 1.06rem; margin-bottom: 8px; color: #284c23; }
+
+    p { margin: 0 0 14px; color: var(--muted); }
+
+    .hero p { color: #f1ffe5; max-width: 780px; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: .18s ease;
+      display: inline-block;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary { background: #ffffff; color: #346224; }
+    .btn.secondary { background: var(--accent); color: #2b5421; }
+    .btn.outline { background: transparent; border-color: rgba(255,255,255,.6); color: #fff; }
+
+    main { padding-bottom: 34px; }
+    section { padding: 12px 0 30px; }
+
+    .block {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 6px 20px rgba(89, 113, 73, 0.08);
+    }
+
+    .card-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdf8 100%);
+      border: 1px solid #d6e5c8;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 6px 14px rgba(82, 105, 65, 0.08);
+    }
+
+    .card p { margin-bottom: 0; }
+
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .flow {
+      background: linear-gradient(145deg, #f1f8e8 0%, var(--soft-blue) 100%);
+      border: 1px dashed #9fc08a;
+      border-radius: 16px;
+      padding: 22px;
+      white-space: pre-line;
+      font-weight: 650;
+      color: #365437;
+    }
+
+    .programs { background: linear-gradient(180deg, #ffffff 0%, #f1f8ea 100%); }
+
+    .investment {
+      background: linear-gradient(130deg, #5d9440 0%, #74ad50 62%, #8dc167 100%);
+      color: #f7ffef;
+      border-radius: 24px;
+      padding: clamp(24px, 4vw, 40px);
+      margin-top: 8px;
+      border: 1px solid rgba(255,255,255,.3);
+      box-shadow: 0 16px 30px rgba(69, 101, 47, 0.24);
+    }
+
+    .investment h2, .investment p, .investment li { color: #f6ffef; }
+
+    .price {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin: 8px 0 14px;
+      letter-spacing: .3px;
+    }
+
+    .investment .btn.secondary {
+      background: #ffffff;
+      color: #3f6f2e;
+    }
+
+    .investment .btn.outline {
+      border-color: rgba(255,255,255,.7);
+      color: #fff;
+    }
+
+    footer {
+      padding: 0 0 44px;
+      color: #59704f;
+      font-size: .95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      header { padding-top: 28px; }
+      .hero { border-radius: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div class="hero-top">
+        <img class="logo" src="logo-nutrivida.png" alt="Logo Nutrivida" />
+        <span class="brand-chip">Bienestar y nutrición con seguimiento</span>
+      </div>
+      <h1>Sistema digital para Nutrivida</h1>
+      <p>Una plataforma para captar personas interesadas, agendar valoraciones y dar seguimiento para convertir citas en clientes recurrentes.</p>
+      <div class="actions">
+        <a class="btn primary" href="#sistema">Ver sistema</a>
+        <a class="btn secondary" href="beneficios.html">Ver beneficios</a>
+        <a class="btn outline" href="crecimiento.html">Ver plan de crecimiento</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="oportunidad">
+      <div class="block">
+        <h2>El valor no está solo en conseguir citas. Está en mantener el seguimiento.</h2>
+        <p>En servicios de bienestar y nutrición, muchas personas llegan interesadas, pero necesitan estructura para avanzar, regresar y mantenerse constantes.</p>
+        <ul>
+          <li>Personas interesadas que aún no saben qué programa elegir</li>
+          <li>Citas que necesitan seguimiento posterior</li>
+          <li>Clientes que pueden volver si se les acompaña correctamente</li>
+          <li>Programas que pueden venderse como paquetes, no solo sesiones sueltas</li>
+          <li>Datos que ayudan a entender qué servicio genera más interés</li>
+        </ul>
+        <p><strong>No se trata solo de agendar. Se trata de convertir interés en proceso.</strong></p>
+      </div>
+    </section>
+
+    <section id="sistema">
+      <h2>Un sistema para captar, filtrar, agendar y dar seguimiento</h2>
+      <div class="flow">Persona entra a la página
+↓
+Conoce los programas
+↓
+Elige objetivo: bajar peso / mejorar hábitos / control / bienestar
+↓
+Agenda valoración
+↓
+Recibe confirmación
+↓
+Nutrivida registra datos básicos
+↓
+Se activa seguimiento
+↓
+La persona vuelve o entra a un programa</div>
+    </section>
+
+    <section>
+      <h2>Módulos del sistema</h2>
+      <div class="card-grid">
+        <article class="card"><h3>1. Página estratégica</h3><p>Explica servicios, programas, beneficios y llamada clara a valoración.</p></article>
+        <article class="card"><h3>2. Agenda de citas</h3><p>Permite reservar valoración o consulta según disponibilidad.</p></article>
+        <article class="card"><h3>3. Formulario inteligente</h3><p>Captura objetivo, edad, interés, disponibilidad y datos de contacto.</p></article>
+        <article class="card"><h3>4. Programas Nutrivida</h3><p>Permite presentar paquetes como valoración inicial, seguimiento mensual, reto 30 días y plan personalizado.</p></article>
+        <article class="card"><h3>5. Confirmaciones automáticas</h3><p>La persona recibe confirmación de su cita y próximos pasos.</p></article>
+        <article class="card"><h3>6. Seguimiento post-cita</h3><p>Recordatorios para que no se pierda después del primer contacto.</p></article>
+        <article class="card"><h3>7. Base de clientes</h3><p>Registro de personas interesadas, citas y estado de seguimiento.</p></article>
+        <article class="card"><h3>8. Historial básico</h3><p>Notas simples por cliente: objetivo, fecha de contacto, programa de interés.</p></article>
+        <article class="card"><h3>9. Re-agendado</h3><p>Facilita que la persona vuelva a reservar sin iniciar todo desde cero.</p></article>
+        <article class="card"><h3>10. Reportes básicos</h3><p>Citas generadas, programas más solicitados, horarios fuertes y fuentes de interés.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Qué gana Nutrivida con este sistema</h2>
+        <div class="card-grid">
+          <article class="card"><h3>Más clientes calificados</h3><p>No solo llegan mensajes. Llegan personas con intención y objetivo claro.</p></article>
+          <article class="card"><h3>Más recompra</h3><p>El seguimiento ayuda a que la persona no se quede en una sola consulta.</p></article>
+          <article class="card"><h3>Más orden</h3><p>Cada contacto queda registrado con datos útiles.</p></article>
+          <article class="card"><h3>Más valor percibido</h3><p>Los servicios dejan de verse como citas sueltas y se presentan como programas.</p></article>
+          <article class="card"><h3>Más control</h3><p>Se puede saber qué programa interesa más y cuándo hay más demanda.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="programs">
+      <div class="block">
+        <h2>Vender programas, no solo citas</h2>
+        <p>Para Nutrivida conviene estructurar la oferta en programas claros, porque eso aumenta el compromiso del cliente y el valor de cada venta.</p>
+        <div class="card-grid">
+          <article class="card"><h3>Valoración inicial</h3><p>Primer acercamiento para entender objetivo y recomendar ruta.</p></article>
+          <article class="card"><h3>Plan mensual</h3><p>Seguimiento estructurado con revisiones y ajustes.</p></article>
+          <article class="card"><h3>Reto 30 días</h3><p>Programa corto para activar nuevos clientes.</p></article>
+          <article class="card"><h3>Seguimiento personalizado</h3><p>Ideal para quienes necesitan acompañamiento constante.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>El seguimiento es donde se gana la recompra</h2>
+        <p>Después de la primera cita, el sistema puede ayudar a mantener contacto con recordatorios, próximos pasos y re-agendado.</p>
+        <div class="card-grid">
+          <article class="card"><p>“Tu seguimiento está próximo”</p></article>
+          <article class="card"><p>“Agenda tu próxima revisión”</p></article>
+          <article class="card"><p>“¿Quieres continuar con tu plan?”</p></article>
+          <article class="card"><p>“Tu programa puede ajustarse esta semana”</p></article>
+        </div>
+        <p style="margin-top:12px;">Los mensajes pueden adaptarse según la forma real de trabajo de Nutrivida.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Panel básico para entender el negocio</h2>
+        <div class="card-grid">
+          <article class="card"><h3>Citas agendadas</h3><p>Lista de próximas citas y estado.</p></article>
+          <article class="card"><h3>Clientes interesados</h3><p>Personas que dejaron datos pero aún no concretan.</p></article>
+          <article class="card"><h3>Clientes activos</h3><p>Personas con programa o seguimiento.</p></article>
+          <article class="card"><h3>Programas más solicitados</h3><p>Qué servicio o plan genera más interés.</p></article>
+          <article class="card"><h3>Horarios fuertes</h3><p>Días y horas con mayor intención de agenda.</p></article>
+          <article class="card"><h3>Seguimiento pendiente</h3><p>Clientes que necesitan recordatorio o segunda cita.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="block">
+        <h2>Implementación completa del sistema</h2>
+        <p>El sistema se desarrolla como una base completa para que Nutrivida pueda captar, agendar y dar seguimiento desde el primer ciclo de trabajo.</p>
+        <ul>
+          <li>Página estratégica</li>
+          <li>Agenda</li>
+          <li>Formulario inteligente</li>
+          <li>Programas</li>
+          <li>Confirmaciones</li>
+          <li>Seguimiento básico</li>
+          <li>Base de clientes</li>
+          <li>Panel interno</li>
+          <li>Reportes básicos</li>
+          <li>Diseño responsive</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="inversion" class="investment">
+      <h2>Inversión del sistema completo</h2>
+      <div class="price">$8,000 MXN</div>
+      <p>Implementación completa del sistema digital para Nutrivida.</p>
+      <p>Incluye: página, agenda, programas, seguimiento, panel, base de clientes y reportes básicos.</p>
+      <div class="actions">
+        <a class="btn secondary" href="#">Quiero implementar el sistema</a>
+        <a class="btn outline" href="crecimiento.html">Ver plan de crecimiento</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">Sistema digital para servicios de bienestar, nutrición y acompañamiento de clientes recurrentes.</footer>
+</body>
+</html>

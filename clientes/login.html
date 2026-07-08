@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal de Clientes | Ixmati</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ixmati" />
+  <meta property="og:image" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:secure_url" content="/clientes/logoixmati.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/clientes/logoixmati.jpg" />
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+  <script src="portal-auth.js"></script>
+</head>
+<body class="portal-body">
+  <main class="login-wrap">
+    <section class="login-card">
+      <div class="badge">Portal privado de clientes</div>
+      <h1>Acceso clientes</h1>
+      <p>Ingresa con tus credenciales para acceder solamente al contenido de tu proyecto.</p>
+
+      <form id="loginForm" autocomplete="off">
+        <input class="input" id="user" type="text" placeholder="Usuario" required>
+        <input class="input" id="pass" type="password" placeholder="Contraseña" required>
+        <button class="btn btn-cta" type="submit" style="width:100%; margin-top:8px;">Entrar al portal</button>
+        <p id="error" style="min-height:20px; margin:12px 0 0; color:#ff9ca5; font-weight:700;"></p>
+      </form>
+
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById("loginForm");
+      var error = document.getElementById("error");
+      var next = new URLSearchParams(window.location.search).get("next");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        error.textContent = "";
+
+        var user = document.getElementById("user").value.trim();
+        var pass = document.getElementById("pass").value;
+        var ok = window.ClientPortalAuth && window.ClientPortalAuth.login(user, pass);
+
+        if (!ok) {
+          error.textContent = "Credenciales incorrectas. Intenta nuevamente.";
+          return;
+        }
+
+        var session = window.ClientPortalAuth && window.ClientPortalAuth.getSession && window.ClientPortalAuth.getSession();
+        var target = (window.ClientPortalAuth && window.ClientPortalAuth.safeNext(next, session && session.client)) || "index.html";
+        window.location.href = target;
+      });
+    })();
+  </script>
+</body>
+</html>

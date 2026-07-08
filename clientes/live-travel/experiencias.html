@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Travel | Experiencias</title>
+  <link rel="icon" type="image/jpeg" href="/clientes/logoixmati.jpg" />
+  <link rel="stylesheet" href="live-travel.css" />
+  <script src="../portal-auth.js"></script>
+  <script defer src="live-travel.js"></script>
+</head>
+<body data-page="experiencias">
+  <header class="lt-nav-wrap"><div class="lt-wrap lt-nav"><a class="lt-brand" href="index.html"><img src="live.png" alt="Logo" /><span><small>Live Travel</small><strong>Plataforma comercial</strong></span></a><button class="lt-burger" type="button">☰</button><nav class="lt-menu"><a data-page="home" href="index.html">Inicio</a><a data-page="destinos" href="destinos.html">Destinos</a><a data-page="experiencias" href="experiencias.html">Experiencias</a><a data-page="cotizador" href="cotizador.html">Cotizador</a><a data-page="asesoria" href="asesoria.html">Asesoría</a></nav><div class="lt-nav-actions"><a class="lt-btn lt-btn-primary" href="cotizador.html">Cotizar viaje</a><a class="lt-btn lt-btn-outline" href="cotizacion.html">Volver a cotización</a><button class="lt-btn lt-btn-outline" id="logoutBtn" type="button">Cerrar sesión</button></div></div></header>
+  <main class="lt-wrap lt-page">
+    <section class="lt-section lt-reveal"><div class="lt-card"><h1>Experiencias de viaje por perfil</h1><p>Explora opciones por objetivo de viaje y activa cotización en segundos.</p></div></section>
+    <section class="lt-section lt-reveal"><div id="expGrid" class="lt-grid-auto"></div></section>
+  </main>
+  <a id="floatingQuote" class="lt-btn lt-btn-primary lt-floating-cta" href="cotizador.html" style="display:none">Cotizar</a>
+  <div id="ltToast" class="lt-toast"></div>
+  <footer class="lt-wrap lt-footer">Live Travel · Experiencias</footer>
+</body>
+</html>
