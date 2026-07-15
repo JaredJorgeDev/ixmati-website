@@ -17,7 +17,7 @@
 
         const wa = document.createElement("a");
         wa.className = "wa-floating";
-        wa.href = "https://wa.me/527751344080?text=Hola%20Ixmati,%20quiero%20cotizar";
+        wa.href = "https://wa.me/527751064629?text=Hola%20Ixmati,%20quiero%20cotizar";
         wa.target = "_blank";
         wa.setAttribute("aria-label", "WhatsApp");
         wa.innerHTML = '<i class="bi bi-whatsapp fs-3"></i>';
@@ -69,7 +69,7 @@
             const text = encodeURIComponent(
                 "Hola Ixmati, soy " + name + ". Correo: " + email + ". Detalle: " + detail + ". Mensaje: " + msg
             );
-            window.open("https://wa.me/527751344080?text=" + text, "_blank");
+            window.open("https://wa.me/527751064629?text=" + text, "_blank");
         });
     }
 

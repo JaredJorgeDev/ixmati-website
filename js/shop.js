@@ -2,7 +2,7 @@
     "use strict";
 
     const API_URL = "api/store.php";
-    const WA_PHONE = "527751344080";
+    const WA_PHONE = "527751064629";
     const CART_KEY = "ixmati_shop_cart_v1";
 
     const fallbackProducts = [
