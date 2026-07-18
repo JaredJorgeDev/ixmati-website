@@ -78,7 +78,8 @@
                   text: "Cuentanos que necesita tu negocio.\nTe ayudamos a elegir la solucion correcta.",
                   visual: "CTA con WhatsApp, website y cierre visual de marca."
               }
-          ]
+          ],
+          socialCopy: "Tu negocio puede vender mejor, atender más rápido y verse más profesional con herramientas digitales bien hechas.\n\nEn Ixmati desarrollamos páginas web, tiendas en línea, automatizaciones y contenido para que tu operación sea más clara y tus clientes encuentren la información sin vueltas.\n\nSolicita información por WhatsApp o visita nuestro website.\n\n#IxmatiDigital #SitiosWeb #Automatización #MarketingDigital"
       },
       {
           id: "OP-002",
@@ -134,7 +135,8 @@
                   text: "Hagamos que tus redes trabajen con estrategia, diseno y seguimiento mensual.",
                   visual: "CTA con WhatsApp y website."
               }
-          ]
+          ],
+          socialCopy: "Tus redes sociales no solo deben verse bonitas: también deben comunicar, generar confianza y mover a tus clientes a escribirte.\n\nCreamos contenido para posts, reels, stories y campañas con estrategia, diseño y seguimiento mensual.\n\nSolicita información y arma tu plan mensual de redes.\n\n#RedesSociales #ContenidoDigital #MarketingDigital #Ixmati"
       },
       {
           id: "OP-003",
@@ -190,7 +192,8 @@
                   text: "Creamos la web que tu negocio necesita para vender, informar o agendar.",
                   visual: "CTA con WhatsApp y website."
               }
-          ]
+          ],
+          socialCopy: "Una página web profesional ayuda a que tus clientes conozcan tus servicios, resuelvan dudas y te contacten en cualquier momento.\n\nDiseñamos sitios claros, responsivos y conectados a WhatsApp para negocios que necesitan presencia digital real.\n\nSolicita información para crear tu sitio web.\n\n#PáginaWeb #DiseñoWeb #NegociosDigitales #IxmatiDigital"
       },
       {
           id: "OP-004",
@@ -246,7 +249,8 @@
                   text: "Armemos una tienda online adaptada a tus productos y proceso de venta.",
                   visual: "CTA con WhatsApp y website."
               }
-          ]
+          ],
+          socialCopy: "Convierte tu catálogo en una tienda en línea clara, ordenada y fácil de usar.\n\nTus clientes pueden ver productos, revisar detalles, elegir variantes y enviar pedidos sin depender de mensajes desordenados.\n\nSolicita información para vender en línea.\n\n#TiendaOnline #Ecommerce #CatálogoDigital #IxmatiDigital"
       },
       {
           id: "OP-005",
@@ -294,7 +298,8 @@
                   text: "Tu negocio necesita una pagina web?\nPresenta tus servicios, genera confianza y recibe clientes desde internet.\nDisponible 24/7.",
                   visual: "Mockup de laptop y celular mostrando una web limpia, con boton de WhatsApp visible y 3 beneficios alrededor."
               }
-          ]
+          ],
+          socialCopy: "Tu negocio necesita una página web que explique lo que haces, genere confianza y facilite que tus clientes te contacten.\n\nCreamos sitios claros, rápidos y adaptados a celular para que tu marca esté disponible todos los días.\n\nManda mensaje y te decimos qué tipo de página necesita tu negocio.\n\n#PáginaWeb #DiseñoWeb #NegocioLocal #IxmatiDigital"
       },
       {
           id: "OP-006",
@@ -357,7 +362,8 @@
                   text: "Tu negocio tambien puede tener una web profesional",
                   visual: "Cierre con marca Ixmati y CTA."
               }
-          ]
+          ],
+          socialCopy: "Desarrollamos un website profesional para Nissan Tulancingo, pensado para verse claro en computadora y celular.\n\nUn sitio bien construido ayuda a presentar información, generar confianza y facilitar el contacto con nuevos clientes.\n\n¿Quieres una web profesional para tu negocio? Escríbenos.\n\n#Website #DiseñoWeb #ProyectoDigital #IxmatiDigital"
       },
       {
           id: "OP-007",
@@ -405,7 +411,8 @@
                   text: "Herramientas que te ahorran tiempo y trabajo.\nAutomatiza registros, pedidos, recordatorios o reportes.\nMenos errores, mas orden y menos tareas repetidas.",
                   visual: "Antes/despues: lado izquierdo tareas manuales, lado derecho dashboard/herramienta simple."
               }
-          ]
+          ],
+          socialCopy: "Hay tareas que tu negocio repite todos los días y que se pueden volver más simples con herramientas digitales.\n\nAutomatizamos registros, pedidos, recordatorios, reportes y procesos para ahorrar tiempo y reducir errores.\n\nCuéntanos qué tarea repites todos los días y vemos cómo automatizarla.\n\n#Automatización #HerramientasDigitales #Productividad #IxmatiDigital"
       },
       {
           id: "OP-008",
@@ -450,7 +457,8 @@
                   text: "Ahora es más fácil conocer todo lo que hacemos.\nVisita nuestra página",
                   visual: "Navegación del sitio."
               }
-          ]
+          ],
+          socialCopy: "Ahora es más fácil conocer todo lo que hacemos en Ixmati.\n\nNuestro nuevo sitio reúne servicios, proyectos y soluciones para marcas que quieren verse mejor, vender más y comunicar con claridad.\n\nVisita nuestra página.\n\n#PáginaWeb #MarketingDigital #Ixmati"
       },
       {
           id: "OP-009",
@@ -494,7 +502,8 @@
                   text: "Una página web también vende.\nSolicita tu sitio",
                   visual: "Mockups."
               }
-          ]
+          ],
+          socialCopy: "Una página web también vende cuando comunica bien, carga rápido y guía al cliente al siguiente paso.\n\nCreamos sitios pensados para mostrar servicios, generar confianza y recibir solicitudes de clientes.\n\nSolicita tu sitio.\n\n#SitioWeb #DiseñoWeb #NegociosDigitales #IxmatiDigital"
       },
       {
           id: "OP-010",
@@ -539,7 +548,8 @@
                   text: "No basta con tener un buen negocio, también hay que hacerlo visible.\nEscríbenos",
                   visual: "Gráficos y ejemplos."
               }
-          ]
+          ],
+          socialCopy: "No basta con tener un buen negocio, también hay que hacerlo visible.\n\nLa publicidad digital ayuda a llegar a más personas, mostrar tus servicios y generar mensajes de clientes interesados.\n\nEscríbenos.\n\n#MarketingDigital #PublicidadDigital #Clientes #IxmatiDigital"
       },
       {
           id: "OP-011",
@@ -601,7 +611,8 @@
                   text: "Cotiza tu fachada",
                   visual: "Cierre con marca Ixmati y CTA."
               }
-          ]
+          ],
+          socialCopy: "Las letras 3D hacen que una fachada se vea más profesional, visible y memorable.\n\nFabricamos e instalamos letras para negocios que quieren destacar desde la calle y reforzar su identidad visual.\n\nCotiza letras 3D con instalación para tu negocio.\n\n#Letras3D #FachadasComerciales #PublicidadExterior #Ixmati"
       },
       {
           id: "OP-012",
@@ -648,7 +659,8 @@
                   text: "Anuncios luminosos para negocios.\nHaz que tu fachada se vea profesional, visible y lista para atraer clientes.",
                   visual: "Fachada con anuncio luminoso encendido y CTA de cotización."
               }
-          ]
+          ],
+          socialCopy: "Haz que tu negocio destaque también de noche con un anuncio luminoso diseñado para tu fachada.\n\nLos anuncios iluminados ayudan a que tu marca sea visible, profesional y fácil de ubicar.\n\nCotiza tu anuncio luminoso para fachada.\n\n#AnunciosLuminosos #PublicidadExterior #Fachadas #Ixmati"
       },
       {
           id: "OP-013",
@@ -710,7 +722,8 @@
                   text: "Cotiza tu instalación",
                   visual: "CTA con ejemplos de uso."
               }
-          ]
+          ],
+          socialCopy: "La lona microperforada es ideal para comunicar promociones o identidad visual en vitrinas sin perder visibilidad desde el interior.\n\nInstalamos soluciones para negocios que quieren aprovechar mejor sus cristales y fachadas.\n\nCotiza lona microperforada para tu negocio.\n\n#LonaMicroperforada #Instalación #PublicidadExterior #Ixmati"
       },
       {
           id: "OP-014",
@@ -769,7 +782,8 @@
                   text: "Solicita tu cotización",
                   visual: "#Acrílicos #Publicidad #Ixmati"
               }
-          ]
+          ],
+          socialCopy: "Los pequeños detalles hacen grandes marcas.\n\nAsí transformamos la imagen de Discípulos con piezas en acrílico pensadas para comunicar mejor y elevar la presentación del espacio.\n\nSolicita tu cotización.\n\n#Acrílicos #Publicidad #Ixmati"
       },
       {
           id: "OP-015",
@@ -828,7 +842,8 @@
                   text: "Agenda tu proyecto",
                   visual: "#Letras3D #PublicidadExterior"
               }
-          ]
+          ],
+          socialCopy: "Cada proyecto representa nuestro compromiso con la calidad.\n\nEn esta colocación de letras 3D para Excapa cuidamos fabricación, instalación y acabado para lograr una fachada más sólida y profesional.\n\nAgenda tu proyecto.\n\n#Letras3D #PublicidadExterior #Fachadas #Ixmati"
       },
       {
           id: "OP-016",
@@ -887,7 +902,8 @@
                   text: "Cotiza",
                   visual: "#Señalética"
               }
-          ]
+          ],
+          socialCopy: "La señalización también comunica profesionalismo.\n\nLos señalamientos de lámina sublimada ayudan a orientar, informar y mantener una imagen clara dentro de negocios, oficinas e instituciones.\n\nCotiza.\n\n#Señalética #Señalamientos #Publicidad #Ixmati"
       },
       {
           id: "OP-017",
@@ -931,7 +947,8 @@
                   text: "Elegancia y resistencia para tu marca.\nSolicita una cotización",
                   visual: "Detalles del material."
               }
-          ]
+          ],
+          socialCopy: "El acrílico aporta elegancia, resistencia y una presentación limpia para piezas de marca, señalética, exhibidores y detalles personalizados.\n\nTrabajamos piezas a la medida para que tu negocio se vea más profesional.\n\nSolicita una cotización.\n\n#Acrílico #Señalética #Publicidad #Ixmati"
       },
       {
           id: "OP-018",
@@ -990,7 +1007,8 @@
                   text: "Agenda una visita",
                   visual: "#AnunciosLuminosos"
               }
-          ]
+          ],
+          socialCopy: "Haz que tu negocio destaque también de noche.\n\nRealizamos colocación de anuncios luminosos para fachadas que necesitan mayor visibilidad y una imagen más profesional.\n\nAgenda una visita.\n\n#AnunciosLuminosos #Instalación #PublicidadExterior #Ixmati"
       },
       {
           id: "OP-019",
@@ -1049,7 +1067,8 @@
                   text: "Agenda una cotización",
                   visual: "#RotulaciónVehicular #PublicidadMóvil"
               }
-          ]
+          ],
+          socialCopy: "Lleva tu marca a todas partes con una rotulación vehicular profesional.\n\nTu unidad puede funcionar como publicidad móvil mientras refuerza la presencia de tu empresa en cada recorrido.\n\nAgenda una cotización.\n\n#RotulaciónVehicular #PublicidadMóvil #PublicidadExterior #Ixmati"
       },
       {
           id: "OP-020",
@@ -1108,7 +1127,8 @@
                   text: "Solicita información",
                   visual: "#Etiquetas"
               }
-          ]
+          ],
+          socialCopy: "Los detalles hacen la diferencia.\n\nLas etiquetas de corte a registro ayudan a que tus productos se vean más cuidados, más profesionales y listos para destacar en empaque o venta.\n\nSolicita información.\n\n#Etiquetas #StickersPersonalizados #CorteARegistro #Ixmati"
       },
       {
           id: "OP-021",
@@ -1167,7 +1187,8 @@
                   text: "Pide tu cotización",
                   visual: "#Uniformes #DTF"
               }
-          ]
+          ],
+          socialCopy: "La imagen de tu equipo también habla de tu empresa.\n\nLos uniformes personalizados ayudan a proyectar orden, confianza y profesionalismo desde el primer contacto con tus clientes.\n\nPide tu cotización.\n\n#Uniformes #DTF #PlayerasPersonalizadas #Ixmati"
       },
       {
           id: "OP-022",
@@ -1211,7 +1232,8 @@
                   text: "Cada cliente tiene una historia.\nConoce nuestros proyectos",
                   visual: "Proceso y resultado."
               }
-          ]
+          ],
+          socialCopy: "Cada cliente tiene una historia, y cada proyecto merece una solución pensada a la medida.\n\nEn este caso de éxito mostramos cómo una buena ejecución visual ayuda a fortalecer la presencia de una marca.\n\nConoce nuestros proyectos.\n\n#CasoDeÉxito #Publicidad #Marca #Ixmati"
       },
       {
           id: "OP-023",
@@ -1255,7 +1277,8 @@
                   text: "No todas las lonas ofrecen el mismo resultado.\nEscríbenos",
                   visual: "Muestras de materiales."
               }
-          ]
+          ],
+          socialCopy: "No todas las lonas ofrecen el mismo resultado.\n\nLa calidad del material, la impresión y los acabados influyen en cómo se ve tu promoción y cuánto dura expuesta.\n\nEscríbenos.\n\n#Lonas #PublicidadExterior #Impresión #Ixmati"
       },
       {
           id: "OP-024",
@@ -1299,7 +1322,8 @@
                   text: "Reconoce los logros con un detalle que perdure.\nSolicita tu diseño",
                   visual: "Detalles del grabado."
               }
-          ]
+          ],
+          socialCopy: "Reconoce los logros con un detalle que perdure.\n\nLos reconocimientos de vidrio son una opción elegante para eventos, escuelas, empresas, premiaciones y agradecimientos especiales.\n\nSolicita tu diseño.\n\n#Reconocimientos #Vidrio #Eventos #Ixmati"
       },
       {
           id: "OP-025",
@@ -1358,7 +1382,8 @@
                   text: "Personaliza tus productos",
                   visual: "#TermosPersonalizados"
               }
-          ]
+          ],
+          socialCopy: "Los artículos personalizados fortalecen la identidad de cualquier institución.\n\nPersonalizamos termos para equipos, escuelas y empresas que buscan detalles útiles, duraderos y con presencia de marca.\n\nPersonaliza tus productos.\n\n#TermosPersonalizados #RegalosCorporativos #Sublimación #Ixmati"
       },
       {
           id: "OP-026",
@@ -1425,7 +1450,8 @@
                   text: "Te orientamos según lugar, medida, objetivo y tipo de superficie.",
                   visual: "Cierre con CTA de asesoría."
               }
-          ]
+          ],
+          socialCopy: "El vinil decorativo y el microperforado ayudan a vestir vitrinas, comunicar promociones y reforzar la identidad visual de tu negocio.\n\nTe orientamos para elegir el material correcto según superficie, objetivo y ubicación.\n\nTe ayudamos a elegir el material correcto para tu negocio.\n\n#VinilDecorativo #Microperforado #Vitrinas #Ixmati"
       },
       {
           id: "OP-027",
@@ -1472,7 +1498,8 @@
                   text: "Corte láser MDF para decoración, exhibición y proyectos personalizados.\nCreamos piezas a la medida de tu idea.",
                   visual: "Piezas MDF cortadas con detalle y CTA."
               }
-          ]
+          ],
+          socialCopy: "El corte láser MDF permite crear piezas decorativas, exhibidores, nombres, detalles personalizados y elementos para puntos de venta.\n\nFabricamos piezas a la medida para proyectos que necesitan precisión y buen acabado.\n\nCotiza corte láser MDF para tu proyecto.\n\n#CorteLáser #MDF #Decoración #Ixmati"
       },
       {
           id: "OP-028",
@@ -1534,7 +1561,8 @@
                   text: "Stickers listos para tu marca",
                   visual: "Resultado final con varias piezas."
               }
-          ]
+          ],
+          socialCopy: "Así se hacen stickers con corte a registro: impresión, alineación, corte y desprendido limpio.\n\nUna buena etiqueta hace que tu producto se vea más cuidado desde el primer vistazo.\n\nCotiza stickers con corte personalizado.\n\n#StickersPersonalizados #CorteARegistro #Etiquetas #Ixmati"
       },
       {
           id: "OP-029",
@@ -1596,7 +1624,8 @@
                   text: "Cotiza tu espacio",
                   visual: "CTA de señalética interior."
               }
-          ]
+          ],
+          socialCopy: "La señalética interior ayuda a orientar, ordenar espacios y reforzar la imagen de tu marca dentro de oficinas, locales e instituciones.\n\nInstalamos piezas claras, limpias y funcionales para cada espacio.\n\nCotiza señalética interior para tu espacio.\n\n#Señalética #Instalación #Oficinas #Ixmati"
       },
       {
           id: "OP-030",
@@ -1643,7 +1672,8 @@
                   text: "Playeras y gorras personalizadas para equipos, eventos y negocios.\nCotiza prendas con tu logo.",
                   visual: "Combo de playera y gorra con logo, fondo limpio y CTA."
               }
-          ]
+          ],
+          socialCopy: "Playeras y gorras personalizadas ayudan a que tu equipo se vea uniforme, profesional y alineado a tu marca.\n\nCotizamos prendas para negocios, eventos, escuelas, equipos y campañas promocionales.\n\nCotiza prendas personalizadas para tu equipo.\n\n#PlayerasPersonalizadas #GorrasPersonalizadas #VinilTextil #Ixmati"
       }
   ];
 

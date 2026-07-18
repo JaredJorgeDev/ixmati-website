@@ -42,7 +42,7 @@
       '<aside class="panel"><p class="eyebrow">Produccion</p><label>Estado</label><select id="statusSelect">' + allowedStatuses(current).map(function (status) { return '<option value="' + status + '" ' + (status === current ? "selected" : "") + '>' + status + '</option>'; }).join("") + '</select><div class="kpi"><span>Fecha</span><strong>' + (op.dueDate || "Sin fecha") + '</strong></div><div class="kpi"><span>Formato</span><strong>' + op.format + '</strong></div><div class="kpi"><span>Piezas</span><strong>' + op.pieces + '</strong></div><div class="kpi"><span>Plataforma</span><strong>' + (op.platform || "Multi") + '</strong></div></aside>',
       '</section>',
       '<section class="detail-layout">',
-      '<article class="panel">' + renderGuide(op) + '<h2>Slides y copy</h2><div class="slide-list">' + op.slides.map(renderSlide).join("") + '</div></article>',
+      '<article class="panel">' + renderGuide(op) + renderSocialCopy(op) + '<h2>Slides y copy</h2><div class="slide-list">' + op.slides.map(renderSlide).join("") + '</div></article>',
       '<aside class="side">',
       '<section class="panel"><h2>CTA</h2><p>' + op.cta + '</p></section>',
       '<section class="panel"><h2>Referencias</h2><div class="chips">' + op.refs.map(function (ref) { return '<span>' + ref + '</span>'; }).join("") + '</div></section>',
@@ -66,6 +66,30 @@
       renderList("Evita esto", op.avoid || defaultAvoid()),
       '</section>'
     ].join("");
+  }
+
+  function renderSocialCopy(op) {
+    var copy = op.socialCopy || defaultSocialCopy(op);
+    return [
+      '<section class="social-copy">',
+      '<div class="social-copy-head"><div><p class="eyebrow">Copy para redes sociales</p><h2>Texto listo para publicar</h2></div><button class="button" type="button" data-copy-social>Copiar copy</button></div>',
+      '<textarea id="socialCopyText" rows="8" readonly>' + escapeHtml(copy) + '</textarea>',
+      '<p class="copy-status" id="copyStatus"></p>',
+      '</section>'
+    ].join("");
+  }
+
+  function defaultSocialCopy(op) {
+    var lines = [];
+    if (op.slides && op.slides.length) lines.push(op.slides.map(function (slide) { return slide.text; }).join("\n"));
+    if (op.cta) lines.push(op.cta);
+    return lines.filter(Boolean).join("\n\n");
+  }
+
+  function escapeHtml(value) {
+    return String(value || "").replace(/[&<>"']/g, function (char) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[char];
+    });
   }
 
   function renderList(title, rows) {
@@ -121,6 +145,29 @@
   }
 
   function bind() {
+    var copyButton = document.querySelector("[data-copy-social]");
+    if (copyButton) {
+      copyButton.addEventListener("click", function () {
+        var textarea = document.getElementById("socialCopyText");
+        var status = document.getElementById("copyStatus");
+        textarea.focus();
+        textarea.select();
+        var done = false;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(textarea.value).then(function () {
+            status.textContent = "Copy copiado.";
+          }).catch(function () {
+            document.execCommand("copy");
+            status.textContent = "Copy seleccionado para copiar.";
+          });
+          done = true;
+        }
+        if (!done) {
+          document.execCommand("copy");
+          status.textContent = "Copy seleccionado para copiar.";
+        }
+      });
+    }
     document.getElementById("statusSelect").addEventListener("change", function (event) {
       if (!isAdmin && ["Aprobado", "Programado", "Publicado"].indexOf(event.target.value) !== -1) return;
       api.saveOpState(op.id, { status: event.target.value }).then(function (ok) {
